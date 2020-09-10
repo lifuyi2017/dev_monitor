@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.winterchen.dao.DevFieldValueMapper">
+
+    <insert id="insert" parameterType="com.winterchen.model.DevOneFieldValue">
+        insert dev_field_value(id,dev_top_id,dev_id,field_id,field_string,field_date,field_blob)
+        value(#{id},#{dev_top_id},#{dev_id},#{field_id},#{field_string},#{field_date},#{field_blob})
+    </insert>
+
+    <select id="getIdByDevId" resultType="java.lang.String">
+        select distinct id from dev_field_value where dev_id=#{devId}
+    </select>
+
+
+    <select id="query" resultType="com.winterchen.model.DevOneFieldValue" parameterType="com.winterchen.model.DevOneFieldValue">
+        select * from dev_field_value where 1=1
+        <if test="id!=null and id!=''">
+            and id=#{id}
+        </if>
+        <if test="dev_top_id!=null and dev_top_id!=''">
+            and dev_top_id=#{dev_top_id}
+        </if>
+        <if test="dev_id!=null and dev_id!=''">
+            and dev_id=#{dev_id}
+        </if>
+        <if test="field_id!=null and field_id!=''">
+            and field_id=#{field_id}
+        </if>
+    </select>
+
+
+</mapper>
