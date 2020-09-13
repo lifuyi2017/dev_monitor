@@ -34,8 +34,8 @@ public class DevFieldValueServiceImpl implements DevFieldValueService {
      */
     @Override
     @Transactional
-    public ResultMessage addFieldValue(DevFieldValue devFieldValue) {
-        ResultMessage resultMessage = new ResultMessage();
+    public ResultMessage<Boolean> addFieldValue(DevFieldValue devFieldValue) {
+        ResultMessage<Boolean> resultMessage = new ResultMessage();
         try {
             String id = UUID.randomUUID().toString().replaceAll("-", "");
             for (Map.Entry<String, FieldValue> entry : devFieldValue.getValueMap().entrySet()) {
@@ -65,12 +65,14 @@ public class DevFieldValueServiceImpl implements DevFieldValueService {
                 }
                 devFieldValueMapper.insert(devOneFieldValue);
             }
-            resultMessage.setSucess(true);
+            resultMessage.setValue(true);
             resultMessage.setMesg("添加成功");
+            resultMessage.setStatuscode("200");
         } catch (Exception e) {
             e.printStackTrace();
-            resultMessage.setSucess(false);
+            resultMessage.setValue(true);
             resultMessage.setMesg("添加失败：" + e.toString());
+            resultMessage.setStatuscode("501");
         }
         return resultMessage;
     }
@@ -104,13 +106,14 @@ public class DevFieldValueServiceImpl implements DevFieldValueService {
                 DevFieldValue devFieldValue = new DevFieldValue(devRelation.getTop_id(), devId, mapValue);
                 devFieldValueList.add(devFieldValue);
             }
-            listResultMessage.setSucess(true);
+            listResultMessage.setStatuscode("200");
             listResultMessage.setMesg("查询成功");
             listResultMessage.setValue(devFieldValueList);
         }catch (Exception e){
             e.printStackTrace();
-            listResultMessage.setSucess(false);
+            listResultMessage.setStatuscode("501");
             listResultMessage.setMesg("查询失败:"+e.toString());
+            listResultMessage.setValue(null);
         }
         return listResultMessage;
     }

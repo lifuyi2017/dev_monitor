@@ -6,7 +6,7 @@ import com.winterchen.model.ResultMessage;
 import java.util.List;
 
 public interface DevFieldValueService {
-    ResultMessage addFieldValue(DevFieldValue devFieldValue);
+    ResultMessage<Boolean> addFieldValue(DevFieldValue devFieldValue);
 
     ResultMessage<List<DevFieldValue>> getFieldValueByDevId(Integer devId);
 }

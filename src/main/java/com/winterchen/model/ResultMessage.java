@@ -2,9 +2,18 @@ package com.winterchen.model;
 
 public class ResultMessage<T> {
 
-    private boolean sucess;
+    private String statuscode;
     private String mesg;
     private T value;
+
+    public ResultMessage() {
+    }
+
+    public ResultMessage(String statuscode, String mesg, T value) {
+        this.statuscode = statuscode;
+        this.mesg = mesg;
+        this.value = value;
+    }
 
     public T getValue() {
         return value;
@@ -14,12 +23,12 @@ public class ResultMessage<T> {
         this.value = value;
     }
 
-    public boolean isSucess() {
-        return sucess;
+    public String getStatuscode() {
+        return statuscode;
     }
 
-    public void setSucess(boolean sucess) {
-        this.sucess = sucess;
+    public void setStatuscode(String statuscode) {
+        this.statuscode = statuscode;
     }
 
     public String getMesg() {

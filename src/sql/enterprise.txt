@@ -1,0 +1,72 @@
+post
+localhost:8080/enterprise/addOrUpdate
+输入：根据enterprise_id判断进行企业的添加或者修改，如果enterprise_id存在就修改，否则添加
+{
+    "enterprise_id":"32eaa",
+    "enterprise_name":"德州仪器",
+    "enterprise_type":"设备生产商"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "添加成功",
+    "value": true
+}
+{
+    "statuscode": "510",
+    "mesg": "操作失败",
+    "value": false
+}
+========================================================================================================
+post
+localhost:8080/enterprise/getEnterprise
+输入：根据enterprise_id、enterprise_name、enterprise_type进行相应查询----enterprise_id和enterprise_type是精确查询，enterprise_name是模糊查询，当全部为null时默认查询所有
+{
+    "enterprise_type":"设备生产商"
+}
+{
+    "enterprise_id":"32esqc",
+    "enterprise_name":null,
+    "enterprise_type":null
+}
+{}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "查询成功",
+    "value": [
+        {
+            "enterprise_id": "32eaa",
+            "enterprise_name": "德州仪器",
+            "enterprise_type": "设备生产商"
+        },
+        {
+            "enterprise_id": "32esqc",
+            "enterprise_name": "日本三菱",
+            "enterprise_type": "设备生产商"
+        }
+    ]
+}
+===========================================================================
+post
+localhost:8080/enterprise/deleteById
+输入：企业id
+输出：
+{
+    "statuscode": "200",
+    "mesg": "删除成功",
+    "value": true
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

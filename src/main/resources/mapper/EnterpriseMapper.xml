@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.winterchen.dao.EnterpriseMapper">
+
+    <select id="getEnterByEntity" resultType="com.winterchen.model.Enterprise" parameterType="com.winterchen.model.Enterprise">
+        select * from enterprise where 1=1
+        <if test="enterprise_id!=null">
+            and enterprise_id=#{enterprise_id}
+        </if>
+        <if test="enterprise_name!=null">
+            and enterprise_name like concat('%',#{enterprise_name},'%')
+        </if>
+        <if test="enterprise_type!=null">
+            and enterprise_type=#{enterprise_type}
+        </if>
+    </select>
+
+    <insert id="add" parameterType="com.winterchen.model.Enterprise">
+        insert  into enterprise(enterprise_id,enterprise_name,enterprise_type)
+        value(#{enterprise_id},#{enterprise_name},#{enterprise_type})
+    </insert>
+
+    <update id="updateById" parameterType="com.winterchen.model.Enterprise">
+        update enterprise set enterprise_name=#{enterprise_name},enterprise_type=#{enterprise_type} where enterprise_id=#{enterprise_id}
+    </update>
+
+    <delete id="deleteById">
+        delete from enterprise where enterprise_id=#{enterprise_id}
+    </delete>
+
+</mapper>
