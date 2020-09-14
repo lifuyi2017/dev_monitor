@@ -3,6 +3,7 @@ package com.winterchen.service.user.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.winterchen.dao.UserDao;
+import com.winterchen.model.User;
 import com.winterchen.model.UserDomain;
 import com.winterchen.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;//这里会报错，但是并不会影响
 
-    @Override
-    public int addUser(UserDomain user) {
 
-        return userDao.insert(user);
-    }
 
     /*
     * 这个方法中用到了我们开头配置依赖的分页插件pagehelper
@@ -39,4 +36,30 @@ public class UserServiceImpl implements UserService {
         PageInfo result = new PageInfo(userDomains);
         return result;
     }
+
+    @Override
+    public void addUser(User user) throws Exception{
+        userDao.addUser(user);
+    }
+
+    @Override
+    public List<User> getUsersByUser(User userQuery) throws Exception{
+        return userDao.getUsersByUser(userQuery);
+    }
+
+    @Override
+    public void updateById(User user) throws Exception {
+        userDao.updateById(user);
+    }
+
+    @Override
+    public void deleteByIds(List<Integer> ids) throws Exception {
+        userDao.deleteByIds(ids);
+    }
+
+    @Override
+    public void editStatus(List<Integer> ids, String status) throws Exception{
+        userDao.editStatus(ids,status);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.winterchen.service.user;
 
 import com.github.pagehelper.PageInfo;
+import com.winterchen.model.User;
 import com.winterchen.model.UserDomain;
 
 import java.util.List;
@@ -10,7 +11,17 @@ import java.util.List;
  */
 public interface UserService {
 
-    int addUser(UserDomain user);
+  
 
     PageInfo<UserDomain> findAllUser(int pageNum, int pageSize);
+
+    void addUser(User user) throws Exception;
+
+    List<User> getUsersByUser(User userQuery) throws Exception;
+
+    void updateById(User user) throws Exception;
+
+    void deleteByIds(List<Integer> ids) throws Exception;
+
+    void editStatus(List<Integer> ids, String status) throws Exception;
 }

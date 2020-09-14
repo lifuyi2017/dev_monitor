@@ -9,7 +9,7 @@
     userId,userName,password,phone
   </sql>
 
-  <insert id="insert" parameterType="com.winterchen.model.UserDomain">
+<!--  <insert id="insert" parameterType="com.winterchen.model.UserDomain">
     INSERT INTO
       <include refid="BASE_TABLE"/>
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -24,7 +24,7 @@
         #{phone, jdbcType=VARCHAR},
       </if>
     </trim>
-  </insert>
+  </insert>-->
 
   <select id="selectUsers" resultType="com.winterchen.model.UserDomain">
       SELECT
@@ -33,5 +33,46 @@
         <include refid="BASE_TABLE"/>
   </select>
 
+  <insert id="addUser" parameterType="com.winterchen.model.User">
+        insert into user(user_name,user_password,user_real_name,user_phone,user_status,enterprise_id)
+        value(#{user_name},#{user_password},#{user_real_name},#{user_phone},#{user_status},#{enterprise_id})
+  </insert>
 
+  <select id="getUsersByUser" parameterType="com.winterchen.model.User" resultType="com.winterchen.model.User">
+        select * from user where 1=1
+        <if test="user_name!=null">
+          and user_name=#{user_name}
+        </if>
+        <if test="user_password!=null">
+          and user_password=#{user_password}
+        </if>
+        <if test="user_status!=null">
+          and user_status=#{user_status}
+        </if>
+        <if test="user_id!=null">
+          and user_id=#{user_id}
+        </if>
+        <if test="enterprise_id!=null">
+          and enterprise_id=#{enterprise_id}
+        </if>
+  </select>
+
+  <update id="updateById" parameterType="com.winterchen.model.User">
+    update user set user_name=#{user_name},user_password=#{user_password},user_real_name=#{user_real_name},user_phone=#{user_phone},user_status=#{user_status},enterprise_id=#{enterprise_id}
+     where user_id=#{user_id}
+  </update>
+
+    <delete id="deleteByIds">
+        delete from user where user_id in
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <update id="editStatus">
+        update user set user_status=#{status} where user_id in
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
 </mapper>
