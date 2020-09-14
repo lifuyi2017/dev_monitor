@@ -1,6 +1,7 @@
 package com.winterchen.controller;
 
 import com.github.pagehelper.PageHelper;
+import com.winterchen.model.OptUser;
 import com.winterchen.model.ResultMessage;
 import com.winterchen.model.User;
 import com.winterchen.model.UserDomain;
@@ -60,6 +61,7 @@ public class UserController {
                 }
                 userService.updateById(user);
             } else {
+                user.setUser_status("1");
                 userService.addUser(user);
             }
             booleanResultMessage.setValue(true);
@@ -96,10 +98,10 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/deleteByIds")
-    public ResultMessage<Boolean> deleteByIds(@RequestParam List<Integer> ids){
+    public ResultMessage<Boolean> deleteByIds(@RequestBody OptUser optUser){
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
-            userService.deleteByIds(ids);
+            userService.deleteByIds(optUser.getIds());
             booleanResultMessage.setValue(true);
             booleanResultMessage.setStatuscode("200");
             booleanResultMessage.setMesg("删除成功");
@@ -115,10 +117,10 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/editStatus")
-    public ResultMessage<Boolean> editStatus(@RequestParam List<Integer> ids,@RequestParam String status){
+    public ResultMessage<Boolean> editStatus(@RequestBody OptUser optUser){
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
-            userService.editStatus(ids,status);
+            userService.editStatus(optUser.getIds(),optUser.getStatus());
             booleanResultMessage.setValue(true);
             booleanResultMessage.setStatuscode("200");
             booleanResultMessage.setMesg("编辑成功");

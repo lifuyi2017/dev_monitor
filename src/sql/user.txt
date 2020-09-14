@@ -1,0 +1,107 @@
+localhost:8080/user/addOrUpdateUser
+输入：没有user_id为增加操作，有user_id为修改操作，enterprise_id(企业id)为必填字段,user_status为用户状态：1为启用，0为禁用
+{
+    "user_id":"1",
+    "user_name": "用户1改",
+    "user_password":"123456",
+    "user_real_name":"顶顶顶顶",
+    "user_phone":"1234455555",
+     "user_status":"1",
+    "enterprise_id":"32esqc"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "操作成功",
+    "value": true
+}
+==============================================================
+查询接口
+localhost:8080/user/queryUser
+输入：可选的查询参数：user_id、user_name、user_status、enterprise_id
+例：
+{
+    "enterprise_id":"32esqc"
+}
+{
+    "user_id":"1",
+    "enterprise_id":"32esqc"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "查询成功",
+    "value": [
+        {
+            "user_id": 1,
+            "user_name": "用户1改",
+            "user_password": "123456",
+            "user_real_name": "顶顶顶顶",
+            "user_phone": "1234455555",
+            "user_status": "1",
+            "enterprise_id": "32esqc"
+        },
+        {
+            "user_id": 4,
+            "user_name": "用户4",
+            "user_password": "123456",
+            "user_real_name": null,
+            "user_phone": "1234455555",
+            "user_status": "1",
+            "enterprise_id": "32esqc"
+        },
+        {
+            "user_id": 5,
+            "user_name": "用户1",
+            "user_password": "123456",
+            "user_real_name": null,
+            "user_phone": "1234455555",
+            "user_status": "1",
+            "enterprise_id": "32esqc"
+        }
+    ]
+}
+===========================================================
+批量启用/禁用用户
+localhost:8080/user/editStatus
+输入：ids用户id、status：0禁用，1启用
+{
+    "ids":[12,13],
+    "status":"0"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "编辑成功",
+    "value": true
+}
+==================================================================
+批量删除用户
+localhost:8080/user/deleteByIds
+输入：
+{
+    "ids":[12,13]
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "删除成功",
+    "value": true
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

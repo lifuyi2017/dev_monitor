@@ -11,7 +11,7 @@
  Target Server Version : 50713
  File Encoding         : 65001
 
- Date: 14/09/2020 20:55:37
+ Date: 14/09/2020 21:33:25
 */
 
 SET NAMES utf8mb4;
@@ -201,6 +201,20 @@ CREATE TABLE `user`  (
   `user_status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '账号状态：1启用，0禁用',
   `enterprise_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '所属公司id',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES (1, '用户1改', '123456', '顶顶顶顶', '1234455555', '1', '32esqc');
+INSERT INTO `user` VALUES (2, '用户2', '123456', NULL, NULL, '1', '32e');
+INSERT INTO `user` VALUES (3, '用户3', '123456', NULL, NULL, '1', '32e');
+INSERT INTO `user` VALUES (4, '用户4', '123456', NULL, '1234455555', '1', '32esqc');
+INSERT INTO `user` VALUES (5, '用户1', '123456', NULL, '1234455555', '1', '32esqc');
+INSERT INTO `user` VALUES (6, '用户1', '123456', NULL, NULL, '1', '32esqqdefc');
+INSERT INTO `user` VALUES (7, '用户2', '123456', NULL, NULL, '1', '32esqqdefc');
+INSERT INTO `user` VALUES (8, '用户3', '123456', NULL, NULL, '1', '32esqqdefc');
+INSERT INTO `user` VALUES (9, '用户4', '123456', NULL, NULL, '1', '32esqqdefc');
+INSERT INTO `user` VALUES (14, '用户7', '123456', NULL, NULL, '1', '32esqqdefc');
 
 SET FOREIGN_KEY_CHECKS = 1;
