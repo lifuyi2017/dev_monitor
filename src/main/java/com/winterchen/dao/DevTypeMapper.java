@@ -8,4 +8,6 @@ public interface DevTypeMapper {
     List<DevTypeElement> queryByEntity(DevTypeElement queryParent);
 
     void insertEntity(DevTypeElement devTypeElement);
+
+    void editById(DevTypeElement devTypeElement);
 }

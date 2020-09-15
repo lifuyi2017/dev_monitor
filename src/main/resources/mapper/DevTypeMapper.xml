@@ -23,4 +23,8 @@
         value (#{dev_element_id},#{dev_parent_element_id},#{dev_element_name},#{dev_type_id},#{type})
     </insert>
 
+    <update id="editById" parameterType="com.winterchen.model.DevTypeElement">
+        update dev_type_elements set dev_element_name=#{dev_element_name} where dev_element_id=#{dev_element_id}
+    </update>
+
 </mapper>

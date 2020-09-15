@@ -61,5 +61,25 @@ public class DevTypeController {
         }
     }
 
+    @ResponseBody
+    @PostMapping("/editDevTypeOrDevElement")
+    public ResultMessage<Boolean> editDevTypeOrDevElement(@RequestBody DevTypeElement devTypeElement){
+        ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
+        try {
+            devTypeService.editDevTypeOrDevElement(devTypeElement);
+            booleanResultMessage.setStatuscode("200");
+            booleanResultMessage.setValue(true);
+            booleanResultMessage.setMesg("添加成功");
+            return booleanResultMessage;
+        }catch (Exception e){
+            e.printStackTrace();
+            booleanResultMessage.setStatuscode("501");
+            booleanResultMessage.setValue(true);
+            booleanResultMessage.setMesg("服务端错误："+e.toString());
+            return booleanResultMessage;
+        }
+    }
+
+
 
 }

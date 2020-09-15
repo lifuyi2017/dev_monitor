@@ -24,5 +24,10 @@ public class DevTypeServiceImpl implements DevTypeService {
         devTypeMapper.insertEntity(devTypeElement);
     }
 
+    @Override
+    public void editDevTypeOrDevElement(DevTypeElement devTypeElement) throws Exception {
+        devTypeMapper.editById(devTypeElement);
+    }
+
 
 }

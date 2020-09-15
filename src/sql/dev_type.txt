@@ -1,5 +1,5 @@
 localhost:8080/devType/addDevTypeOrDevElement
-输入：
+输入：type：1是组件，2是设备类型；dev_element_name名称；dev_parent_element_id父节点id
 {
     "dev_element_name":"水泵",
     "type":"1"
@@ -16,3 +16,6 @@ localhost:8080/devType/addDevTypeOrDevElement
     "value": true
 }
 ======================================================
+
+
+

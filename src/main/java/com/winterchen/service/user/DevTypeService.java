@@ -8,4 +8,6 @@ public interface DevTypeService {
     List<DevTypeElement> queryByEntity(DevTypeElement queryParent) throws Exception;
 
     void insertEntity(DevTypeElement devTypeElement) throws Exception;
+
+    void editDevTypeOrDevElement(DevTypeElement devTypeElement) throws Exception;
 }
