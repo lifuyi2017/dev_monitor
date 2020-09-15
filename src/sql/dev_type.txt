@@ -1,0 +1,18 @@
+localhost:8080/devType/addDevTypeOrDevElement
+输入：
+{
+    "dev_element_name":"水泵",
+    "type":"1"
+}
+{
+    "dev_element_name":"驱动端",
+    "dev_parent_element_id":"09c6feecc1594eb99265d244fba2b888",
+    "type":"2"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "添加成功",
+    "value": true
+}
+======================================================

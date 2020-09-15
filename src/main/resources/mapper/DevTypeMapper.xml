@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.winterchen.dao.DevTypeMapper">
+
+    <select id="queryByEntity" parameterType="com.winterchen.model.DevTypeElement" resultType="com.winterchen.model.DevTypeElement">
+        select * from dev_type_elements where 1=1
+        <if test="dev_element_id!=null">
+            and dev_element_id=#{dev_element_id}
+        </if>
+        <if test="dev_parent_element_id!=null">
+            and dev_parent_element_id=#{dev_parent_element_id}
+        </if>
+        <if test="dev_type_id!=null">
+            and dev_type_id=#{dev_type_id}
+        </if>
+        <if test="type!=null">
+            and `type`=#{type}
+        </if>
+    </select>
+
+    <insert id="insertEntity" parameterType="com.winterchen.model.DevTypeElement">
+        insert  into dev_type_elements(dev_element_id,dev_parent_element_id,dev_element_name,dev_type_id,`type`)
+        value (#{dev_element_id},#{dev_parent_element_id},#{dev_element_name},#{dev_type_id},#{type})
+    </insert>
+
+</mapper>
