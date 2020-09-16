@@ -11,7 +11,7 @@
  Target Server Version : 50649
  File Encoding         : 65001
 
- Date: 15/09/2020 18:15:45
+ Date: 16/09/2020 18:01:22
 */
 
 SET NAMES utf8mb4;
@@ -121,7 +121,7 @@ INSERT INTO `dev_relation` VALUES (5, '垂直', '水泵', 3, 2);
 DROP TABLE IF EXISTS `dev_type_custom_field`;
 CREATE TABLE `dev_type_custom_field`  (
   `dev_type_custom_field_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '设备字段主键:dev_type_id+\"-\"+dev_type_field_name',
-  `dev_type_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '设备类型id',
+  `dev_type_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '设备类型id:对应dev_type_elements表的type为1时的主键',
   `dev_type_field_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字段名称',
   `dev_type_field_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字段类型：1文本、2数字、3日期、4图片',
   PRIMARY KEY (`dev_type_custom_field_id`) USING BTREE,
@@ -171,6 +171,11 @@ CREATE TABLE `dev_type_fixed_field`  (
   `dev_type_service_enterprise_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备服务商id',
   `dev_type_production_enterprise_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备生产商id',
   `dev_element_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '市面上这一类设备的标识，对应dev_type_elements表的type为1时的主键',
+  `dev_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备类型',
+  `dev_type_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备编号',
+  `dev_type_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备名称',
+  `dev_type_charge_user_id` int(11) NULL DEFAULT NULL COMMENT '负责人id',
+  `dev_type_pic` mediumblob NULL COMMENT '设备图片',
   PRIMARY KEY (`dev_type_field_value_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '设备类型固定字段表' ROW_FORMAT = Compact;
 
