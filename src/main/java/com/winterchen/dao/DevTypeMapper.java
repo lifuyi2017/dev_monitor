@@ -10,4 +10,8 @@ public interface DevTypeMapper {
     void insertEntity(DevTypeElement devTypeElement);
 
     void editById(DevTypeElement devTypeElement);
+
+    void deleteByElementId(String dev_element_id);
+
+    void deleteByParentId(String dev_element_id);
 }

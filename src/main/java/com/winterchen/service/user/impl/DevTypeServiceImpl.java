@@ -29,5 +29,11 @@ public class DevTypeServiceImpl implements DevTypeService {
         devTypeMapper.editById(devTypeElement);
     }
 
+    @Override
+    public void deleteElementAndSubElements(String dev_element_id) throws Exception{
+        devTypeMapper.deleteByElementId(dev_element_id);
+        devTypeMapper.deleteByParentId(dev_element_id);
+    }
+
 
 }

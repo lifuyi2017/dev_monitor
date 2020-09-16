@@ -2,7 +2,9 @@ package com.winterchen.controller;
 
 import com.winterchen.model.DevTypeElement;
 import com.winterchen.model.ResultMessage;
+import com.winterchen.service.user.DevCustomFieldValueService;
 import com.winterchen.service.user.DevFieldValueService;
+import com.winterchen.service.user.DevFixedFieldValueService;
 import com.winterchen.service.user.DevTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,9 @@ import java.util.UUID;
 public class DevTypeController {
 
     @Autowired
-    private DevFieldValueService devFieldValueService;
+    private DevFixedFieldValueService devFixedFieldValueService;
+    @Autowired
+    private DevCustomFieldValueService devCustomFieldValueService;
     @Autowired
     private DevTypeService devTypeService;
 
@@ -78,6 +82,20 @@ public class DevTypeController {
             booleanResultMessage.setMesg("服务端错误："+e.toString());
             return booleanResultMessage;
         }
+    }
+
+    @ResponseBody
+    @PostMapping("/deleteDevType")
+    public ResultMessage<Boolean> deleteDevType(@RequestBody DevTypeElement devTypeElement){
+        //删除当前值
+        //删除子节点
+        devTypeService.deleteElementAndSubElements(devTypeElement.getDev_element_id());
+        //如果是设备类型还需要删除数据：固定字段数据和用户自定义字段数据
+        if("1".equals(devTypeElement.getType())){
+            devFixedFieldValueService.deleteByElementId(devTypeElement.getDev_element_id());
+            devCustomFieldValueService.deleteByElementId(devTypeElement.getDev_element_id());
+        }
+
     }
 
 
