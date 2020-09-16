@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 127.0.0.1
+ Source Server         : 本地连接
  Source Server Type    : MySQL
- Source Server Version : 50649
+ Source Server Version : 50713
  Source Host           : localhost:3306
  Source Schema         : dev_test
 
  Target Server Type    : MySQL
- Target Server Version : 50649
+ Target Server Version : 50713
  File Encoding         : 65001
 
- Date: 16/09/2020 18:01:22
+ Date: 16/09/2020 22:12:57
 */
 
 SET NAMES utf8mb4;
@@ -121,11 +121,11 @@ INSERT INTO `dev_relation` VALUES (5, '垂直', '水泵', 3, 2);
 DROP TABLE IF EXISTS `dev_type_custom_field`;
 CREATE TABLE `dev_type_custom_field`  (
   `dev_type_custom_field_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '设备字段主键:dev_type_id+\"-\"+dev_type_field_name',
-  `dev_type_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '设备类型id:对应dev_type_elements表的type为1时的主键',
+  `dev_element_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '设备类型id:对应dev_type_elements表的type为1时的主键',
   `dev_type_field_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字段名称',
   `dev_type_field_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字段类型：1文本、2数字、3日期、4图片',
   PRIMARY KEY (`dev_type_custom_field_id`) USING BTREE,
-  INDEX `dev_type_id`(`dev_type_id`, `dev_type_field_name`) USING BTREE
+  INDEX `dev_type_id`(`dev_element_id`, `dev_type_field_name`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '设备类型用户自定义字段表' ROW_FORMAT = Compact;
 
 -- ----------------------------
