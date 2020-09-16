@@ -1,5 +1,6 @@
 package com.winterchen.controller;
 
+import com.winterchen.model.DevCustomFieldRequest;
 import com.winterchen.model.DevTypeElement;
 import com.winterchen.model.ResultMessage;
 import com.winterchen.service.user.DevCustomFieldValueService;
@@ -27,6 +28,11 @@ public class DevTypeController {
     @Autowired
     private DevTypeService devTypeService;
 
+    /**
+     * 新增设备或组件：type=1是设备，type=2是组件
+     * @param devTypeElement
+     * @return
+     */
     @ResponseBody
     @PostMapping("/addDevTypeOrDevElement")
     public ResultMessage<Boolean> addDevTypeOrDevElement(@RequestBody DevTypeElement devTypeElement){
@@ -65,6 +71,11 @@ public class DevTypeController {
         }
     }
 
+    /**
+     * 重命名
+     * @param devTypeElement
+     * @return
+     */
     @ResponseBody
     @PostMapping("/editDevTypeOrDevElement")
     public ResultMessage<Boolean> editDevTypeOrDevElement(@RequestBody DevTypeElement devTypeElement){
@@ -84,20 +95,54 @@ public class DevTypeController {
         }
     }
 
+    /**
+     * 删除组件或设备：type=1是设备，type=2是组件
+     * @param devTypeElement
+     * @return
+     */
     @ResponseBody
     @PostMapping("/deleteDevType")
     public ResultMessage<Boolean> deleteDevType(@RequestBody DevTypeElement devTypeElement){
-        //删除当前值
-        //删除子节点
-        devTypeService.deleteElementAndSubElements(devTypeElement.getDev_element_id());
-        //如果是设备类型还需要删除数据：固定字段数据和用户自定义字段数据
-        if("1".equals(devTypeElement.getType())){
-            devFixedFieldValueService.deleteByElementId(devTypeElement.getDev_element_id());
-            devCustomFieldValueService.deleteByElementId(devTypeElement.getDev_element_id());
+        ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
+        try {
+            //删除当前值、删除子节点
+            devTypeService.deleteElementAndSubElements(devTypeElement.getDev_element_id());
+            //如果是设备类型还需要删除数据：固定字段数据和用户自定义字段数据
+            if("1".equals(devTypeElement.getType())){
+                devFixedFieldValueService.deleteByElementId(devTypeElement.getDev_element_id());
+                devCustomFieldValueService.deleteByElementId(devTypeElement.getDev_element_id());
+            }
+            booleanResultMessage.setStatuscode("200");
+            booleanResultMessage.setMesg("删除成功");
+            booleanResultMessage.setValue(true);
+            return booleanResultMessage;
+        }catch (Exception e){
+            e.printStackTrace();
+            booleanResultMessage.setStatuscode("501");
+            booleanResultMessage.setMesg("服务端错误："+e.toString());
+            booleanResultMessage.setValue(false);
+            return booleanResultMessage;
         }
-
     }
 
+    /**
+     * 编辑设备的用户自定义字段
+     */
+    @ResponseBody
+    @PostMapping("/editCustomField")
+    public ResultMessage<Boolean> editCustomField(@RequestBody DevCustomFieldRequest devCustomFieldRequest){
 
+        try {
+            DevTypeElement devTypeElement = new DevTypeElement();
+            devTypeElement.setDev_parent_element_id(devCustomFieldRequest.getDev_element_id());
+            List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
+            devCustomFieldRequest.setDev_element_id(devTypeElements.get(0).getDev_element_id());
+
+        }catch (Exception e){
+
+        }
+
+
+    }
 
 }
