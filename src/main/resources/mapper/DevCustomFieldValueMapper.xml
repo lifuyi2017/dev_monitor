@@ -6,4 +6,8 @@
          delete from dev_type_custom_value  where dev_element_id=#{dev_element_id}
     </delete>
 
+    <delete id="deleteByCustomFieldId">
+        delete from dev_type_custom_value  where dev_type_custom_field_id=#{dev_type_custom_field_id}
+    </delete>
+
 </mapper>

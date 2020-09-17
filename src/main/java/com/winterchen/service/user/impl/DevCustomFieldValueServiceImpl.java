@@ -16,4 +16,9 @@ public class DevCustomFieldValueServiceImpl implements DevCustomFieldValueServic
         devCustomFieldValueMapper.deleteByElementId(dev_element_id);
     }
 
+    @Override
+    public void deleteByCustomFieldId(String dev_type_custom_field_id) throws Exception {
+        devCustomFieldValueMapper.deleteByCustomFieldId(dev_type_custom_field_id);
+    }
+
 }

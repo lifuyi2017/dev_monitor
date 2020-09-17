@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.winterchen.dao.DevCustomFieldMapper">
+
+    <select id="getCustomFieldsByEntity" parameterType="com.winterchen.model.DevCustomField" resultType="com.winterchen.model.DevCustomField">
+        select * from dev_type_custom_field where 1=1
+        <if test="dev_type_custom_field_id!=null">
+            and dev_type_custom_field_id=#{dev_type_custom_field_id}
+        </if>
+        <if test="dev_element_id!=null">
+            and dev_element_id=#{dev_element_id}
+        </if>
+        <if test="dev_type_field_name!=null">
+            and dev_type_field_name=#{dev_type_field_name}
+        </if>
+        <if test="dev_type_field_type!=null">
+            and dev_type_field_type=#{dev_type_field_type}
+        </if>
+    </select>
+
+    <insert id="insertEntity" parameterType="com.winterchen.model.DevCustomField">
+        insert into dev_type_custom_field(dev_type_custom_field_id,dev_element_id,dev_type_field_name,dev_type_field_type)
+        value (#{dev_type_custom_field_id},#{dev_element_id},#{dev_type_field_name},#{dev_type_field_type})
+    </insert>
+
+    <delete id="deleteById">
+        delete from dev_type_custom_field where dev_type_custom_field_id=#{dev_type_custom_field_id}
+    </delete>
+
+</mapper>
