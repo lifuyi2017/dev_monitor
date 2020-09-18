@@ -1,12 +1,10 @@
 package com.winterchen.controller;
 
+import com.winterchen.model.DevCustomField;
 import com.winterchen.model.DevCustomFieldRequest;
 import com.winterchen.model.DevTypeElement;
 import com.winterchen.model.ResultMessage;
-import com.winterchen.service.user.DevCustomFieldValueService;
-import com.winterchen.service.user.DevFieldValueService;
-import com.winterchen.service.user.DevFixedFieldValueService;
-import com.winterchen.service.user.DevTypeService;
+import com.winterchen.service.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +23,8 @@ public class DevTypeController {
     private DevFixedFieldValueService devFixedFieldValueService;
     @Autowired
     private DevCustomFieldValueService devCustomFieldValueService;
+    @Autowired
+    private DevCustomFieldService devCustomFieldService;
     @Autowired
     private DevTypeService devTypeService;
 
@@ -131,18 +131,50 @@ public class DevTypeController {
     @ResponseBody
     @PostMapping("/editCustomField")
     public ResultMessage<Boolean> editCustomField(@RequestBody DevCustomFieldRequest devCustomFieldRequest){
-
+        ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
             DevTypeElement devTypeElement = new DevTypeElement();
             devTypeElement.setDev_parent_element_id(devCustomFieldRequest.getDev_element_id());
             List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
             devCustomFieldRequest.setDev_element_id(devTypeElements.get(0).getDev_element_id());
-
+            //新的设置设备id
+            List<DevCustomField> devCustomFieldListNew = devCustomFieldRequest.getDevCustomFieldList();
+            for(DevCustomField devCustomField:devCustomFieldListNew){
+                devCustomField.setDev_element_id(devTypeElements.get(0).getDev_element_id());
+            }
+            //先查询原有的用户自定义字段
+            DevCustomField devCustomField = new DevCustomField();
+            devCustomField.setDev_element_id(devCustomFieldRequest.getDev_element_id());
+            List<DevCustomField> devCustomFieldList=devCustomFieldService.getCustomFieldsByEntity(devCustomField);
+            //新增的,只需要新增即可
+            List<DevCustomField> addList=devCustomFieldListNew;
+            addList.removeAll(devCustomFieldList);
+            for(DevCustomField customField:addList){
+                customField.setDev_type_custom_field_id(customField.getDev_element_id()+"-"+customField.getDev_type_field_name());
+                devCustomFieldService.insertEntity(customField);
+            }
+            //删除的,还需要删除值表
+            List<DevCustomField> deleteList=devCustomFieldList;
+            deleteList.removeAll(devCustomFieldListNew);
+            for(DevCustomField customField:deleteList){
+                devCustomFieldService.deleteEntity(customField);
+                devCustomFieldValueService.deleteByCustomFieldId(customField.getDev_type_custom_field_id());
+            }
+            booleanResultMessage.setValue(true);
+            booleanResultMessage.setMesg("修改成功");
+            booleanResultMessage.setStatuscode("200");
+            return booleanResultMessage;
         }catch (Exception e){
-
+            e.printStackTrace();
+            booleanResultMessage.setValue(false);
+            booleanResultMessage.setMesg("服务端错误："+e.toString());
+            booleanResultMessage.setStatuscode("501");
+            return booleanResultMessage;
         }
-
-
     }
+
+    /**
+     * 获取所有的用户自定义字段
+     */
 
 }

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本地连接
+ Source Server         : 127.0.0.1
  Source Server Type    : MySQL
- Source Server Version : 50713
+ Source Server Version : 50649
  Source Host           : localhost:3306
  Source Schema         : dev_test
 
  Target Server Type    : MySQL
- Target Server Version : 50713
+ Target Server Version : 50649
  File Encoding         : 65001
 
- Date: 16/09/2020 22:12:57
+ Date: 17/09/2020 17:41:02
 */
 
 SET NAMES utf8mb4;
@@ -120,7 +120,7 @@ INSERT INTO `dev_relation` VALUES (5, '垂直', '水泵', 3, 2);
 -- ----------------------------
 DROP TABLE IF EXISTS `dev_type_custom_field`;
 CREATE TABLE `dev_type_custom_field`  (
-  `dev_type_custom_field_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '设备字段主键:dev_type_id+\"-\"+dev_type_field_name',
+  `dev_type_custom_field_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '设备字段主键:dev_element_id+\"-\"+dev_type_field_name',
   `dev_element_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '设备类型id:对应dev_type_elements表的type为1时的主键',
   `dev_type_field_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字段名称',
   `dev_type_field_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字段类型：1文本、2数字、3日期、4图片',
@@ -135,7 +135,7 @@ DROP TABLE IF EXISTS `dev_type_custom_value`;
 CREATE TABLE `dev_type_custom_value`  (
   `dev_type_field_value_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键：用于标识一行数据的uuid',
   `dev_element_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '市面上这一类设备的标识，对应dev_type_elements表的type为1时的主键',
-  `dev_type_custom_field_id` int(11) NULL DEFAULT NULL COMMENT '设备自定义的字段主键',
+  `dev_type_custom_field_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备自定义的字段主键',
   `value_string` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文本值',
   `value_date` datetime(0) NULL DEFAULT NULL COMMENT '日期值',
   `value_blob` mediumblob NULL COMMENT '图片值',
