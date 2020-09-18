@@ -176,5 +176,7 @@ public class DevTypeController {
     /**
      * 获取所有的用户自定义字段
      */
+    @ResponseBody
+    @PostMapping("/getCustomFieldByElementId")
 
 }
