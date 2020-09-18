@@ -134,9 +134,9 @@ public class DevTypeController {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
             DevTypeElement devTypeElement = new DevTypeElement();
-            devTypeElement.setDev_parent_element_id(devCustomFieldRequest.getDev_element_id());
+            devTypeElement.setDev_element_id(devCustomFieldRequest.getDev_element_id());
             List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
-            devCustomFieldRequest.setDev_element_id(devTypeElements.get(0).getDev_element_id());
+            devCustomFieldRequest.setDev_element_id(devTypeElements.get(0).getDev_type_id());
             //新的设置设备id
             List<DevCustomField> devCustomFieldListNew = devCustomFieldRequest.getDevCustomFieldList();
             for(DevCustomField devCustomField:devCustomFieldListNew){
@@ -174,9 +174,34 @@ public class DevTypeController {
     }
 
     /**
-     * 获取所有的用户自定义字段
+     * 获取所有的用户自定义字段:只需要传入dev_element_id
      */
     @ResponseBody
     @PostMapping("/getCustomFieldByElementId")
+    public ResultMessage<DevCustomFieldRequest> getCustomFieldByElementId(@RequestBody DevCustomFieldRequest devCustomFieldRequest){
+        ResultMessage<DevCustomFieldRequest> devCustomFieldRequestResultMessage = new ResultMessage<>();
+        try {
+            DevTypeElement devTypeElement = new DevTypeElement();
+            devTypeElement.setDev_element_id(devCustomFieldRequest.getDev_element_id());
+            List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
+            DevCustomField devCustomField = new DevCustomField();
+            devCustomField.setDev_element_id(devTypeElements.get(0).getDev_type_id());
+            List<DevCustomField> devCustomFieldList=devCustomFieldService.getCustomFieldsByEntity(devCustomField);
+            devCustomFieldRequest.setDevCustomFieldList(devCustomFieldList);
+            devCustomFieldRequestResultMessage.setValue(devCustomFieldRequest);
+            devCustomFieldRequestResultMessage.setMesg("查询成功");
+            devCustomFieldRequestResultMessage.setStatuscode("200");
+        }catch (Exception e){
+            e.printStackTrace();
+            devCustomFieldRequestResultMessage.setValue(null);
+            devCustomFieldRequestResultMessage.setMesg("服务端错误："+e.toString());
+            devCustomFieldRequestResultMessage.setStatuscode("501");
+        }
+        return devCustomFieldRequestResultMessage;
+    }
+
+    /**
+     * 新增设备
+     */
 
 }
