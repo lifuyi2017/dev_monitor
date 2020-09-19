@@ -10,4 +10,7 @@ public interface DevCustomFieldMapper {
     void insertEntity(DevCustomField customField);
 
     void deleteById(String dev_type_custom_field_id);
+
+
+    void deleteByElementId(String dev_element_id);
 }

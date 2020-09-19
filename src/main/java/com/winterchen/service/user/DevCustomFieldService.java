@@ -10,4 +10,6 @@ public interface DevCustomFieldService {
     void insertEntity(DevCustomField customField) throws Exception;
 
     void deleteEntity(DevCustomField customField) throws Exception;
+
+    void deleteByElementId(String dev_element_id);
 }

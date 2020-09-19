@@ -10,4 +10,30 @@
         delete from dev_type_custom_value  where dev_type_custom_field_id=#{dev_type_custom_field_id}
     </delete>
 
+    <insert id="insert">
+        insert  into dev_type_custom_value(dev_type_field_value_id,dev_element_id,dev_type_custom_field_id,
+        value_string,value_date,value_blob) value (#{dev_type_field_value_id},#{dev_element_id},#{dev_type_custom_field_id}
+        ,#{value_string},#{value_date},#{value_blob})
+    </insert>
+
+    <select id="getByEntity" parameterType="com.winterchen.model.DevCustomFieldValue" resultType="com.winterchen.model.DevCustomFieldValue">
+        select * from dev_type_custom_value where 1=1
+        <if test="dev_type_field_value_id!=null">
+            and dev_type_field_value_id=#{dev_type_field_value_id}
+        </if>
+        <if test="dev_element_id!=null">
+            and dev_element_id=#{dev_element_id}
+        </if>
+    </select>
+
+    <delete id="deleteByValueId">
+        delete from dev_type_custom_value  where dev_type_field_value_id=#{dev_type_field_value_id}
+    </delete>
+
+    <update id="updateById" parameterType="com.winterchen.model.DevCustomFieldValue">
+        update dev_type_custom_value set value_string=#{value_string},value_date=#{value_date},value_blob=#{value_blob}
+        where dev_type_field_value_id=#{dev_type_field_value_id} and dev_element_id=#{dev_element_id} and
+        dev_type_custom_field_id=#{dev_type_custom_field_id}
+    </update>
+
 </mapper>

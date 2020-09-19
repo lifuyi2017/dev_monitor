@@ -27,4 +27,10 @@
         delete from dev_type_custom_field where dev_type_custom_field_id=#{dev_type_custom_field_id}
     </delete>
 
+    <delete id="deleteByElementId">
+        delete from dev_type_custom_field where dev_element_id=#{dev_element_id}
+    </delete>
+
+
+
 </mapper>

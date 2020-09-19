@@ -6,4 +6,36 @@
         delete from dev_type_fixed_field  where dev_element_id=#{dev_element_id}
     </delete>
 
+    <delete id="deleteByValueId">
+        delete from dev_type_fixed_field  where dev_type_field_value_id=#{dev_type_field_value_id}
+    </delete>
+
+    <insert id="insertValue">
+        insert into dev_type_fixed_field(dev_type_field_value_id,dev_type_operate_enterprise_id,
+        dev_type_service_enterprise_id,dev_type_production_enterprise_id,dev_element_id,
+        dev_type,dev_type_code,dev_type_name,dev_type_charge_user_id,dev_type_pic) value (
+        #{dev_type_field_value_id},#{dev_type_operate_enterprise_id},#{dev_type_service_enterprise_id},
+        #{dev_type_production_enterprise_id},#{dev_element_id},#{dev_type},#{dev_type_code},
+        #{dev_type_name},#{dev_type_charge_user_id},#{dev_type_pic}
+        )
+    </insert>
+    
+    <select id="queryForEntity" parameterType="com.winterchen.model.DevFixedFieldValue" resultType="com.winterchen.model.DevFixedFieldValue">
+        select * from dev_type_fixed_field where 1=1
+        <if test="dev_element_id!=null">
+            and dev_element_id=#{dev_element_id}
+        </if>
+        <if test="dev_type_field_value_id!=null">
+            and dev_type_field_value_id=#{dev_type_field_value_id}
+        </if>
+    </select>
+
+    <update id="updateByValueId" parameterType="com.winterchen.model.DevFixedFieldValue">
+        update dev_type_fixed_field set dev_type_operate_enterprise_id=#{dev_type_operate_enterprise_id},
+        dev_type_service_enterprise_id=#{dev_type_service_enterprise_id},
+        dev_type_production_enterprise_id=#{dev_type_production_enterprise_id},
+        dev_element_id=#{dev_element_id},dev_type=#{dev_type},dev_type_code=#{dev_type_code},
+        dev_type_name=#{dev_type_name},dev_type_charge_user_id=#{dev_type_charge_user_id},
+        dev_type_pic=#{dev_type_pic} where dev_type_field_value_id=#{dev_type_field_value_id}
+    </update>
 </mapper>

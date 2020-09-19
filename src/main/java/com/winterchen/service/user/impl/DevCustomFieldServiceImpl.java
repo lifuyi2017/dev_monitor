@@ -28,4 +28,9 @@ public class DevCustomFieldServiceImpl implements DevCustomFieldService {
     public void deleteEntity(DevCustomField customField) throws Exception{
         devCustomFieldMapper.deleteById(customField.getDev_type_custom_field_id());
     }
+
+    @Override
+    public void deleteByElementId(String dev_element_id) {
+        devCustomFieldMapper.deleteByElementId(dev_element_id);
+    }
 }
