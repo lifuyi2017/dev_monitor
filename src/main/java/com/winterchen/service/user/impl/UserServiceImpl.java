@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.winterchen.dao.UserDao;
 import com.winterchen.model.User;
 import com.winterchen.model.UserDomain;
+import com.winterchen.model.UserRequest;
 import com.winterchen.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,8 +44,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersByUser(User userQuery) throws Exception{
-        return userDao.getUsersByUser(userQuery);
+    public PageInfo<User> getUsersByUser(UserRequest userRequest) throws Exception{
+        PageHelper.startPage(userRequest.getPageNum(), userRequest.getPageSize());
+        List<User> userList=userDao.getUsersByUser(userRequest.getUser());
+        PageInfo result = new PageInfo(userList);
+        return result;
     }
 
     @Override
@@ -60,6 +64,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void editStatus(List<Integer> ids, String status) throws Exception{
         userDao.editStatus(ids,status);
+    }
+
+    @Override
+    public List<User> getUsersByUserNoPage(User userQuery) {
+        return userDao.getUsersByUser(userQuery);
     }
 
 }

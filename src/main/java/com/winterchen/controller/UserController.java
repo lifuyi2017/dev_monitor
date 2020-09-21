@@ -1,10 +1,8 @@
 package com.winterchen.controller;
 
 import com.github.pagehelper.PageHelper;
-import com.winterchen.model.OptUser;
-import com.winterchen.model.ResultMessage;
-import com.winterchen.model.User;
-import com.winterchen.model.UserDomain;
+import com.github.pagehelper.PageInfo;
+import com.winterchen.model.*;
 import com.winterchen.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,7 +50,7 @@ public class UserController {
             if (user.getUser_id() != null) {
                 User userQuery = new User();
                 userQuery.setUser_id(user.getUser_id());
-                List<User> userList = userService.getUsersByUser(userQuery);
+                List<User> userList = userService.getUsersByUserNoPage(userQuery);
                 if (userList == null || userList.size() == 0) {
                     booleanResultMessage.setValue(false);
                     booleanResultMessage.setStatuscode("401");
@@ -79,10 +77,10 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/queryUser")
-    public ResultMessage<List<User>> queryUser(@RequestBody User user) {
-        ResultMessage<List<User>> listResultMessage = new ResultMessage<>();
+    public ResultMessage<PageInfo<User>> queryUser(@RequestBody UserRequest userRequest) {
+        ResultMessage<PageInfo<User>> listResultMessage = new ResultMessage<>();
         try {
-            List<User> usersByUser = userService.getUsersByUser(user);
+            PageInfo<User> usersByUser = userService.getUsersByUser(userRequest);
             listResultMessage.setValue(usersByUser);
             listResultMessage.setStatuscode("200");
             listResultMessage.setMesg("查询成功");
