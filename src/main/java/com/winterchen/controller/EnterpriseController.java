@@ -1,7 +1,9 @@
 package com.winterchen.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.winterchen.model.Enterprise;
+import com.winterchen.model.EnterpriseRequest;
 import com.winterchen.model.ResultMessage;
 import com.winterchen.service.user.EnterpriseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ public class EnterpriseController {
         try {
             Enterprise queryEnter = new Enterprise();
             queryEnter.setEnterprise_id(enterprise.getEnterprise_id());
-            List<Enterprise> list=enterpriseService.getEnterByEntity(queryEnter);
+            List<Enterprise> list=enterpriseService.getEnterByEntityNoPage(queryEnter);
             if(list!=null && list.size()>0){
                 enterpriseService.updateById(enterprise);
                 booleanResultMessage.setMesg("修改成功");
@@ -47,10 +49,10 @@ public class EnterpriseController {
 
     @ResponseBody
     @PostMapping("/getEnterprise")
-    public  ResultMessage<List<Enterprise>> getEnterprise(@RequestBody Enterprise enterprise){
-        ResultMessage<List<Enterprise>> booleanResultMessage = new ResultMessage<>();
+    public  ResultMessage<PageInfo<Enterprise>> getEnterprise(@RequestBody EnterpriseRequest enterpriseRequest){
+        ResultMessage<PageInfo<Enterprise>> booleanResultMessage = new ResultMessage<>();
         try {
-            List<Enterprise> list=enterpriseService.getEnterByEntity(enterprise);
+            PageInfo<Enterprise> list=enterpriseService.getEnterByEntity(enterpriseRequest);
             booleanResultMessage.setValue(list);
             booleanResultMessage.setStatuscode("200");
             booleanResultMessage.setMesg("查询成功");

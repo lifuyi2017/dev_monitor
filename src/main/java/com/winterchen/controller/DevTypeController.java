@@ -1,5 +1,7 @@
 package com.winterchen.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.winterchen.model.*;
 import com.winterchen.service.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -285,21 +287,22 @@ public class DevTypeController {
      */
     @ResponseBody
     @PostMapping("/getValueByElementId")
-    public ResultMessage<List<DevFieldValueRequest>> getValueByElementId(@RequestBody DevFieldValueRequest devFieldValueRequest) {
-        ResultMessage<List<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
+    public ResultMessage<PageInfo<DevFieldValueRequest>> getValueByElementId(@RequestBody DevFieldValueRequestPage devFieldValueRequestPage) {
+//        ResultMessage<List<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
+        ResultMessage<PageInfo<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
         try {
             ArrayList<DevFieldValueRequest> devFieldValueRequestArrayList = new ArrayList<>();
             //设置类型
             DevTypeElement devTypeElement = new DevTypeElement();
-            devTypeElement.setDev_element_id(devFieldValueRequest.getDevFixedFieldValue().getDev_element_id());
+            devTypeElement.setDev_element_id(devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
             List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
-            devFieldValueRequest.getDevFixedFieldValue().setDev_element_id(devTypeElements.get(0).getDev_type_id());
+            devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().setDev_element_id(devTypeElements.get(0).getDev_type_id());
             //查询固定字段
             List<DevFixedFieldValue> devFixedFieldValueList = devFixedFieldValueService.getValueListByElementId(
-                    devFieldValueRequest.getDevFixedFieldValue().getDev_element_id());
+                    devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
             //查询用户自定义字段
             Map<String, Map<String, String>> customValueMap = devCustomFieldValueService.getValueListByElementId(
-                    devFieldValueRequest.getDevFixedFieldValue().getDev_element_id());
+                    devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
             //进行合并
             for (DevFixedFieldValue devFixedFieldValue : devFixedFieldValueList) {
                 DevFieldValueRequest request = new DevFieldValueRequest();
@@ -307,7 +310,11 @@ public class DevTypeController {
                 request.setCustomFieldValue(customValueMap.get(devFixedFieldValue.getDev_type_field_value_id()));
                 devFieldValueRequestArrayList.add(request);
             }
-            resultMessage.setValue(devFieldValueRequestArrayList);
+
+            PageHelper.startPage(devFieldValueRequestPage.getPageNum(), devFieldValueRequestPage.getPageSize());
+            PageInfo result = new PageInfo(devFieldValueRequestArrayList);
+//            resultMessage.setValue(devFieldValueRequestArrayList);
+            resultMessage.setValue(result);
             resultMessage.setMesg("查询成功");
             resultMessage.setStatuscode("200");
             return resultMessage;
