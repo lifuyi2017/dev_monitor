@@ -21,45 +21,59 @@ localhost:8080/user/queryUser
 输入：可选的查询参数：user_id、user_name、user_status、enterprise_id
 例：
 {
-    "enterprise_id":"32esqc"
+    "user": {
+        "enterprise_id": "32esqc"
+    },
+    "pageNum": 2,
+    "pageSize": 2
 }
 {
-    "user_id":"1",
-    "enterprise_id":"32esqc"
+    "user": {
+        "user_id": "1",
+        "enterprise_id": "32esqc"
+    },
+    "pageNum": 2,
+    "pageSize": 2
 }
 输出：
 {
     "statuscode": "200",
     "mesg": "查询成功",
-    "value": [
-        {
-            "user_id": 1,
-            "user_name": "用户1改",
-            "user_password": "123456",
-            "user_real_name": "顶顶顶顶",
-            "user_phone": "1234455555",
-            "user_status": "1",
-            "enterprise_id": "32esqc"
-        },
-        {
-            "user_id": 4,
-            "user_name": "用户4",
-            "user_password": "123456",
-            "user_real_name": null,
-            "user_phone": "1234455555",
-            "user_status": "1",
-            "enterprise_id": "32esqc"
-        },
-        {
-            "user_id": 5,
-            "user_name": "用户1",
-            "user_password": "123456",
-            "user_real_name": null,
-            "user_phone": "1234455555",
-            "user_status": "1",
-            "enterprise_id": "32esqc"
-        }
-    ]
+    "value": {
+        "total": 3,
+        "list": [
+            {
+                "user_id": 5,
+                "user_name": "用户1",
+                "user_password": "123456",
+                "user_real_name": null,
+                "user_phone": "1234455555",
+                "user_status": "1",
+                "enterprise_id": "32esqc"
+            }
+        ],
+        "pageNum": 2,
+        "pageSize": 2,
+        "size": 1,
+        "startRow": 3,
+        "endRow": 3,
+        "pages": 2,
+        "prePage": 1,
+        "nextPage": 0,
+        "isFirstPage": false,
+        "isLastPage": true,
+        "hasPreviousPage": true,
+        "hasNextPage": false,
+        "navigatePages": 8,
+        "navigatepageNums": [
+            1,
+            2
+        ],
+        "navigateFirstPage": 1,
+        "navigateLastPage": 2,
+        "lastPage": 2,
+        "firstPage": 1
+    }
 }
 ===========================================================
 批量启用/禁用用户
