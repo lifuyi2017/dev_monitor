@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.winterchen.dao.InstrumentMapper" >
+
+    <update id="updateById" parameterType="com.winterchen.model.Network">
+        update network set network_type=#{network_type},network_code=#{network_code},network_name=#{network_name},
+        network_ip=#{network_ip},input_address=#{input_address},output_agreement=#{output_agreement},
+        enterprise_id=#{enterprise_id} where network_id=#{network_id}
+    </update>
+
+    <insert id="insert" parameterType="com.winterchen.model.Network">
+        insert  into network(network_id,network_type,network_code,network_name,network_ip,input_address
+        ,output_agreement,enterprise_id) value (#{network_id},#{network_type},#{network_code},#{network_name},
+        #{network_ip},#{input_address},#{output_agreement},#{enterprise_id})
+    </insert>
+
+</mapper>
