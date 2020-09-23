@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.winterchen.dao.NetworkMapper" >
+
+    <select id="queryByEntity" parameterType="com.winterchen.model.Network" resultType="com.winterchen.model.Network">
+        select  * from network where 1=1
+        <if test="network_name!=null">
+            and network_name=#{network_name}
+        </if>
+        <if test="network_id!=null">
+            and network_id=#{network_id}
+        </if>
+        <if test="enterprise_id!=null">
+            and enterprise_id=#{enterprise_id}
+        </if>
+        <if test="network_ip!=null">
+            and network_ip=#{network_ip}
+        </if>
+    </select>
+
+    <delete id="deleteNetWorkById">
+        delete from network where network_id=#{network_id}
+    </delete>
+
+</mapper>

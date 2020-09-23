@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.winterchen.dao.MeasureMapper" >
+
+    <update id="updateById" parameterType="com.winterchen.model.Measure">
+        update measure set measure_type=#{measure_type},measure_code=#{measure_code},
+        measure_name=#{measure_name},measure_ip=#{measure_ip},
+        measure_channel_num=#{measure_channel_num},network_id=#{network_id},
+        enterprise_id=#{enterprise_id} where measure_id=#{measure_id}
+    </update>
+
+    <insert id="insertEntity" parameterType="com.winterchen.model.Measure">
+        insert into measure(measure_id,measure_type,measure_code,
+        measure_name,measure_ip,measure_channel_num,network_id,
+        enterprise_id) value (#{measure_id},#{measure_type},#{measure_code},
+        #{measure_name},#{measure_ip},#{measure_channel_num},#{network_id},#{enterprise_id})
+    </insert>
+
+    <select id="queryByEntity" parameterType="com.winterchen.model.Measure" resultType="com.winterchen.model.Measure">
+        select * from measure where 1=1
+        <if test="measure_id!=null">
+            and measure_id=#{measure_id}
+        </if>
+        <if test="measure_name!=null">
+            and measure_name=#{measure_name}
+        </if>
+        <if test="enterprise_id!=null">
+            and enterprise_id=#{enterprise_id}
+        </if>
+        <if test="network_id!=null">
+            and network_id=#{network_id}
+        </if>
+    </select>
+
+    <delete id="deleteNetWorkById">
+        delete from measure where measure_id=#{measure_id}
+    </delete>
+
+</mapper>

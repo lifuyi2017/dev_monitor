@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.winterchen.dao.ChannelMapper" >
+
+    <update id="updateById" parameterType="com.winterchen.model.Channel">
+        update channel set channel_code=#{channel_code},channel_name=#{channel_name},
+        signal_type=#{signal_type},data_type=#{data_type},input_type=#{input_type},
+        input_type_range=#{input_type_range},is_output_power=#{is_output_power},
+        pin_num=#{pin_num},measure_id=#{measure_id},enterprise_id=#{enterprise_id}
+         where channel_id=#{channel_id}
+    </update>
+
+    <insert id="insertEntity" parameterType="com.winterchen.model.Channel">
+        insert into channel(channel_id,channel_code,channel_name,signal_type,data_type,
+        input_type,input_type_range,is_output_power,pin_num,measure_id,enterprise_id)
+        value (#{channel_id},#{channel_code},#{channel_name},#{signal_type},#{data_type},
+        #{input_type},#{input_type_range},#{is_output_power},#{pin_num},#{measure_id},
+        #{enterprise_id})
+    </insert>
+
+    <select id="queryByEntity" parameterType="com.winterchen.model.Channel" resultType="com.winterchen.model.Channel">
+        select * from channel where 1=1 
+        <if test="channel_id!=null">
+            and channel_id=#{channel_id}
+        </if>
+        <if test="channel_name!=null">
+            and channel_name=#{channel_name}
+        </if>
+        <if test="measure_id!=null">
+            and measure_id=#{measure_id}
+        </if>
+        <if test="enterprise_id!=null">
+            and enterprise_id=#{enterprise_id}
+        </if>
+    </select>
+
+    <delete id="deleteById">
+        delete from channel where channel_id=#{channel_id}
+    </delete>
+
+</mapper>
