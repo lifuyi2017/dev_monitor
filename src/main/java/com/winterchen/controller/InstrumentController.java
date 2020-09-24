@@ -3,10 +3,7 @@ package com.winterchen.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.winterchen.model.*;
-import com.winterchen.service.user.ChannelService;
-import com.winterchen.service.user.InstrumentService;
-import com.winterchen.service.user.MeasureService;
-import com.winterchen.service.user.NetworkService;
+import com.winterchen.service.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +26,8 @@ public class InstrumentController {
     private MeasureService measureService;
     @Autowired
     private ChannelService channelService;
+    @Autowired
+    private LogicService logicService;
 
     /**
      * 新增或者更新网关
@@ -254,6 +253,60 @@ public class InstrumentController {
             booleanResultMessage.setStatuscode("501");
         }
         return booleanResultMessage;
+    }
+
+    /**
+     * 新增逻辑节点
+     */
+    @ResponseBody
+    @PostMapping("/addOrUpdateLogic")
+    public ResultMessage<Boolean> addOrUpdateLogic(@RequestBody LogicNode logicNode){
+        ResultMessage<Boolean> resultMessage = new ResultMessage();
+        try {
+            if (logicNode.getLogic_id()!= null && !"".equals(logicNode.getLogic_id().trim())) {
+                //修改
+                logicService.updateById(logicNode);
+                resultMessage.setValue(true);
+                resultMessage.setMesg("修改成功");
+                resultMessage.setStatuscode("200");
+            } else {
+                //新增
+                logicNode.setLogic_id(UUID.randomUUID().toString().replaceAll("-", ""));
+                logicService.insertEntity(logicNode);
+                resultMessage.setValue(true);
+                resultMessage.setMesg("新增成功");
+                resultMessage.setStatuscode("200");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMessage.setValue(false);
+            resultMessage.setMesg("服务端错误：" + e.toString());
+            resultMessage.setStatuscode("501");
+        }
+        return resultMessage;
+    }
+
+    /**
+     * 查询逻辑节点
+     */
+    @ResponseBody
+    @PostMapping("/queryLogic")
+    public ResultMessage<PageInfo<LogicNode>> queryLogic(@RequestBody LogicNodeRequest logicNodeRequest){
+        ResultMessage<PageInfo<LogicNode>> logicPage = new ResultMessage<>();
+        try {
+            PageHelper.startPage(logicNodeRequest.getPageNum(), logicNodeRequest.getPageSize());
+            List<LogicNode> channelList = logicService.queryByEntity(logicNodeRequest.getLogicNode());
+            PageInfo<LogicNode> result = new PageInfo(channelList);
+            logicPage.setValue(result);
+            logicPage.setStatuscode("200");
+            channelPage.setMesg("查询成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            channelPage.setValue(null);
+            channelPage.setStatuscode("501");
+            channelPage.setMesg("服务端错误：" + e.toString());
+        }
+        return channelPage;
     }
 
 

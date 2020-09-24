@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.winterchen.dao.LogicRelationMapper" >
+
+
+    <delete id="deleteByLogicId">
+        delete from logic_relation where logic_id=#{logic_id}
+    </delete>
+
+    <insert id="insert" parameterType="com.winterchen.model.LogicRelation">
+        insert  into logic_relation(logic_id,measure_id,channel_id) value (
+        #{logic_id},#{measure_id},#{channel_id}
+        )
+    </insert>
+
+</mapper>
