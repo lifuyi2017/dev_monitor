@@ -22,4 +22,8 @@
         </if>
     </select>
 
+    <delete id="deleteById">
+        delete from logic_node where logic_id=#{logic_id}
+    </delete>
+
 </mapper>

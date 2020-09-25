@@ -13,4 +13,21 @@
         )
     </insert>
 
+    <select id="queryForEntity" parameterType="com.winterchen.model.LogicRelation" resultType="com.winterchen.model.LogicRelation">
+        select * from logic_relation where 1=1 
+        <if test="logic_id!=null">
+            and logic_id=#{logic_id}
+        </if>
+        <if test="measure_id!=null">
+            and measure_id=#{measure_id}
+        </if>
+        <if test="channel_id!=null">
+            and channel_id=#{channel_id}
+        </if>
+    </select>
+
+    <delete id="deleteById">
+        delete from logic_relation where logic_id=#{logic_id}
+    </delete>
+
 </mapper>

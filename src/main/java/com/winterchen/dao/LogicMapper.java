@@ -10,4 +10,6 @@ public interface LogicMapper {
     void insertEntity(LogicNode logicNode);
 
     List<LogicNode> queryForEntity(LogicNode logicNode);
+
+    void deleteById(String logic_id);
 }

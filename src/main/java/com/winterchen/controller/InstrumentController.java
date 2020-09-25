@@ -299,14 +299,35 @@ public class InstrumentController {
             PageInfo<LogicNode> result = new PageInfo(channelList);
             logicPage.setValue(result);
             logicPage.setStatuscode("200");
-            channelPage.setMesg("查询成功");
+            logicPage.setMesg("查询成功");
         } catch (Exception e) {
             e.printStackTrace();
-            channelPage.setValue(null);
-            channelPage.setStatuscode("501");
-            channelPage.setMesg("服务端错误：" + e.toString());
+            logicPage.setValue(null);
+            logicPage.setStatuscode("501");
+            logicPage.setMesg("服务端错误：" + e.toString());
         }
-        return channelPage;
+        return logicPage;
+    }
+
+    /**
+     * 通过id删除逻辑节点
+     */
+    @ResponseBody
+    @PostMapping("/deleteLogicById")
+    public ResultMessage<Boolean> deleteLogicById(@RequestBody LogicNode logicNode){
+        ResultMessage<Boolean> booleanResultMessage = new ResultMessage();
+        try {
+            logicService.deleteById(logicNode.getLogic_id());
+            booleanResultMessage.setMesg("删除成功");
+            booleanResultMessage.setValue(true);
+            booleanResultMessage.setStatuscode("200");
+        } catch (Exception e) {
+            e.printStackTrace();
+            booleanResultMessage.setMesg("服务端错误：" + e.toString());
+            booleanResultMessage.setValue(false);
+            booleanResultMessage.setStatuscode("501");
+        }
+        return booleanResultMessage;
     }
 
 

@@ -48,4 +48,10 @@ public class LogicServiceImpl implements LogicService {
         }
         return logicNodeList;
     }
+
+    @Override
+    public void deleteById(String logic_id) {
+        logicMapper.deleteById(logic_id);
+        logicRelationMapper.deleteById(logic_id);
+    }
 }
