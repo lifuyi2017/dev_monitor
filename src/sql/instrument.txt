@@ -1,0 +1,406 @@
+==========================================
+新增或者更新网关
+localhost:8080/instrument/addOrUpdateNetWork
+输入：有network_id时是更新
+{
+    "network_type": "网关类型3",
+    "network_code": "03",
+    "network_name": "网关名称3",
+    "network_ip": "192.168.10.3",
+    "input_address": "网关地址3",
+    "output_agreement": "协议3",
+    "enterprise_id": "32esqqdefc"
+}
+{
+    "network_id":"818d21ed349f444cb0d04cd39948b81a",
+    "network_type": "公安网",
+    "network_code": "03",
+    "network_name": "网关名称3",
+    "network_ip": "192.168.10.3",
+    "input_address": "网关地址3",
+    "output_agreement": "协议3",
+    "enterprise_id": "32esqqdefc"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "修改成功",
+    "value": true
+}
+==================================================================
+查询网关
+localhost:8080/instrument/queryNetWork
+输入：
+{
+    "network": {},
+    "pageNum": 2,
+    "pageSize": 2
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "查询成功",
+    "value": {
+        "total": 3,
+        "list": [
+            {
+                "network_id": "818d21ed349f444cb0d04cd39948b81a",
+                "network_type": "公安网",
+                "network_code": "03",
+                "network_name": "网关名称3",
+                "network_ip": "192.168.10.3",
+                "input_address": "网关地址3",
+                "output_agreement": "协议3",
+                "enterprise_id": "32esqqdefc"
+            }
+        ],
+        "pageNum": 2,
+        "pageSize": 2,
+        "size": 1,
+        "startRow": 3,
+        "endRow": 3,
+        "pages": 2,
+        "prePage": 1,
+        "nextPage": 0,
+        "isFirstPage": false,
+        "isLastPage": true,
+        "hasPreviousPage": true,
+        "hasNextPage": false,
+        "navigatePages": 8,
+        "navigatepageNums": [
+            1,
+            2
+        ],
+        "navigateFirstPage": 1,
+        "navigateLastPage": 2,
+        "lastPage": 2,
+        "firstPage": 1
+    }
+}
+================================================================
+删除网关，通过id
+localhost:8080/instrument/deleteNetWorkById
+输入：
+{
+    "network_id": "7d0cb72f38174625942f68866e533254"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "删除成功",
+    "value": true
+}
+====================================================
+新增或者更新物理节点
+localhost:8080/instrument/addOrUpdateMeasure
+输入：
+{
+    "measure_type": "分体",
+    "measure_code": "01",
+    "measure_name": "采集卡名称1",
+    "measure_ip": "192.168.10.2",
+    "measure_channel_num": "3",
+    "network_id": "818d21ed349f444cb0d04cd39948b81a",
+    "enterprise_id": "32esqqdefc"
+}
+{
+    "measure_id":"204fa4d77c474ef29160190e495e99fe",
+    "measure_type": "测点",
+    "measure_code": "03",
+    "measure_name": "采集卡名称3",
+    "measure_ip": "192.168.10.4",
+    "measure_channel_num": "5",
+    "network_id": "818d21ed349f444cb0d04cd39948b81a",
+    "enterprise_id": "32esqqdefc"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "新增成功",
+    "value": true
+}
+==========================================================
+查询物理节点
+localhost:8080/instrument/queryMeasure
+输入：
+{
+    "measure": {},
+    "pageNum": 2,
+    "pageSize": 1
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "查询成功",
+    "value": {
+        "total": 3,
+        "list": [
+            {
+                "measure_id": "4cb94a9c56b545c7aab2bd76d3037dc7",
+                "measure_type": "分体",
+                "measure_code": "01",
+                "measure_name": "采集卡名称1",
+                "measure_ip": "192.168.10.2",
+                "measure_channel_num": "3",
+                "network_id": "818d21ed349f444cb0d04cd39948b81a",
+                "enterprise_id": "32esqqdefc"
+            }
+        ],
+        "pageNum": 2,
+        "pageSize": 1,
+        "size": 1,
+        "startRow": 2,
+        "endRow": 2,
+        "pages": 3,
+        "prePage": 1,
+        "nextPage": 3,
+        "isFirstPage": false,
+        "isLastPage": false,
+        "hasPreviousPage": true,
+        "hasNextPage": true,
+        "navigatePages": 8,
+        "navigatepageNums": [
+            1,
+            2,
+            3
+        ],
+        "navigateFirstPage": 1,
+        "navigateLastPage": 3,
+        "lastPage": 3,
+        "firstPage": 1
+    }
+}
+===========================================
+删除物理节点，通过id
+localhost:8080/instrument/deleteMeasureById
+输入：
+{
+    "measure_id": "4cb94a9c56b545c7aab2bd76d3037dc7"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "删除成功",
+    "value": true
+}
+===============================================
+新增或者更新通道
+localhost:8080/instrument/addOrUpdateChannel
+输入：
+{
+    "channel_code": "01",
+    "channel_name": "通道名称1",
+    "signal_type": "电流",
+    "data_type": "数模类型1",
+    "input_type": "电流",
+    "input_type_range": "范围1",
+    "is_output_power": "是",
+    "pin_num": "3",
+    "measure_id": "204fa4d77c474ef29160190e495e99fe",
+    "enterprise_id": "32esqqdefc"
+}
+{
+    "channel_id":"b5acab3e4f5f452eb03f12e191599c37",
+    "channel_code": "03",
+    "channel_name": "通道名称3",
+    "signal_type": "加速度",
+    "data_type": "数模类型3",
+    "input_type": "电流",
+    "input_type_range": "范围3",
+    "is_output_power": "是",
+    "pin_num": "3",
+    "measure_id": "204fa4d77c474ef29160190e495e99fe",
+    "enterprise_id": "32esqqdefc"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "新增成功",
+    "value": true
+}
+=====================================================
+查询通道
+localhost:8080/instrument/queryChannel
+输入：
+{
+    "channel": {},
+    "pageNum": 2,
+    "pageSize": 2
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "查询成功",
+    "value": {
+        "total": 3,
+        "list": [
+            {
+                "channel_id": "e431cc3e2a604d969526b9f5ced60b94",
+                "channel_code": "02",
+                "channel_name": "通道名称2",
+                "signal_type": "电流",
+                "data_type": "数模类型2",
+                "input_type": "电流",
+                "input_type_range": "范围2",
+                "is_output_power": "是",
+                "pin_num": "3",
+                "measure_id": "204fa4d77c474ef29160190e495e99fe",
+                "enterprise_id": "32esqqdefc"
+            }
+        ],
+        "pageNum": 2,
+        "pageSize": 2,
+        "size": 1,
+        "startRow": 3,
+        "endRow": 3,
+        "pages": 2,
+        "prePage": 1,
+        "nextPage": 0,
+        "isFirstPage": false,
+        "isLastPage": true,
+        "hasPreviousPage": true,
+        "hasNextPage": false,
+        "navigatePages": 8,
+        "navigatepageNums": [
+            1,
+            2
+        ],
+        "navigateFirstPage": 1,
+        "navigateLastPage": 2,
+        "firstPage": 1,
+        "lastPage": 2
+    }
+}
+==========================================
+删除通道，通过id
+localhost:8080/instrument/deleteChannelById
+输入:
+{
+    "channel_id": "e431cc3e2a604d969526b9f5ced60b94"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "删除成功",
+    "value": true
+}
+================================================
+新增逻辑节点
+localhost:8080/instrument/addOrUpdateLogic
+输入:
+{
+    "logic_code": "",
+    "logic_name": "",
+    "enterprise_id": "",
+    "logicRelationList": [
+        {
+            "measure_id": "204fa4d77c474ef29160190e495e99fe",
+            "channel_id": "8be83c824f3c48bca0052819838c925c"
+        },
+        {
+            "measure_id": "204fa4d77c474ef29160190e495e99fe",
+            "channel_id": "b5acab3e4f5f452eb03f12e191599c37"
+        }
+    ]
+}
+{
+    "logic_id":"a9b787e3527f4024aff2566210db4644",
+    "logic_code": "3333",
+    "logic_name": "逻辑测点3",
+    "enterprise_id": "32esqqdefc",
+    "logicRelationList": [
+        {
+            "measure_id": "204fa4d77c474ef29160190e495e99fe",
+            "channel_id": "8be83c824f3c48bca0052819838c925c"
+        },
+        {
+            "measure_id": "204fa4d77c474ef29160190e495e99fe",
+            "channel_id": "b5acab3e4f5f452eb03f12e191599c37"
+        }
+    ]
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "新增成功",
+    "value": true
+}
+==========================================================
+查询逻辑节点
+localhost:8080/instrument/queryLogic
+输入：
+{
+    "logicNode": {},
+    "pageNum": 2,
+    "pageSize": 2
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "查询成功",
+    "value": {
+        "total": 3,
+        "list": [
+            {
+                "logic_id": "d1f75619989a49aaaa83c23299380c05",
+                "logic_code": "8888",
+                "logic_name": "逻辑测点1",
+                "enterprise_id": "32esqqdefc",
+                "logicRelationList": [
+                    {
+                        "logic_id": "d1f75619989a49aaaa83c23299380c05",
+                        "measure_id": "204fa4d77c474ef29160190e495e99fe",
+                        "channel_id": "8be83c824f3c48bca0052819838c925c"
+                    },
+                    {
+                        "logic_id": "d1f75619989a49aaaa83c23299380c05",
+                        "measure_id": "204fa4d77c474ef29160190e495e99fe",
+                        "channel_id": "b5acab3e4f5f452eb03f12e191599c37"
+                    }
+                ]
+            }
+        ],
+        "pageNum": 2,
+        "pageSize": 2,
+        "size": 1,
+        "startRow": 3,
+        "endRow": 3,
+        "pages": 2,
+        "prePage": 1,
+        "nextPage": 0,
+        "isFirstPage": false,
+        "isLastPage": true,
+        "hasPreviousPage": true,
+        "hasNextPage": false,
+        "navigatePages": 8,
+        "navigatepageNums": [
+            1,
+            2
+        ],
+        "navigateFirstPage": 1,
+        "navigateLastPage": 2,
+        "firstPage": 1,
+        "lastPage": 2
+    }
+}
+============================================
+通过id删除逻辑节点
+localhost:8080/instrument/deleteLogicById
+输入：
+{
+    "logic_id": "d1f75619989a49aaaa83c23299380c05"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "删除成功",
+    "value": true
+}
+
+
+
+
+
+
+
+
