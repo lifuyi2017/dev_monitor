@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8082
 
 
 spring:
@@ -14,7 +14,7 @@ spring:
           #基本属性
           url: jdbc:mysql://127.0.0.1:3306/dev_test?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
           username: root
-          password: 123456
+          password: QP3dzr0srIXc3DVE
           #配置初始化大小/最小/最大
           initial-size: 1
           min-idle: 1
