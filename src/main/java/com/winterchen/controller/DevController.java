@@ -3,6 +3,7 @@ package com.winterchen.controller;
 
 import com.winterchen.model.*;
 import com.winterchen.service.user.DevService;
+import com.winterchen.service.user.DevTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,8 @@ public class DevController {
 
     @Autowired
     private DevService devService;
+    @Autowired
+    private DevTypeService devTypeService;
 
     @ResponseBody
     @GetMapping("test")
@@ -175,6 +178,14 @@ public class DevController {
     @ResponseBody
     @PostMapping("/loadDevTypeTemplate")
     public ResultMessage<Boolean> loadDevTypeTemplate(@RequestBody DevInputRequest devInputRequest){
+
+        try {
+            DevTypeElement devTypeElement = new DevTypeElement();
+            devTypeElement.setDev_type_id(devInputRequest.getType_element_id());
+            List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
