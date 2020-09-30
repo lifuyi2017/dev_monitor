@@ -1,16 +1,11 @@
 package com.winterchen.controller;
 
 
-import com.winterchen.model.DevElement;
-import com.winterchen.model.Enterprise;
-import com.winterchen.model.ResultMessage;
+import com.winterchen.model.*;
 import com.winterchen.service.user.DevService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +17,15 @@ public class DevController {
     @Autowired
     private DevService devService;
 
+    @ResponseBody
+    @GetMapping("test")
+    public ResultMessage<Boolean> test() {
+        ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
+        booleanResultMessage.setStatuscode("501");
+        booleanResultMessage.setValue(false);
+        booleanResultMessage.setMesg("服务端错误：");
+        return booleanResultMessage;
+    }
 
     /**
      * 新增设备或组件：type=1是设备，type=2是组件
@@ -142,6 +146,37 @@ public class DevController {
         }
     }
 
+
+    /**
+     * 获取树中的下级列表
+     */
+    @ResponseBody
+    @PostMapping("/getSubElementsByParentId")
+    public ResultMessage<List<DevElement>> getSubElementsByParentId(@RequestBody DevElement devElement) {
+        ResultMessage<List<DevElement>> resultMessage = new ResultMessage<>();
+        try {
+            List<DevElement> devTypeElements = devService.queryByEntity(devElement);
+            resultMessage.setValue(devTypeElements);
+            resultMessage.setMesg("查询成功");
+            resultMessage.setStatuscode("200");
+            return resultMessage;
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMessage.setValue(null);
+            resultMessage.setMesg("服务端错误：" + e.toString());
+            resultMessage.setStatuscode("501");
+            return resultMessage;
+        }
+    }
+
+    /**
+     * 导入模板
+     */
+    @ResponseBody
+    @PostMapping("/loadDevTypeTemplate")
+    public ResultMessage<Boolean> loadDevTypeTemplate(@RequestBody DevInputRequest devInputRequest){
+
+    }
 
 
 }

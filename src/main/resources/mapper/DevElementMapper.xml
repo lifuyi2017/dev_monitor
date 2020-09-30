@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.winterchen.dao.DevElementMapper">
+
+    <select id="queryByEntity" parameterType="com.winterchen.model.DevElement" resultType="com.winterchen.model.DevElement">
+            select * from dev_elements where 1=1
+            <if test="dev_element_id!=null">
+                and dev_element_id=#{dev_element_id}
+            </if>
+            <if test="dev_parent_element_id!=null">
+                and dev_parent_element_id=#{dev_parent_element_id}
+            </if>
+            <if test="dev_element_name!=null">
+                and dev_element_name=#{dev_element_name}
+            </if>
+            <if test="dev_type_id!=null">
+                and dev_type_id=#{dev_type_id}
+            </if>
+            <if test="type!=null">
+                and `type`=#{type}
+            </if>
+            <if test="enterprise_id!=null">
+                and enterprise_id=#{enterprise_id}
+            </if>
+    </select>
+
+    <insert id="insertEntity" parameterType="com.winterchen.model.DevElement">
+        insert into table dev_elements(dev_element_id,dev_parent_element_id,dev_element_name,dev_type_id,`type`,enterprise_id)
+         value (#{dev_element_id},#{dev_parent_element_id},#{dev_element_name},#{dev_type_id},#{type},#{enterprise_id})
+    </insert>
+
+    <update id="editDevOrDevElementById">
+        update dev_elements set dev_parent_element_id=#{dev_parent_element_id},dev_element_name=#{dev_element_name},
+        dev_type_id=#{dev_type_id},`type`=#{type},enterprise_id=#{enterprise_id} where dev_element_id=#{dev_element_id}
+    </update>
+
+    <delete id="deleteByElementId">
+        delete from dev_elements where dev_element_id=#{dev_element_id}
+    </delete>
+
+    <delete id="deleteByParentId">
+        delete from dev_elements where dev_parent_element_id=#{dev_element_id}
+    </delete>
+
+</mapper>
