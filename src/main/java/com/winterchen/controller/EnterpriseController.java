@@ -14,6 +14,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/enterprise")
+@CrossOrigin
 public class EnterpriseController {
 
     @Autowired

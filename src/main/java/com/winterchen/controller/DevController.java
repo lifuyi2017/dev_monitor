@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/dev")
+@CrossOrigin
 public class DevController {
 
     @Autowired
@@ -175,22 +176,22 @@ public class DevController {
     /**
      * 导入模板
      */
-    @ResponseBody
-    @PostMapping("/loadDevTypeTemplate")
-    public ResultMessage<Boolean> loadDevTypeTemplate(@RequestBody DevInputRequest devInputRequest){
-
-        try {
-            DevTypeElement devTypeElement = new DevTypeElement();
-            devTypeElement.setDev_type_id(devInputRequest.getType_element_id());
-            List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
-            for(){
-
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
+//    @ResponseBody
+//    @PostMapping("/loadDevTypeTemplate")
+//    public ResultMessage<Boolean> loadDevTypeTemplate(@RequestBody DevInputRequest devInputRequest){
+//
+//        try {
+//            DevTypeElement devTypeElement = new DevTypeElement();
+//            devTypeElement.setDev_type_id(devInputRequest.getType_element_id());
+//            List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
+//            for(){
+//
+//            }
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//    }
 
 
 }
