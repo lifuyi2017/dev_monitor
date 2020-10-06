@@ -183,6 +183,9 @@ public class DevController {
             DevTypeElement devTypeElement = new DevTypeElement();
             devTypeElement.setDev_type_id(devInputRequest.getType_element_id());
             List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
+            for(){
+
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
