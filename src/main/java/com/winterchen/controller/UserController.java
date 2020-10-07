@@ -3,6 +3,7 @@ package com.winterchen.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.winterchen.model.*;
+import com.winterchen.service.user.EnterpriseService;
 import com.winterchen.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private EnterpriseService enterpriseService;
 
 /*    @ResponseBody
     @PostMapping("/add")
@@ -81,8 +84,27 @@ public class UserController {
     public ResultMessage<PageInfo<User>> queryUser(@RequestBody UserRequest userRequest) {
         ResultMessage<PageInfo<User>> listResultMessage = new ResultMessage<>();
         try {
-            PageInfo<User> usersByUser = userService.getUsersByUser(userRequest);
-            listResultMessage.setValue(usersByUser);
+            PageInfo result;
+            if(userRequest.getPageNum()!=null && userRequest.getPageSize()!=null){
+                PageHelper.startPage(userRequest.getPageNum(), userRequest.getPageSize());
+                List<User> usersByUser = userService.getUsersByUser(userRequest);
+                for(User user:usersByUser){
+                    Enterprise enterprise = new Enterprise();
+                    enterprise.setEnterprise_id(user.getEnterprise_id());
+                    user.setEnterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
+                }
+                result = new PageInfo(usersByUser);
+            }else {
+                result=new PageInfo();
+                List<User> usersByUser = userService.getUsersByUser(userRequest);
+                for(User user:usersByUser){
+                    Enterprise enterprise = new Enterprise();
+                    enterprise.setEnterprise_id(user.getEnterprise_id());
+                    user.setEnterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
+                }
+                result.setList(usersByUser);
+            }
+            listResultMessage.setValue(result);
             listResultMessage.setStatuscode("200");
             listResultMessage.setMesg("查询成功");
             return listResultMessage;

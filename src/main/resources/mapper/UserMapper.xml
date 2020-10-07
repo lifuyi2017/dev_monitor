@@ -34,8 +34,8 @@
   </select>
 
   <insert id="addUser" parameterType="com.winterchen.model.User">
-        insert into user(user_name,user_password,user_real_name,user_phone,user_status,enterprise_id)
-        value(#{user_name},#{user_password},#{user_real_name},#{user_phone},#{user_status},#{enterprise_id})
+        insert into user(user_name,user_password,user_real_name,user_phone,user_status,enterprise_id,update_time)
+        value(#{user_name},#{user_password},#{user_real_name},#{user_phone},#{user_status},#{enterprise_id},now())
   </insert>
 
   <select id="getUsersByUser" parameterType="com.winterchen.model.User" resultType="com.winterchen.model.User">
@@ -55,6 +55,7 @@
         <if test="enterprise_id!=null">
           and enterprise_id=#{enterprise_id}
         </if>
+         order by update_time desc
   </select>
 
   <update id="updateById" parameterType="com.winterchen.model.User">

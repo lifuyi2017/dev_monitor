@@ -44,11 +44,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo<User> getUsersByUser(UserRequest userRequest) throws Exception{
-        PageHelper.startPage(userRequest.getPageNum(), userRequest.getPageSize());
+    public List<User> getUsersByUser(UserRequest userRequest) throws Exception{
+
         List<User> userList=userDao.getUsersByUser(userRequest.getUser());
-        PageInfo result = new PageInfo(userList);
-        return result;
+
+        return userList;
     }
 
     @Override

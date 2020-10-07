@@ -1,6 +1,7 @@
 package com.winterchen.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class User implements Serializable {
     private static final long serialVersionUID = 6414098616140717985L;
@@ -12,11 +13,13 @@ public class User implements Serializable {
     private String user_phone;
     private String user_status;
     private String enterprise_id;
+    private String enterprise_name;
+    private Date update_time;
 
     public User() {
     }
 
-    public User(Integer user_id, String user_name, String user_password, String user_real_name, String user_phone, String user_status, String enterprise_id) {
+    public User(Integer user_id, String user_name, String user_password, String user_real_name, String user_phone, String user_status, String enterprise_id, Date update_time) {
         this.user_id = user_id;
         this.user_name = user_name;
         this.user_password = user_password;
@@ -24,10 +27,15 @@ public class User implements Serializable {
         this.user_phone = user_phone;
         this.user_status = user_status;
         this.enterprise_id = enterprise_id;
+        this.update_time = update_time;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public String getEnterprise_name() {
+        return enterprise_name;
+    }
+
+    public void setEnterprise_name(String enterprise_name) {
+        this.enterprise_name = enterprise_name;
     }
 
     public Integer getUser_id() {
@@ -84,5 +92,13 @@ public class User implements Serializable {
 
     public void setEnterprise_id(String enterprise_id) {
         this.enterprise_id = enterprise_id;
+    }
+
+    public Date getUpdate_time() {
+        return update_time;
+    }
+
+    public void setUpdate_time(Date update_time) {
+        this.update_time = update_time;
     }
 }

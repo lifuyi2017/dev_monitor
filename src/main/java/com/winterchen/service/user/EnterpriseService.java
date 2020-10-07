@@ -7,7 +7,7 @@ import com.winterchen.model.EnterpriseRequest;
 import java.util.List;
 
 public interface EnterpriseService {
-    PageInfo<Enterprise> getEnterByEntity(EnterpriseRequest enterpriseRequest) throws Exception;
+    List<Enterprise> getEnterByEntity(Enterprise enterpriseRequest) throws Exception;
 
     void updateById(Enterprise enterprise) throws Exception;
 

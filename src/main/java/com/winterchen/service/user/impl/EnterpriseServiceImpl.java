@@ -20,11 +20,11 @@ public class EnterpriseServiceImpl  implements EnterpriseService {
 
 
     @Override
-    public PageInfo<Enterprise> getEnterByEntity(EnterpriseRequest enterpriseRequest) throws Exception{
-        PageHelper.startPage(enterpriseRequest.getPageNum(), enterpriseRequest.getPageSize());
-        List<Enterprise> enterByEntity = enterpriseMapper.getEnterByEntity(enterpriseRequest.getEnterprise());
-        PageInfo result = new PageInfo(enterByEntity);
-        return  result;
+    public List<Enterprise> getEnterByEntity(Enterprise enterprise) throws Exception{
+
+        List<Enterprise> enterByEntity = enterpriseMapper.getEnterByEntity(enterprise);
+
+        return  enterByEntity;
     }
 
     @Override

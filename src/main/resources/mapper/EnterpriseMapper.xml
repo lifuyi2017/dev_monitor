@@ -13,15 +13,19 @@
         <if test="enterprise_type!=null">
             and enterprise_type=#{enterprise_type}
         </if>
+        <if test="enterprise_code!=null">
+            and enterprise_code=#{enterprise_code}
+        </if>
     </select>
 
     <insert id="add" parameterType="com.winterchen.model.Enterprise">
-        insert  into enterprise(enterprise_id,enterprise_name,enterprise_type)
-        value(#{enterprise_id},#{enterprise_name},#{enterprise_type})
+        insert  into enterprise(enterprise_id,enterprise_name,enterprise_type,enterprise_code)
+        value(#{enterprise_id},#{enterprise_name},#{enterprise_type},#{enterprise_code})
     </insert>
 
     <update id="updateById" parameterType="com.winterchen.model.Enterprise">
-        update enterprise set enterprise_name=#{enterprise_name},enterprise_type=#{enterprise_type} where enterprise_id=#{enterprise_id}
+        update enterprise set enterprise_name=#{enterprise_name},enterprise_type=#{enterprise_type},
+        enterprise_code=#{enterprise_code}  where enterprise_id=#{enterprise_id}
     </update>
 
     <delete id="deleteById">
