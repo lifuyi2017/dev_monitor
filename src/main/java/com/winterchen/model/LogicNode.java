@@ -11,6 +11,16 @@ public class LogicNode implements Serializable {
     private String logic_name;
     private String enterprise_id;
 
+    private String enterprise_name;
+
+    public String getEnterprise_name() {
+        return enterprise_name;
+    }
+
+    public void setEnterprise_name(String enterprise_name) {
+        this.enterprise_name = enterprise_name;
+    }
+
     private List<LogicRelation> logicRelationList;
 
     public LogicNode() {

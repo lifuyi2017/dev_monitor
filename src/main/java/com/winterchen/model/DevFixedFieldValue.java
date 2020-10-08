@@ -10,6 +10,9 @@ public class DevFixedFieldValue implements Serializable {
     private String dev_type_service_enterprise_id;
     private String dev_type_production_enterprise_id;
 
+    private String dev_type_operate_enterprise_name;
+    private String dev_type_service_enterprise_name;
+    private String dev_type_production_enterprise_name;
 
     private String dev_element_id;
     private String dev_type;
@@ -17,6 +20,7 @@ public class DevFixedFieldValue implements Serializable {
     private String dev_type_name;
     private Integer dev_type_charge_user_id;
 
+    private String dev_type_charge_user_name;
 
     private byte[] dev_type_pic;
     private String dev_type_pic_str;
@@ -48,6 +52,38 @@ public class DevFixedFieldValue implements Serializable {
         this.dev_type_name = dev_type_name;
         this.dev_type_charge_user_id = dev_type_charge_user_id;
         this.dev_type_pic = dev_type_pic;
+    }
+
+    public String getDev_type_operate_enterprise_name() {
+        return dev_type_operate_enterprise_name;
+    }
+
+    public void setDev_type_operate_enterprise_name(String dev_type_operate_enterprise_name) {
+        this.dev_type_operate_enterprise_name = dev_type_operate_enterprise_name;
+    }
+
+    public String getDev_type_service_enterprise_name() {
+        return dev_type_service_enterprise_name;
+    }
+
+    public void setDev_type_service_enterprise_name(String dev_type_service_enterprise_name) {
+        this.dev_type_service_enterprise_name = dev_type_service_enterprise_name;
+    }
+
+    public String getDev_type_production_enterprise_name() {
+        return dev_type_production_enterprise_name;
+    }
+
+    public void setDev_type_production_enterprise_name(String dev_type_production_enterprise_name) {
+        this.dev_type_production_enterprise_name = dev_type_production_enterprise_name;
+    }
+
+    public String getDev_type_charge_user_name() {
+        return dev_type_charge_user_name;
+    }
+
+    public void setDev_type_charge_user_name(String dev_type_charge_user_name) {
+        this.dev_type_charge_user_name = dev_type_charge_user_name;
     }
 
     public String getDev_type_field_value_id() {

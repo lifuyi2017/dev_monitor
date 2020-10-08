@@ -27,6 +27,10 @@ public class DevTypeController {
     private DevCustomFieldService devCustomFieldService;
     @Autowired
     private DevTypeService devTypeService;
+    @Autowired
+    private EnterpriseService enterpriseService;
+    @Autowired
+    private UserService userService;
 
     /**
      * 新增设备或组件：type=1是设备，type=2是组件
@@ -289,28 +293,16 @@ public class DevTypeController {
 //        ResultMessage<List<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
         ResultMessage<PageInfo<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
         try {
-            ArrayList<DevFieldValueRequest> devFieldValueRequestArrayList = new ArrayList<>();
-            //设置类型
-            DevTypeElement devTypeElement = new DevTypeElement();
-            devTypeElement.setDev_element_id(devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
-            List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
-            devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().setDev_element_id(devTypeElements.get(0).getDev_type_id());
-            //查询固定字段
-            List<DevFixedFieldValue> devFixedFieldValueList = devFixedFieldValueService.getValueListByElementId(
-                    devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
-            //查询用户自定义字段
-            Map<String, Map<String, String>> customValueMap = devCustomFieldValueService.getValueListByElementId(
-                    devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
-            //进行合并
-            for (DevFixedFieldValue devFixedFieldValue : devFixedFieldValueList) {
-                DevFieldValueRequest request = new DevFieldValueRequest();
-                request.setDevFixedFieldValue(devFixedFieldValue);
-                request.setCustomFieldValue(customValueMap.get(devFixedFieldValue.getDev_type_field_value_id()));
-                devFieldValueRequestArrayList.add(request);
+            PageInfo result;
+            if(devFieldValueRequestPage.getPageNum()!=null && devFieldValueRequestPage.getPageSize()!=null){
+                PageHelper.startPage(devFieldValueRequestPage.getPageNum(), devFieldValueRequestPage.getPageSize());
+                ArrayList<DevFieldValueRequest> devFieldValueRequestArrayList = getElementList(devFieldValueRequestPage);
+                result = new PageInfo(devFieldValueRequestArrayList);
+            }else {
+                result=new PageInfo();
+                ArrayList<DevFieldValueRequest> devFieldValueRequestArrayList = getElementList(devFieldValueRequestPage);
+                result.setList(devFieldValueRequestArrayList);
             }
-
-            PageHelper.startPage(devFieldValueRequestPage.getPageNum(), devFieldValueRequestPage.getPageSize());
-            PageInfo result = new PageInfo(devFieldValueRequestArrayList);
 //            resultMessage.setValue(devFieldValueRequestArrayList);
             resultMessage.setValue(result);
             resultMessage.setMesg("查询成功");
@@ -323,6 +315,40 @@ public class DevTypeController {
             resultMessage.setStatuscode("501");
             return resultMessage;
         }
+    }
+
+    private ArrayList<DevFieldValueRequest> getElementList(DevFieldValueRequestPage devFieldValueRequestPage) throws Exception {
+        ArrayList<DevFieldValueRequest> devFieldValueRequestArrayList = new ArrayList<>();
+        //设置类型
+        DevTypeElement devTypeElement = new DevTypeElement();
+        devTypeElement.setDev_element_id(devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
+        List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
+        devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().setDev_element_id(devTypeElements.get(0).getDev_type_id());
+        //查询固定字段
+        List<DevFixedFieldValue> devFixedFieldValueList = devFixedFieldValueService.getValueListByElementId(
+                devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
+        //查询用户自定义字段
+        Map<String, Map<String, String>> customValueMap = devCustomFieldValueService.getValueListByElementId(
+                devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
+        //进行合并
+        for (DevFixedFieldValue devFixedFieldValue : devFixedFieldValueList) {
+            //补全名称
+            Enterprise enterprise = new Enterprise();
+            enterprise.setEnterprise_id(devFixedFieldValue.getDev_type_operate_enterprise_id());
+            devFixedFieldValue.setDev_type_operate_enterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
+            enterprise.setEnterprise_id(devFixedFieldValue.getDev_type_production_enterprise_id());
+            devFixedFieldValue.setDev_type_production_enterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
+            enterprise.setEnterprise_id(devFixedFieldValue.getDev_type_service_enterprise_id());
+            devFixedFieldValue.setDev_type_service_enterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
+            User user = new User();
+            user.setUser_id(devFixedFieldValue.getDev_type_charge_user_id());
+            devFixedFieldValue.setDev_type_charge_user_name(userService.getUsersByUser(user).get(0).getUser_name());
+            DevFieldValueRequest request = new DevFieldValueRequest();
+            request.setDevFixedFieldValue(devFixedFieldValue);
+            request.setCustomFieldValue(customValueMap.get(devFixedFieldValue.getDev_type_field_value_id()));
+            devFieldValueRequestArrayList.add(request);
+        }
+        return devFieldValueRequestArrayList;
     }
 
 

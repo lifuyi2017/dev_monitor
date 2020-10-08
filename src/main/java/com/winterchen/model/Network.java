@@ -14,6 +14,8 @@ public class Network implements Serializable {
     private String output_agreement;
     private String enterprise_id;
 
+    private String enterprise_name;
+
     public Network() {
     }
 
@@ -26,6 +28,14 @@ public class Network implements Serializable {
         this.input_address = input_address;
         this.output_agreement = output_agreement;
         this.enterprise_id = enterprise_id;
+    }
+
+    public String getEnterprise_name() {
+        return enterprise_name;
+    }
+
+    public void setEnterprise_name(String enterprise_name) {
+        this.enterprise_name = enterprise_name;
     }
 
     public String getNetwork_id() {

@@ -14,6 +14,25 @@ public class Measure implements Serializable {
     private String network_id;
     private String enterprise_id;
 
+    private String network_name;
+    private String enterprise_name;
+
+    public String getNetwork_name() {
+        return network_name;
+    }
+
+    public void setNetwork_name(String network_name) {
+        this.network_name = network_name;
+    }
+
+    public String getEnterprise_name() {
+        return enterprise_name;
+    }
+
+    public void setEnterprise_name(String enterprise_name) {
+        this.enterprise_name = enterprise_name;
+    }
+
     public Measure() {
     }
 

@@ -87,7 +87,7 @@ public class UserController {
             PageInfo result;
             if(userRequest.getPageNum()!=null && userRequest.getPageSize()!=null){
                 PageHelper.startPage(userRequest.getPageNum(), userRequest.getPageSize());
-                List<User> usersByUser = userService.getUsersByUser(userRequest);
+                List<User> usersByUser = userService.getUsersByUser(userRequest.getUser());
                 for(User user:usersByUser){
                     Enterprise enterprise = new Enterprise();
                     enterprise.setEnterprise_id(user.getEnterprise_id());
@@ -96,7 +96,7 @@ public class UserController {
                 result = new PageInfo(usersByUser);
             }else {
                 result=new PageInfo();
-                List<User> usersByUser = userService.getUsersByUser(userRequest);
+                List<User> usersByUser = userService.getUsersByUser(userRequest.getUser());
                 for(User user:usersByUser){
                     Enterprise enterprise = new Enterprise();
                     enterprise.setEnterprise_id(user.getEnterprise_id());

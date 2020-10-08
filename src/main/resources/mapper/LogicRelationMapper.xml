@@ -9,20 +9,27 @@
 
     <insert id="insert" parameterType="com.winterchen.model.LogicRelation">
         insert  into logic_relation(logic_id,measure_id,channel_id) value (
-        #{logic_id},#{measure_id},#{channel_id}
+        #{logic_id},#{measure_id},#{id}
         )
     </insert>
 
     <select id="queryForEntity" parameterType="com.winterchen.model.LogicRelation" resultType="com.winterchen.model.LogicRelation">
-        select * from logic_relation where 1=1 
+        select logic_id,measure_id from logic_relation where 1=1
         <if test="logic_id!=null">
             and logic_id=#{logic_id}
         </if>
         <if test="measure_id!=null">
             and measure_id=#{measure_id}
         </if>
-        <if test="channel_id!=null">
-            and channel_id=#{channel_id}
+    </select>
+
+    <select id="getChannelIdByEntity"  parameterType="com.winterchen.model.LogicRelation" >
+        select channel_id from logic_relation where 1=1
+        <if test="logic_id!=null">
+            and logic_id=#{logic_id}
+        </if>
+        <if test="measure_id!=null">
+            and measure_id=#{measure_id}
         </if>
     </select>
 

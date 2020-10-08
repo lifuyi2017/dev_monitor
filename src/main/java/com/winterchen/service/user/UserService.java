@@ -18,7 +18,7 @@ public interface UserService {
 
     void addUser(User user) throws Exception;
 
-    List<User> getUsersByUser(UserRequest userRequest) throws Exception;
+    List<User> getUsersByUser(User userRequest) throws Exception;
 
     void updateById(User user) throws Exception;
 

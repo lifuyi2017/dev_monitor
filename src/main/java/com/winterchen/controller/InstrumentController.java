@@ -26,6 +26,8 @@ public class InstrumentController {
     private ChannelService channelService;
     @Autowired
     private LogicService logicService;
+    @Autowired
+    private EnterpriseService enterpriseService;
 
     /**
      * 新增或者更新网关
@@ -66,9 +68,16 @@ public class InstrumentController {
     public ResultMessage<PageInfo<Network>> queryNetWork(@RequestBody NetworkRequest networkRequest) {
         ResultMessage<PageInfo<Network>> networkPage = new ResultMessage<>();
         try {
-            PageHelper.startPage(networkRequest.getPageNum(), networkRequest.getPageSize());
-            List<Network> networkList = networkService.queryByEntity(networkRequest.getNetwork());
-            PageInfo<Network> result = new PageInfo(networkList);
+            PageInfo result;
+            if(networkRequest.getPageNum()!=null && networkRequest.getPageSize()!=null){
+                PageHelper.startPage(networkRequest.getPageNum(), networkRequest.getPageSize());
+                List<Network> networkList=getNetworkList(networkRequest.getNetwork());
+                result = new PageInfo(networkList);
+            }else {
+                result= new PageInfo();
+                List<Network> networkList=getNetworkList(networkRequest.getNetwork());
+                result.setList(networkList);
+            }
             networkPage.setValue(result);
             networkPage.setStatuscode("200");
             networkPage.setMesg("查询成功");
@@ -79,6 +88,16 @@ public class InstrumentController {
             networkPage.setMesg("服务端错误：" + e.toString());
         }
         return networkPage;
+    }
+
+    private List<Network> getNetworkList(Network network) throws Exception {
+        List<Network> networkList = networkService.queryByEntity(network);
+        for(Network network1:networkList){
+            Enterprise enterprise = new Enterprise();
+            enterprise.setEnterprise_id(network1.getEnterprise_id());
+            network1.setEnterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
+        }
+        return networkList;
     }
 
     /**
@@ -141,9 +160,16 @@ public class InstrumentController {
     public ResultMessage<PageInfo<Measure>> queryMeasure(@RequestBody MeasureRequest measureRequest){
         ResultMessage<PageInfo<Measure>> networkPage = new ResultMessage<>();
         try {
-            PageHelper.startPage(measureRequest.getPageNum(), measureRequest.getPageSize());
-            List<Measure> measureList = measureService.queryByEntity(measureRequest.getMeasure());
-            PageInfo<Measure> result = new PageInfo(measureList);
+            PageInfo result;
+            if(measureRequest.getPageNum()!=null && measureRequest.getPageSize()!=null){
+                PageHelper.startPage(measureRequest.getPageNum(), measureRequest.getPageSize());
+                List<Measure> measureList = getMeasureList(measureRequest.getMeasure());
+                result = new PageInfo(measureList);
+            }else {
+                result = new PageInfo();
+                List<Measure> measureList = getMeasureList(measureRequest.getMeasure());
+                result.setList(measureList);
+            }
             networkPage.setValue(result);
             networkPage.setStatuscode("200");
             networkPage.setMesg("查询成功");
@@ -154,6 +180,19 @@ public class InstrumentController {
             networkPage.setMesg("服务端错误：" + e.toString());
         }
         return networkPage;
+    }
+
+    private List<Measure> getMeasureList(Measure measure) throws Exception {
+        List<Measure> measureList = measureService.queryByEntity(measure);
+        for(Measure measure1:measureList){
+            Network network = new Network();
+            network.setNetwork_id(measure1.getNetwork_id());
+            measure1.setNetwork_name(networkService.queryByEntity(network).get(0).getNetwork_name());
+            Enterprise enterprise = new Enterprise();
+            enterprise.setEnterprise_id(measure1.getEnterprise_id());
+            measure1.setEnterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
+        }
+        return measureList;
     }
 
     /**
@@ -217,9 +256,16 @@ public class InstrumentController {
     public ResultMessage<PageInfo<Channel>> queryChannel(@RequestBody ChannelRequest channelRequest){
         ResultMessage<PageInfo<Channel>> channelPage = new ResultMessage<>();
         try {
-            PageHelper.startPage(channelRequest.getPageNum(), channelRequest.getPageSize());
-            List<Channel> channelList = channelService.queryByEntity(channelRequest.getChannel());
-            PageInfo<Channel> result = new PageInfo(channelList);
+            PageInfo result;
+            if(channelRequest.getPageNum()!=null && channelRequest.getPageSize()!=null){
+                PageHelper.startPage(channelRequest.getPageNum(), channelRequest.getPageSize());
+                List<Channel> channelList = getChannelList(channelRequest.getChannel());
+                result = new PageInfo(channelList);
+            }else {
+                result= new PageInfo();
+                List<Channel> channelList = getChannelList(channelRequest.getChannel());
+                result.setList(channelList);
+            }
             channelPage.setValue(result);
             channelPage.setStatuscode("200");
             channelPage.setMesg("查询成功");
@@ -230,6 +276,19 @@ public class InstrumentController {
             channelPage.setMesg("服务端错误：" + e.toString());
         }
         return channelPage;
+    }
+
+    private List<Channel> getChannelList(Channel channel) throws Exception {
+        List<Channel> channelList = channelService.queryByEntity(channel);
+        for(Channel ch:channelList){
+            Enterprise enterprise = new Enterprise();
+            enterprise.setEnterprise_id(ch.getEnterprise_id());
+            ch.setEnterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
+            Measure measure = new Measure();
+            measure.setMeasure_id(ch.getMeasure_id());
+            ch.setMeasure_name(measureService.queryByEntity(measure).get(0).getMeasure_name());
+        }
+        return channelList;
     }
 
     /**
@@ -292,9 +351,16 @@ public class InstrumentController {
     public ResultMessage<PageInfo<LogicNode>> queryLogic(@RequestBody LogicNodeRequest logicNodeRequest){
         ResultMessage<PageInfo<LogicNode>> logicPage = new ResultMessage<>();
         try {
-            PageHelper.startPage(logicNodeRequest.getPageNum(), logicNodeRequest.getPageSize());
-            List<LogicNode> channelList = logicService.queryByEntity(logicNodeRequest.getLogicNode());
-            PageInfo<LogicNode> result = new PageInfo(channelList);
+            PageInfo result;
+            if(logicNodeRequest.getPageNum()!=null && logicNodeRequest.getPageSize()!=null){
+                PageHelper.startPage(logicNodeRequest.getPageNum(), logicNodeRequest.getPageSize());
+                List<LogicNode> logicNodeList = logicService.queryByEntity(logicNodeRequest.getLogicNode());
+                result = new PageInfo(logicNodeList);
+            }else {
+                result =new PageInfo();
+                List<LogicNode> logicNodeList = logicService.queryByEntity(logicNodeRequest.getLogicNode());
+                result.setList(logicNodeList);
+            }
             logicPage.setValue(result);
             logicPage.setStatuscode("200");
             logicPage.setMesg("查询成功");

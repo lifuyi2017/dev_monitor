@@ -17,6 +17,10 @@ public class Channel implements Serializable {
     private String measure_id;
     private String enterprise_id;
 
+
+    private String measure_name;
+    private String enterprise_name;
+
     public Channel() {
     }
 
@@ -32,6 +36,22 @@ public class Channel implements Serializable {
         this.pin_num = pin_num;
         this.measure_id = measure_id;
         this.enterprise_id = enterprise_id;
+    }
+
+    public String getMeasure_name() {
+        return measure_name;
+    }
+
+    public void setMeasure_name(String measure_name) {
+        this.measure_name = measure_name;
+    }
+
+    public String getEnterprise_name() {
+        return enterprise_name;
+    }
+
+    public void setEnterprise_name(String enterprise_name) {
+        this.enterprise_name = enterprise_name;
     }
 
     public String getChannel_id() {

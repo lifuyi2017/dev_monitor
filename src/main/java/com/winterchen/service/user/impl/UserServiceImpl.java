@@ -44,9 +44,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersByUser(UserRequest userRequest) throws Exception{
+    public List<User> getUsersByUser(User userRequest) throws Exception{
 
-        List<User> userList=userDao.getUsersByUser(userRequest.getUser());
+        List<User> userList=userDao.getUsersByUser(userRequest);
 
         return userList;
     }
