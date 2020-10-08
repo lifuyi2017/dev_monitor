@@ -23,7 +23,7 @@
         </if>
     </select>
 
-    <select id="getChannelIdByEntity"  parameterType="com.winterchen.model.LogicRelation" >
+    <select id="getChannelIdByEntity"  parameterType="com.winterchen.model.LogicRelation"  resultType="java.lang.String">
         select channel_id from logic_relation where 1=1
         <if test="logic_id!=null">
             and logic_id=#{logic_id}
@@ -35,6 +35,14 @@
 
     <delete id="deleteById">
         delete from logic_relation where logic_id=#{logic_id}
+    </delete>
+
+    <delete id="deleteByMeasureId">
+        delete from logic_relation where measure_id=#{measure_id}
+    </delete>
+
+    <delete id="deleteByChannelId">
+        delete from logic_relation where channel_id=#{channel_id}
     </delete>
 
 </mapper>

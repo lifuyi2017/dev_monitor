@@ -1,6 +1,7 @@
 package com.winterchen.service.user.impl;
 
 import com.winterchen.dao.ChannelMapper;
+import com.winterchen.dao.LogicRelationMapper;
 import com.winterchen.model.Channel;
 import com.winterchen.service.user.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ public class ChannelServiceImpl implements ChannelService {
 
     @Autowired
     private ChannelMapper channelMapper;
+    @Autowired
+    private LogicRelationMapper logicRelationMapper;
 
     @Override
     public void updateById(Channel channel) throws Exception {
@@ -32,5 +35,6 @@ public class ChannelServiceImpl implements ChannelService {
     @Override
     public void deleteNetWorkById(String channel_id) throws Exception{
         channelMapper.deleteById(channel_id);
+        logicRelationMapper.deleteByChannelId(channel_id);
     }
 }

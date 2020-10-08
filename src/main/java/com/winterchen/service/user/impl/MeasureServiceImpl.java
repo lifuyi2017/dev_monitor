@@ -1,5 +1,6 @@
 package com.winterchen.service.user.impl;
 
+import com.winterchen.dao.LogicRelationMapper;
 import com.winterchen.dao.MeasureMapper;
 import com.winterchen.model.Measure;
 import com.winterchen.service.user.MeasureService;
@@ -13,6 +14,8 @@ public class MeasureServiceImpl implements MeasureService {
 
     @Autowired
     private MeasureMapper measureMapper;
+    @Autowired
+    private LogicRelationMapper logicRelationMapper;
 
     @Override
     public void updateById(Measure measure) throws Exception {
@@ -32,5 +35,6 @@ public class MeasureServiceImpl implements MeasureService {
     @Override
     public void deleteNetWorkById(String measure_id) {
         measureMapper.deleteNetWorkById(measure_id);
+        logicRelationMapper.deleteByMeasureId(measure_id);
     }
 }

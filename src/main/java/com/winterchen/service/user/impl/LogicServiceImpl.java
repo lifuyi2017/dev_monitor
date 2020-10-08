@@ -62,12 +62,18 @@ public class LogicServiceImpl implements LogicService {
                 for(String id:ids){
                     Channel channel = new Channel();
                     channel.setChannel_id(id);
-                    channelNameList.add(channelMapper.queryByEntity(channel).get(0).getChannel_name());
+                    List<Channel> channelList = channelMapper.queryByEntity(channel);
+                    if(channelList.size()>0){
+                        channelNameList.add(channelList.get(0).getChannel_name());
+                    }
                 }
                 relation.setChannel_name_list(channelNameList);
                 Measure measure = new Measure();
                 measure.setMeasure_id(relation.getMeasure_id());
-                relation.setMeasure_name(measureMapper.queryByEntity(measure).get(0).getMeasure_name());
+                List<Measure> measureList = measureMapper.queryByEntity(measure);
+                if(measureList.size()>0){
+                    relation.setMeasure_name(measureList.get(0).getMeasure_name());
+                }
             }
             logic.setLogicRelationList(logicRelationList);
         }

@@ -14,4 +14,8 @@ public interface LogicRelationMapper {
     void deleteById(String logic_id);
 
     List<String> getChannelIdByEntity(LogicRelation relation);
+
+    void deleteByMeasureId(String measure_id);
+
+    void deleteByChannelId(String channel_id);
 }
