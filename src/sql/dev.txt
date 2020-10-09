@@ -1,0 +1,118 @@
+添加
+localhost:8082/dev/addDevOrDevElement
+输入：type：1是组件，2是设备类型；dev_element_name名称；dev_parent_element_id父节点id
+{
+    "dev_element_name":"设备0001",
+    "type":"1",
+    "enterprise_id":"5fb11e08add4497f842cd11ca7f53e4d"
+}
+{
+    "dev_element_name":"设备0001一级组件1",
+    "dev_parent_element_id":"602e7b8179284ab4ba6fc10e6a0588e6",
+    "type":"2",
+    "enterprise_id":"5fb11e08add4497f842cd11ca7f53e4d"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "添加成功",
+    "value": true
+}
+===================================================================
+重命名
+localhost:8082/dev/editDevOrDevElement
+输入：
+{
+    "dev_element_name":"设备0001一级组件1号",
+    "dev_element_id":"fb1ea5a792f14db78311895fe0eee1e0"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "修改成功",
+    "value": true
+}
+===========================================================
+删除组件或设备：type=1是设备，type=2是组件
+localhost:8082/dev/deleteDevType
+输入：
+{
+    "dev_element_id": "03e9ab6b87f24372987600d427f9917c",
+    "type": "1"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "删除成功",
+    "value": true
+}
+================================================================
+获取树中某一企业的设备
+localhost:8082/dev/getTopElementsByEnterpriseId
+输入
+{
+    "enterprise_id":"5fb11e08add4497f842cd11ca7f53e4d"
+}
+输出
+{
+    "statuscode": "200",
+    "mesg": "查询成功",
+    "value": [
+        {
+            "dev_element_id": "602e7b8179284ab4ba6fc10e6a0588e6",
+            "dev_parent_element_id": null,
+            "dev_element_name": "设备0001",
+            "dev_type_id": "602e7b8179284ab4ba6fc10e6a0588e6",
+            "type": "1",
+            "enterprise_id": "5fb11e08add4497f842cd11ca7f53e4d"
+        }
+    ]
+}
+======================================================
+获取树中的下级列表，组件
+localhost:8082/dev/getSubElementsByParentId
+输入：
+{
+    "dev_parent_element_id":"602e7b8179284ab4ba6fc10e6a0588e6"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "查询成功",
+    "value": [
+        {
+            "dev_element_id": "33c5c43b3c504f079bd5855a71d38e51",
+            "dev_parent_element_id": "602e7b8179284ab4ba6fc10e6a0588e6",
+            "dev_element_name": "设备0001一级组件2",
+            "dev_type_id": "602e7b8179284ab4ba6fc10e6a0588e6",
+            "type": "2",
+            "enterprise_id": "5fb11e08add4497f842cd11ca7f53e4d"
+        },
+        {
+            "dev_element_id": "fb1ea5a792f14db78311895fe0eee1e0",
+            "dev_parent_element_id": "602e7b8179284ab4ba6fc10e6a0588e6",
+            "dev_element_name": "设备0001一级组件1号",
+            "dev_type_id": "602e7b8179284ab4ba6fc10e6a0588e6",
+            "type": "2",
+            "enterprise_id": "5fb11e08add4497f842cd11ca7f53e4d"
+        }
+    ]
+}
+========================================================
+导入模板
+localhost:8082/dev/loadDevTypeTemplate
+输入：type_element_id为要导入的设备类型的id
+{
+    "dev_element_name":"设备0003",
+    "type_element_id":"09c6feecc1594eb99265d244fba2b888",
+    "enterprise_id":"5fb11e08add4497f842cd11ca7f53e4d"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "导入成功",
+    "value": true
+}
+
+
+

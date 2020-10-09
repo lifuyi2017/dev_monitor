@@ -21,6 +21,32 @@ public class LogicRelation implements Serializable {
         this.measure_name = measure_name;
     }
 
+    @Override
+    public int hashCode() {
+        return logic_id.hashCode()+measure_id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj){
+            return true;//地址相等
+        }
+
+        if(obj == null){
+            return false;//非空性：对于任意非空引用x，x.equals(null)应该返回false。
+        }
+
+        if(obj instanceof LogicRelation){
+            LogicRelation logicRelation = (LogicRelation) obj;
+            //需要比较的字段相等，则这两个对象相等
+            if(this.getLogic_id().equals(logicRelation.getLogic_id())
+                    && this.getMeasure_id().equals(logicRelation.getMeasure_id())){
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public LogicRelation() {
     }

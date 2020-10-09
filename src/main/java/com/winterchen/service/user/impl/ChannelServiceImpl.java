@@ -1,11 +1,14 @@
 package com.winterchen.service.user.impl;
 
 import com.winterchen.dao.ChannelMapper;
+import com.winterchen.dao.CollectionManagerMapper;
 import com.winterchen.model.Channel;
+import com.winterchen.model.CollectionManager;
 import com.winterchen.service.user.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service("channelService")
@@ -13,6 +16,8 @@ public class ChannelServiceImpl implements ChannelService {
 
     @Autowired
     private ChannelMapper channelMapper;
+    @Resource
+    private CollectionManagerMapper collectionManagerMapper;
 
     @Override
     public void updateById(Channel channel) throws Exception {
@@ -32,5 +37,6 @@ public class ChannelServiceImpl implements ChannelService {
     @Override
     public void deleteNetWorkById(String channel_id) throws Exception{
         channelMapper.deleteById(channel_id);
+        collectionManagerMapper.deleteByChannelId(channel_id);
     }
 }

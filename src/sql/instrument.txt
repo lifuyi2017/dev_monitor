@@ -295,11 +295,7 @@ localhost:8080/instrument/addOrUpdateLogic
     "logicRelationList": [
         {
             "measure_id": "204fa4d77c474ef29160190e495e99fe",
-            "channel_id": "8be83c824f3c48bca0052819838c925c"
-        },
-        {
-            "measure_id": "204fa4d77c474ef29160190e495e99fe",
-            "channel_id": "b5acab3e4f5f452eb03f12e191599c37"
+            "channel_id_list": ["8be83c824f3c48bca0052819838c925c","b5acab3e4f5f452eb03f12e191599c37"]
         }
     ]
 }
@@ -311,11 +307,7 @@ localhost:8080/instrument/addOrUpdateLogic
     "logicRelationList": [
         {
             "measure_id": "204fa4d77c474ef29160190e495e99fe",
-            "channel_id": "8be83c824f3c48bca0052819838c925c"
-        },
-        {
-            "measure_id": "204fa4d77c474ef29160190e495e99fe",
-            "channel_id": "b5acab3e4f5f452eb03f12e191599c37"
+            "channel_id_list": ["8be83c824f3c48bca0052819838c925c","b5acab3e4f5f452eb03f12e191599c37"]
         }
     ]
 }
