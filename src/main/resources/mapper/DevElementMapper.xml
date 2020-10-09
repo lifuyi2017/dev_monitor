@@ -25,13 +25,12 @@
     </select>
 
     <insert id="insertEntity" parameterType="com.winterchen.model.DevElement">
-        insert into table dev_elements(dev_element_id,dev_parent_element_id,dev_element_name,dev_type_id,`type`,enterprise_id)
+        insert into  dev_elements(dev_element_id,dev_parent_element_id,dev_element_name,dev_type_id,`type`,enterprise_id)
          value (#{dev_element_id},#{dev_parent_element_id},#{dev_element_name},#{dev_type_id},#{type},#{enterprise_id})
     </insert>
 
     <update id="editDevOrDevElementById">
-        update dev_elements set dev_parent_element_id=#{dev_parent_element_id},dev_element_name=#{dev_element_name},
-        dev_type_id=#{dev_type_id},`type`=#{type},enterprise_id=#{enterprise_id} where dev_element_id=#{dev_element_id}
+        update dev_elements set dev_element_name=#{dev_element_name} where dev_element_id=#{dev_element_id}
     </update>
 
     <delete id="deleteByElementId">

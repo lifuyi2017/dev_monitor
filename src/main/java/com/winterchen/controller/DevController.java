@@ -110,7 +110,8 @@ public class DevController {
         try {
             //删除当前值、删除子节点
             devService.deleteElementAndSubElements(devElement.getDev_element_id());
-            //如果是设备类型还需要删除数据：固定字段数据和用户自定义字段数据
+            //删除采集点数据
+//            coll
             booleanResultMessage.setStatuscode("200");
             booleanResultMessage.setMesg("删除成功");
             booleanResultMessage.setValue(true);
@@ -126,7 +127,7 @@ public class DevController {
 
 
     /**
-     * 获取树中的设备
+     * 获取树中某一企业的设备
      */
     @ResponseBody
     @PostMapping("/getTopElementsByEnterpriseId")
@@ -152,7 +153,7 @@ public class DevController {
 
 
     /**
-     * 获取树中的下级列表
+     * 获取树中的下级列表，组件
      */
     @ResponseBody
     @PostMapping("/getSubElementsByParentId")
@@ -176,22 +177,44 @@ public class DevController {
     /**
      * 导入模板
      */
-//    @ResponseBody
-//    @PostMapping("/loadDevTypeTemplate")
-//    public ResultMessage<Boolean> loadDevTypeTemplate(@RequestBody DevInputRequest devInputRequest){
-//
-//        try {
-//            DevTypeElement devTypeElement = new DevTypeElement();
-//            devTypeElement.setDev_type_id(devInputRequest.getType_element_id());
-//            List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
-//            for(){
-//
-//            }
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//
-//    }
+    @ResponseBody
+    @PostMapping("/loadDevTypeTemplate")
+    public ResultMessage<Boolean> loadDevTypeTemplate(@RequestBody DevInputRequest devInputRequest) {
+        ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
+        try {
+            DevTypeElement devTypeElement = new DevTypeElement();
+            devTypeElement.setDev_type_id(devInputRequest.getType_element_id());
+            List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
+            String appendId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5);
+            String parentId;
+            String elementName;
+            for (DevTypeElement devType : devTypeElements) {
+                if (devType.getDev_parent_element_id() != null) {
+                    parentId = devType.getDev_parent_element_id() + appendId;
+                } else {
+                    parentId = null;
+                }
+                if ("1".equals(devType.getType())) {
+                    elementName = devInputRequest.getDev_element_name();
+                } else {
+                    elementName = devType.getDev_element_name();
+                }
+                DevElement devElement = new DevElement(devType.getDev_element_id() + appendId, parentId, elementName,
+                        devType.getDev_type_id() + appendId, devType.getType(), devInputRequest.getEnterprise_id());
+                devService.insertEntity(devElement);
+            }
+            booleanResultMessage.setStatuscode("200");
+            booleanResultMessage.setValue(true);
+            booleanResultMessage.setMesg("导入成功");
+            return booleanResultMessage;
+        } catch (Exception e) {
+            e.printStackTrace();
+            booleanResultMessage.setStatuscode("501");
+            booleanResultMessage.setMesg("服务端错误：" + e.toString());
+            booleanResultMessage.setValue(false);
+            return booleanResultMessage;
+        }
+    }
 
 
 }

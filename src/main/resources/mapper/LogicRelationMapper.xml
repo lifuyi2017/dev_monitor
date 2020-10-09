@@ -23,6 +23,7 @@
         </if>
     </select>
 
+    <select id="getChannelIdByEntity"  parameterType="com.winterchen.model.LogicRelation" resultType="java.lang.String">
     <select id="getChannelIdByEntity"  parameterType="com.winterchen.model.LogicRelation"  resultType="java.lang.String">
         select channel_id from logic_relation where 1=1
         <if test="logic_id!=null">

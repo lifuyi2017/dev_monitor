@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.winterchen.dao.CollectionManagerMapper">
+
+    <delete id="deleteByLogicId">
+        delete from collection where logic_id=#{logic_id}
+    </delete>
+
+    <delete id="deleteByMeasureId">
+        delete from collection where measure_id=#{measure_id}
+    </delete>
+
+    <delete id="deleteByChannelId">
+        delete from collection where channel_id=#{channel_id}
+    </delete>
+
+    <select id="queryByEntity" parameterType="com.winterchen.model.CollectionManager" resultType="com.winterchen.model.CollectionManager">
+        select * from collection where 1=1
+        <if test="collection_id!=null">
+            and collection_id=#{collection_id}
+        </if>
+        <if test="measure_id!=null">
+            and measure_id=#{measure_id}
+        </if>
+        <if test="channel_id!=null">
+            and channel_id=#{channel_id}
+        </if>
+        <if test="logic_id!=null">
+            and logic_id=#{logic_id}
+        </if>
+        <if test="dev_element_id!=null">
+            and dev_element_id=#{dev_element_id}
+        </if>
+        <if test="status!=null">
+            and status=#{status}
+        </if>
+         order by update_time desc
+    </select>
+
+    <update id="updateByCollectionId" parameterType="com.winterchen.model.CollectionManager">
+        update collection set collection_type=#{collection_type},collection_frequency=#{collection_frequency},
+        collection_cycle=#{collection_cycle},collection_accuracy=#{collection_accuracy},collection_interval=#{collection_interval},
+        measure_id=#{measure_id},channel_id=#{channel_id},logic_id=#{logic_id},dev_element_id=#{dev_element_id},
+        status=#{status} where collection_id=#{collection_id}
+    </update>
+
+    <insert id="insert"  parameterType="com.winterchen.model.CollectionManager">
+        insert into collection(collection_id,collection_type,collection_frequency,collection_cycle,collection_accuracy,
+        collection_interval,measure_id,channel_id,logic_id,dev_element_id,status) value (#{collection_id},#{collection_type},
+        #{collection_frequency},#{collection_cycle},#{collection_accuracy},#{collection_interval},#{measure_id},#{channel_id},
+        #{logic_id},#{dev_element_id},#{status})
+    </insert>
+
+</mapper>
