@@ -1,0 +1,131 @@
+新增或者修改
+localhost:8082/collectionController/addOrUpdateCollection
+输入：
+{
+    "collection_type": "加速度",
+    "collection_frequency": "5Hz",
+    "collection_cycle": "5S",
+    "collection_accuracy": "5",
+    "collection_interval": "5",
+    "measure_id": "e4571507fef9430582ab942c3c8c68e7",
+    "channel_id": "25bb04434e4f40e1bcd04444b4411520",
+    "logic_id": "31f0dc52371c42bcbb07017bbae3bfad",
+    "dev_element_id": "33c5c43b3c504f079bd5855a71d38e51"
+}
+{
+    "collection_id":"d249fd19a0f04fefacb0397737ef30f0",
+    "collection_type": "加速度",
+    "collection_frequency": "5Hz",
+    "collection_cycle": "5S",
+    "collection_accuracy": "10",
+    "collection_interval": "15",
+    "measure_id": "e4571507fef9430582ab942c3c8c68e7",
+    "channel_id": "25bb04434e4f40e1bcd04444b4411520",
+    "logic_id": "31f0dc52371c42bcbb07017bbae3bfad",
+    "dev_element_id": "33c5c43b3c504f079bd5855a71d38e51"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "操作成功",
+    "value": true
+}
+======================================================================
+查询
+localhost:8082/collectionController/queryCollection
+输入：
+{
+    "collectionManager": {
+        "dev_element_id": "33c5c43b3c504f079bd5855a71d38e51"
+    },
+    "pageNum": 1,
+    "pageSize": 1
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "查询成功",
+    "value": {
+        "total": 2,
+        "list": [
+            {
+                "collection_id": "d249fd19a0f04fefacb0397737ef30f0",
+                "collection_type": "加速度",
+                "collection_frequency": "5Hz",
+                "collection_cycle": "5S",
+                "collection_accuracy": "10",
+                "collection_interval": "15",
+                "measure_id": "e4571507fef9430582ab942c3c8c68e7",
+                "channel_id": "25bb04434e4f40e1bcd04444b4411520",
+                "logic_id": "31f0dc52371c42bcbb07017bbae3bfad",
+                "dev_element_id": "33c5c43b3c504f079bd5855a71d38e51",
+                "status": "0",
+                "update_time": "2020-10-09T04:41:22.000+0000",
+                "measure_name": "物理节点333",
+                "channel_name": "通道333",
+                "logic_name": null
+            }
+        ],
+        "pageNum": 1,
+        "pageSize": 1,
+        "size": 1,
+        "startRow": 1,
+        "endRow": 1,
+        "pages": 2,
+        "prePage": 0,
+        "nextPage": 2,
+        "isFirstPage": true,
+        "isLastPage": false,
+        "hasPreviousPage": false,
+        "hasNextPage": true,
+        "navigatePages": 8,
+        "navigatepageNums": [
+            1,
+            2
+        ],
+        "navigateFirstPage": 1,
+        "navigateLastPage": 2,
+        "lastPage": 2,
+        "firstPage": 1
+    }
+}
+================================================================
+开始停止采集：1开0停
+localhost:8082/collectionController/startStopCollect
+输入：
+{
+    "ids": [
+        "4331b2815d034ec6b4086a1dbcc90eff",
+        "d249fd19a0f04fefacb0397737ef30f0"
+    ],
+    "status": "1"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "操作成功",
+    "value": true
+}
+=================================================
+删除
+localhost:8082/collectionController/deleteById
+输入：
+{
+    "collection_id": "d249fd19a0f04fefacb0397737ef30f0"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "操作成功",
+    "value": true
+}
+
+
+
+
+
+
+
+
+
+

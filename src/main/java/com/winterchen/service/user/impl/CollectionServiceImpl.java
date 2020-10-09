@@ -54,4 +54,14 @@ public class CollectionServiceImpl implements CollectionService {
         collectionManagerMapper.insert(collectionManager);
     }
 
+    @Override
+    public void deleteByElementId(String dev_element_id) {
+        collectionManagerMapper.deleteByElementId(dev_element_id);
+    }
+
+    @Override
+    public void deleteById(String collection_id) {
+        collectionManagerMapper.deleteById(collection_id);
+    }
+
 }

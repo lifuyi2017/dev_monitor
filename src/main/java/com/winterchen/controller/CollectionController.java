@@ -23,7 +23,7 @@ public class CollectionController {
     private CollectionService collectionService;
 
     /**
-     * 开始采集
+     * 开始停止采集
      */
     @PostMapping("/startStopCollect")
     @Transactional
@@ -92,7 +92,7 @@ public class CollectionController {
                     booleanResultMessage.setMesg("操作成功");
                 }
             }else {
-                collectionManager.setChannel_id(UUID.randomUUID().toString().replaceAll("-", ""));
+                collectionManager.setCollection_id(UUID.randomUUID().toString().replaceAll("-", ""));
                 collectionManager.setStatus("0");
                 collectionService.insert(collectionManager);
                 booleanResultMessage.setValue(true);
@@ -100,6 +100,7 @@ public class CollectionController {
                 booleanResultMessage.setMesg("操作成功");
             }
         }catch (Exception e) {
+            e.printStackTrace();
             booleanResultMessage.setValue(false);
             booleanResultMessage.setStatuscode("501");
             booleanResultMessage.setMesg("服务端错误：" + e.toString());
@@ -137,7 +138,32 @@ public class CollectionController {
     }
 
 
-
+    /**
+     *删除
+     */
+    @PostMapping("/deleteById")
+    public ResultMessage<Boolean> deleteById(@RequestBody CollectionManager collectionManager){
+        ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
+        try {
+            List<CollectionManager> collectionManagerList = collectionService.queryByEntity(collectionManager);
+            if("1".equals(collectionManagerList.get(0).getStatus())){
+                booleanResultMessage.setValue(false);
+                booleanResultMessage.setStatuscode("401");
+                booleanResultMessage.setMesg("请先停止采集任务");
+            }else {
+                collectionService.deleteById(collectionManager.getCollection_id());
+                booleanResultMessage.setValue(true);
+                booleanResultMessage.setStatuscode("200");
+                booleanResultMessage.setMesg("操作成功");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            booleanResultMessage.setValue(false);
+            booleanResultMessage.setStatuscode("501");
+            booleanResultMessage.setMesg("服务端错误：" + e.toString());
+        }
+        return booleanResultMessage;
+    }
 
 
 

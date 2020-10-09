@@ -16,4 +16,8 @@ public interface CollectionManagerMapper {
     void updateByCollectionId(CollectionManager collectionManager1);
 
     void insert(CollectionManager collectionManager);
+
+    void deleteByElementId(String dev_element_id);
+
+    void deleteById(String collection_id);
 }

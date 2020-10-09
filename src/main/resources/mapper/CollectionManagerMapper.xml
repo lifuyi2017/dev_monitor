@@ -14,6 +14,14 @@
         delete from collection where channel_id=#{channel_id}
     </delete>
 
+    <delete id="deleteByElementId">
+        delete from collection where dev_element_id=#{dev_element_id}
+    </delete>
+
+    <delete id="deleteById">
+        delete from collection where collection_id=#{collection_id}
+    </delete>
+
     <select id="queryByEntity" parameterType="com.winterchen.model.CollectionManager" resultType="com.winterchen.model.CollectionManager">
         select * from collection where 1=1
         <if test="collection_id!=null">

@@ -2,6 +2,7 @@ package com.winterchen.controller;
 
 
 import com.winterchen.model.*;
+import com.winterchen.service.user.CollectionService;
 import com.winterchen.service.user.DevService;
 import com.winterchen.service.user.DevTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class DevController {
     private DevService devService;
     @Autowired
     private DevTypeService devTypeService;
+    @Autowired
+    private CollectionService collectionService;
 
     @ResponseBody
     @GetMapping("test")
@@ -111,7 +114,7 @@ public class DevController {
             //删除当前值、删除子节点
             devService.deleteElementAndSubElements(devElement.getDev_element_id());
             //删除采集点数据
-//            coll
+            collectionService.deleteByElementId(devElement.getDev_element_id());
             booleanResultMessage.setStatuscode("200");
             booleanResultMessage.setMesg("删除成功");
             booleanResultMessage.setValue(true);
