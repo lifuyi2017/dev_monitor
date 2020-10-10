@@ -130,7 +130,19 @@ localhost:8082/user/login
         "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4In0.VrTKfI8lb-WdyHTZkZsmrHSqdvW4le2cYHZ_H4a-vk8"
     }
 }
-
+=================================================================
+登出
+localhost:8082/user/loginOut
+输入：
+{
+    "user_id":8
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "操作成功",
+    "value": true
+}
 
 
 

@@ -9,6 +9,7 @@ import com.winterchen.annotation.PassToken;
 import com.winterchen.annotation.UserLoginToken;
 import com.winterchen.model.User;
 import com.winterchen.service.user.UserService;
+import com.winterchen.util.TokenCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -34,6 +35,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         if(!(handler instanceof HandlerMethod)){
             return true;
         }
+
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
         if(method.isAnnotationPresent(PassToken.class))
@@ -57,6 +59,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 }
                 catch (JWTDecodeException e){
                     throw new RuntimeException("401");
+                }
+                if (token.equals(TokenCache.cache.getIfPresent(userId))){
+                    throw new RuntimeException("已经登出注销的token，请重新登录");
                 }
                 User user1 = new User();
                 user1.setUser_id(userId);

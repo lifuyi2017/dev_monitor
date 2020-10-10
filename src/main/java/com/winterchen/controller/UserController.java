@@ -7,11 +7,13 @@ import com.winterchen.annotation.UserLoginToken;
 import com.winterchen.model.*;
 import com.winterchen.service.user.EnterpriseService;
 import com.winterchen.service.user.UserService;
+import com.winterchen.util.TokenCache;
 import com.winterchen.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -43,6 +45,25 @@ public class UserController {
         return userService.findAllUser(pageNum, pageSize);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/loginOut", method = RequestMethod.POST)
+    @UserLoginToken
+    public ResultMessage<Boolean> loginOut(@RequestBody User user, HttpServletRequest request){
+        ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
+        try {
+            String token=request.getHeader("token");
+            TokenCache.cache.put(user.getUser_id(),token);
+            booleanResultMessage.setValue(true);
+            booleanResultMessage.setStatuscode("200");
+            booleanResultMessage.setMesg("操作成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            booleanResultMessage.setValue(false);
+            booleanResultMessage.setStatuscode("501");
+            booleanResultMessage.setMesg("系统错误:" + e.toString());
+        }
+        return booleanResultMessage;
+    }
 
     @PassToken
     @ResponseBody
