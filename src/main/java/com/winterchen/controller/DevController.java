@@ -1,6 +1,7 @@
 package com.winterchen.controller;
 
 
+import com.winterchen.annotation.UserLoginToken;
 import com.winterchen.model.*;
 import com.winterchen.service.user.CollectionService;
 import com.winterchen.service.user.DevService;
@@ -26,6 +27,7 @@ public class DevController {
 
     @ResponseBody
     @GetMapping("test")
+    @UserLoginToken
     public ResultMessage<Boolean> test() {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         booleanResultMessage.setStatuscode("501");
@@ -42,6 +44,7 @@ public class DevController {
      */
     @ResponseBody
     @PostMapping("/addDevOrDevElement")
+    @UserLoginToken
     public ResultMessage<Boolean> addDevOrDevElement(@RequestBody DevElement devElement) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
@@ -86,6 +89,7 @@ public class DevController {
      */
     @ResponseBody
     @PostMapping("/editDevOrDevElement")
+    @UserLoginToken
     public ResultMessage<Boolean> editDevTypeOrDevElement(@RequestBody DevElement devElement) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
@@ -108,6 +112,7 @@ public class DevController {
      */
     @ResponseBody
     @PostMapping("/deleteDevType")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteDevType(@RequestBody DevElement devElement) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
@@ -134,6 +139,7 @@ public class DevController {
      */
     @ResponseBody
     @PostMapping("/getTopElementsByEnterpriseId")
+    @UserLoginToken
     public ResultMessage<List<DevElement>> getTopElements(@RequestBody Enterprise enterprise) {
         ResultMessage<List<DevElement>> resultMessage = new ResultMessage<>();
         try {
@@ -160,6 +166,7 @@ public class DevController {
      */
     @ResponseBody
     @PostMapping("/getSubElementsByParentId")
+    @UserLoginToken
     public ResultMessage<List<DevElement>> getSubElementsByParentId(@RequestBody DevElement devElement) {
         ResultMessage<List<DevElement>> resultMessage = new ResultMessage<>();
         try {
@@ -182,6 +189,7 @@ public class DevController {
      */
     @ResponseBody
     @PostMapping("/loadDevTypeTemplate")
+    @UserLoginToken
     public ResultMessage<Boolean> loadDevTypeTemplate(@RequestBody DevInputRequest devInputRequest) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {

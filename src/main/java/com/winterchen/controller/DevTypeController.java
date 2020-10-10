@@ -2,6 +2,7 @@ package com.winterchen.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.winterchen.annotation.UserLoginToken;
 import com.winterchen.model.*;
 import com.winterchen.service.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class DevTypeController {
      */
     @ResponseBody
     @PostMapping("/addDevTypeOrDevElement")
+    @UserLoginToken
     public ResultMessage<Boolean> addDevTypeOrDevElement(@RequestBody DevTypeElement devTypeElement) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
@@ -84,6 +86,7 @@ public class DevTypeController {
      */
     @ResponseBody
     @PostMapping("/editDevTypeOrDevElement")
+    @UserLoginToken
     public ResultMessage<Boolean> editDevTypeOrDevElement(@RequestBody DevTypeElement devTypeElement) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
@@ -106,6 +109,7 @@ public class DevTypeController {
      */
     @ResponseBody
     @PostMapping("/deleteDevType")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteDevType(@RequestBody DevTypeElement devTypeElement) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
@@ -134,6 +138,7 @@ public class DevTypeController {
      */
     @ResponseBody
     @PostMapping("/getTopElements")
+    @UserLoginToken
     public ResultMessage<List<DevTypeElement>> getTopElements() {
         ResultMessage<List<DevTypeElement>> resultMessage = new ResultMessage<>();
         try {
@@ -158,6 +163,7 @@ public class DevTypeController {
      */
     @ResponseBody
     @PostMapping("/getSubElementsByParentId")
+    @UserLoginToken
     public ResultMessage<List<DevTypeElement>> getSubElementsByParentId(@RequestBody DevTypeElement devTypeElement) {
         ResultMessage<List<DevTypeElement>> resultMessage = new ResultMessage<>();
         try {
@@ -182,6 +188,7 @@ public class DevTypeController {
     @Transactional
     @ResponseBody
     @PostMapping("/editCustomField")
+    @UserLoginToken
     public ResultMessage<Boolean> editCustomField(@RequestBody DevCustomFieldRequest devCustomFieldRequest) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
@@ -229,6 +236,7 @@ public class DevTypeController {
      */
     @ResponseBody
     @PostMapping("/getCustomFieldByElementId")
+    @UserLoginToken
     public ResultMessage<DevCustomFieldRequest> getCustomFieldByElementId(@RequestBody DevCustomFieldRequest devCustomFieldRequest) {
         ResultMessage<DevCustomFieldRequest> devCustomFieldRequestResultMessage = new ResultMessage<>();
         try {
@@ -258,6 +266,7 @@ public class DevTypeController {
     @Transactional
     @ResponseBody
     @PostMapping("/insertFieldValue")
+    @UserLoginToken
     public ResultMessage<Boolean> insertFieldValue(@RequestBody DevFieldValueRequest devFieldValueRequest) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
@@ -289,6 +298,7 @@ public class DevTypeController {
      */
     @ResponseBody
     @PostMapping("/getValueByElementId")
+    @UserLoginToken
     public ResultMessage<PageInfo<DevFieldValueRequest>> getValueByElementId(@RequestBody DevFieldValueRequestPage devFieldValueRequestPage) {
 //        ResultMessage<List<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
         ResultMessage<PageInfo<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
@@ -358,6 +368,7 @@ public class DevTypeController {
     @Transactional
     @ResponseBody
     @PostMapping("/deleteValueByValueId")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteValueByValueId(@RequestBody DevCustomFieldValue devCustomFieldValue) {
         ResultMessage<Boolean> resultMessage = new ResultMessage<>();
         try {
@@ -381,6 +392,7 @@ public class DevTypeController {
      */
     @ResponseBody
     @PostMapping("/updateValueByValueId")
+    @UserLoginToken
     public ResultMessage<Boolean> updateValueByValueId(@RequestBody DevFieldValueRequest devFieldValueRequest) {
         ResultMessage<Boolean> resultMessage = new ResultMessage<>();
         try {

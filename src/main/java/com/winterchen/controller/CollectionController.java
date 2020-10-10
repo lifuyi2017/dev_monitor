@@ -2,6 +2,7 @@ package com.winterchen.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.winterchen.annotation.UserLoginToken;
 import com.winterchen.model.CollectionManager;
 import com.winterchen.model.CollectionManagerRequest;
 import com.winterchen.model.ResultMessage;
@@ -27,6 +28,7 @@ public class CollectionController {
      */
     @PostMapping("/startStopCollect")
     @Transactional
+    @UserLoginToken
     public ResultMessage<Boolean> startCollect(@RequestBody StartStopCollection startStopCollection){
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
@@ -75,6 +77,7 @@ public class CollectionController {
      * 新增或者修改
      */
     @PostMapping("/addOrUpdateCollection")
+    @UserLoginToken
     public ResultMessage<Boolean> addOrUpdateCollection(@RequestBody CollectionManager collectionManager){
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
@@ -112,6 +115,7 @@ public class CollectionController {
      * 查询
      */
     @PostMapping("/queryCollection")
+    @UserLoginToken
     public  ResultMessage<PageInfo<CollectionManager>> queryCollection(@RequestBody CollectionManagerRequest collectionManagerRequest){
         ResultMessage<PageInfo<CollectionManager>> logicPage = new ResultMessage<>();
         try {
@@ -142,6 +146,7 @@ public class CollectionController {
      *删除
      */
     @PostMapping("/deleteById")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteById(@RequestBody CollectionManager collectionManager){
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {

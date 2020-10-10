@@ -2,9 +2,12 @@ package com.winterchen.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.winterchen.annotation.PassToken;
+import com.winterchen.annotation.UserLoginToken;
 import com.winterchen.model.*;
 import com.winterchen.service.user.EnterpriseService;
 import com.winterchen.service.user.UserService;
+import com.winterchen.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -40,12 +43,41 @@ public class UserController {
         return userService.findAllUser(pageNum, pageSize);
     }
 
+
+    @PassToken
+    @ResponseBody
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResultMessage<LoginResult> login(@RequestBody User user) {
+        ResultMessage<LoginResult> resultMessage = new ResultMessage();
+        try {
+            List<User> usersByUser = userService.getUsersByUser(user);
+            if (usersByUser == null) {
+                resultMessage.setValue(null);
+                resultMessage.setStatuscode("401");
+                resultMessage.setMesg("登录失败，用户不存在或者密码错误");
+            } else {
+                User user1 = usersByUser.get(0);
+                String token = TokenUtil.getToken(user1);
+                LoginResult loginResult = new LoginResult(user1, token);
+                resultMessage.setValue(loginResult);
+                resultMessage.setMesg("登陆成功");
+                resultMessage.setStatuscode("200");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMessage.setStatuscode("501");
+            resultMessage.setMesg("系统错误:" + e.toString());
+        }
+        return resultMessage;
+    }
+
     @ResponseBody
     @PostMapping("/addOrUpdateUser")
+    @UserLoginToken
     public ResultMessage<Boolean> addOrUpdateUser(@RequestBody User user) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
-            if(user.getEnterprise_id()==null || ("").equals(user.getEnterprise_id().trim())){
+            if (user.getEnterprise_id() == null || ("").equals(user.getEnterprise_id().trim())) {
                 booleanResultMessage.setValue(false);
                 booleanResultMessage.setStatuscode("401");
                 booleanResultMessage.setMesg("请设置企业id");
@@ -70,34 +102,35 @@ public class UserController {
             booleanResultMessage.setStatuscode("200");
             booleanResultMessage.setMesg("操作成功");
             return booleanResultMessage;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             booleanResultMessage.setValue(false);
             booleanResultMessage.setStatuscode("501");
-            booleanResultMessage.setMesg("系统错误:"+e.toString());
+            booleanResultMessage.setMesg("系统错误:" + e.toString());
             return booleanResultMessage;
         }
     }
 
     @ResponseBody
     @PostMapping("/queryUser")
+    @UserLoginToken
     public ResultMessage<PageInfo<User>> queryUser(@RequestBody UserRequest userRequest) {
         ResultMessage<PageInfo<User>> listResultMessage = new ResultMessage<>();
         try {
             PageInfo result;
-            if(userRequest.getPageNum()!=null && userRequest.getPageSize()!=null){
+            if (userRequest.getPageNum() != null && userRequest.getPageSize() != null) {
                 PageHelper.startPage(userRequest.getPageNum(), userRequest.getPageSize());
                 List<User> usersByUser = userService.getUsersByUser(userRequest.getUser());
-                for(User user:usersByUser){
+                for (User user : usersByUser) {
                     Enterprise enterprise = new Enterprise();
                     enterprise.setEnterprise_id(user.getEnterprise_id());
                     user.setEnterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
                 }
                 result = new PageInfo(usersByUser);
-            }else {
-                result=new PageInfo();
+            } else {
+                result = new PageInfo();
                 List<User> usersByUser = userService.getUsersByUser(userRequest.getUser());
-                for(User user:usersByUser){
+                for (User user : usersByUser) {
                     Enterprise enterprise = new Enterprise();
                     enterprise.setEnterprise_id(user.getEnterprise_id());
                     user.setEnterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
@@ -108,18 +141,19 @@ public class UserController {
             listResultMessage.setStatuscode("200");
             listResultMessage.setMesg("查询成功");
             return listResultMessage;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             listResultMessage.setValue(null);
             listResultMessage.setStatuscode("501");
-            listResultMessage.setMesg("服务器错误:"+e.toString());
+            listResultMessage.setMesg("服务器错误:" + e.toString());
             return listResultMessage;
         }
     }
 
     @ResponseBody
     @PostMapping("/deleteByIds")
-    public ResultMessage<Boolean> deleteByIds(@RequestBody OptUser optUser){
+    @UserLoginToken
+    public ResultMessage<Boolean> deleteByIds(@RequestBody OptUser optUser) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
             userService.deleteByIds(optUser.getIds());
@@ -127,21 +161,22 @@ public class UserController {
             booleanResultMessage.setStatuscode("200");
             booleanResultMessage.setMesg("删除成功");
             return booleanResultMessage;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             booleanResultMessage.setValue(false);
             booleanResultMessage.setStatuscode("501");
-            booleanResultMessage.setMesg("操作失败："+e.toString());
+            booleanResultMessage.setMesg("操作失败：" + e.toString());
             return booleanResultMessage;
         }
     }
 
     @ResponseBody
     @PostMapping("/editStatus")
-    public ResultMessage<Boolean> editStatus(@RequestBody OptUser optUser){
+    @UserLoginToken
+    public ResultMessage<Boolean> editStatus(@RequestBody OptUser optUser) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
-            userService.editStatus(optUser.getIds(),optUser.getStatus());
+            userService.editStatus(optUser.getIds(), optUser.getStatus());
             booleanResultMessage.setValue(true);
             booleanResultMessage.setStatuscode("200");
             booleanResultMessage.setMesg("编辑成功");
@@ -150,7 +185,7 @@ public class UserController {
             e.printStackTrace();
             booleanResultMessage.setValue(false);
             booleanResultMessage.setStatuscode("501");
-            booleanResultMessage.setMesg("操作失败："+e.toString());
+            booleanResultMessage.setMesg("操作失败：" + e.toString());
             return booleanResultMessage;
         }
     }

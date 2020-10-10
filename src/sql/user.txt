@@ -23,7 +23,7 @@ localhost:8080/user/queryUser
 例：
 {
     "user": {
-        "enterprise_id": "32esqc"
+        "enterprise_id": "32esqqdefc"
     },
     "pageNum": 2,
     "pageSize": 2
@@ -103,9 +103,33 @@ localhost:8080/user/deleteByIds
     "mesg": "删除成功",
     "value": true
 }
-
-
-
+===============================================================
+登录
+localhost:8082/user/login
+输入：
+{
+    "user_name":"用户3",
+    "user_password":"123456"
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "登陆成功",
+    "value": {
+        "user": {
+            "user_id": 8,
+            "user_name": "用户3",
+            "user_password": "123456",
+            "user_real_name": "33",
+            "user_phone": null,
+            "user_status": "0",
+            "enterprise_id": "32esqqdefc",
+            "enterprise_name": null,
+            "update_time": "2020-10-06T20:18:19.000+0000"
+        },
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4In0.VrTKfI8lb-WdyHTZkZsmrHSqdvW4le2cYHZ_H4a-vk8"
+    }
+}
 
 
 

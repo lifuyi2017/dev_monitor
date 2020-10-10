@@ -2,6 +2,7 @@ package com.winterchen.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.winterchen.annotation.UserLoginToken;
 import com.winterchen.model.*;
 import com.winterchen.service.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class InstrumentController {
      */
     @ResponseBody
     @PostMapping("/addOrUpdateNetWork")
+    @UserLoginToken
     public ResultMessage<Boolean> addOrUpdateNetWork(@RequestBody Network network) {
         ResultMessage<Boolean> resultMessage = new ResultMessage();
         try {
@@ -65,6 +67,7 @@ public class InstrumentController {
      */
     @ResponseBody
     @PostMapping("/queryNetWork")
+    @UserLoginToken
     public ResultMessage<PageInfo<Network>> queryNetWork(@RequestBody NetworkRequest networkRequest) {
         ResultMessage<PageInfo<Network>> networkPage = new ResultMessage<>();
         try {
@@ -105,6 +108,7 @@ public class InstrumentController {
      */
     @ResponseBody
     @PostMapping("/deleteNetWorkById")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteNetWorkById(@RequestBody Network network) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
@@ -126,6 +130,7 @@ public class InstrumentController {
      */
     @ResponseBody
     @PostMapping("/addOrUpdateMeasure")
+    @UserLoginToken
     public ResultMessage<Boolean> addOrUpdateMeasure(@RequestBody Measure measure){
         ResultMessage<Boolean> resultMessage = new ResultMessage();
         try {
@@ -157,6 +162,7 @@ public class InstrumentController {
      */
     @ResponseBody
     @PostMapping("/queryMeasure")
+    @UserLoginToken
     public ResultMessage<PageInfo<Measure>> queryMeasure(@RequestBody MeasureRequest measureRequest){
         ResultMessage<PageInfo<Measure>> networkPage = new ResultMessage<>();
         try {
@@ -200,6 +206,7 @@ public class InstrumentController {
      */
     @ResponseBody
     @PostMapping("/deleteMeasureById")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteMeasureById(@RequestBody Measure measure) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
@@ -222,6 +229,7 @@ public class InstrumentController {
      */
     @ResponseBody
     @PostMapping("/addOrUpdateChannel")
+    @UserLoginToken
     public ResultMessage<Boolean> addOrUpdateChannel(@RequestBody Channel channel){
         ResultMessage<Boolean> resultMessage = new ResultMessage();
         try {
@@ -253,6 +261,7 @@ public class InstrumentController {
      */
     @ResponseBody
     @PostMapping("/queryChannel")
+    @UserLoginToken
     public ResultMessage<PageInfo<Channel>> queryChannel(@RequestBody ChannelRequest channelRequest){
         ResultMessage<PageInfo<Channel>> channelPage = new ResultMessage<>();
         try {
@@ -296,6 +305,7 @@ public class InstrumentController {
      */
     @ResponseBody
     @PostMapping("/deleteChannelById")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteChannelById(@RequestBody Channel channel){
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage();
         try {
@@ -317,6 +327,7 @@ public class InstrumentController {
      */
     @ResponseBody
     @PostMapping("/addOrUpdateLogic")
+    @UserLoginToken
     public ResultMessage<Boolean> addOrUpdateLogic(@RequestBody LogicNode logicNode){
         ResultMessage<Boolean> resultMessage = new ResultMessage();
         try {
@@ -348,6 +359,7 @@ public class InstrumentController {
      */
     @ResponseBody
     @PostMapping("/queryLogic")
+    @UserLoginToken
     public ResultMessage<PageInfo<LogicNode>> queryLogic(@RequestBody LogicNodeRequest logicNodeRequest){
         ResultMessage<PageInfo<LogicNode>> logicPage = new ResultMessage<>();
         try {
@@ -378,6 +390,7 @@ public class InstrumentController {
      */
     @ResponseBody
     @PostMapping("/deleteLogicById")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteLogicById(@RequestBody LogicNode logicNode){
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage();
         try {

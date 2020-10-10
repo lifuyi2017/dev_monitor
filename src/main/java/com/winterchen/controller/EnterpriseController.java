@@ -3,6 +3,7 @@ package com.winterchen.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.winterchen.annotation.UserLoginToken;
 import com.winterchen.model.Enterprise;
 import com.winterchen.model.EnterpriseRequest;
 import com.winterchen.model.ResultMessage;
@@ -24,6 +25,7 @@ public class EnterpriseController {
 
     @ResponseBody
     @PostMapping("/addOrUpdate")
+    @UserLoginToken
     public ResultMessage<Boolean> addOrUpdate(@RequestBody Enterprise enterprise) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         booleanResultMessage.setValue(true);
@@ -53,6 +55,7 @@ public class EnterpriseController {
 
     @ResponseBody
     @PostMapping("/getEnterprise")
+    @UserLoginToken
     public ResultMessage<PageInfo<Enterprise>> getEnterprise(@RequestBody EnterpriseRequest enterpriseRequest) {
         ResultMessage<PageInfo<Enterprise>> booleanResultMessage = new ResultMessage<>();
         try {
@@ -81,6 +84,7 @@ public class EnterpriseController {
 
     @ResponseBody
     @PostMapping("/deleteById")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteById(@RequestBody Enterprise enterprise) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
