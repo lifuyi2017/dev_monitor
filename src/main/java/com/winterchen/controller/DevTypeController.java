@@ -278,8 +278,10 @@ public class DevTypeController {
             devFieldValueRequest.getDevFixedFieldValue().setDev_type_field_value_id(id);
             devFixedFieldValueService.insertFixedValue(devFieldValueRequest.getDevFixedFieldValue().getDev_element_id(),
                     devFieldValueRequest.getDevFixedFieldValue());
-            devCustomFieldValueService.insertCustomValue(id, devFieldValueRequest.getDevFixedFieldValue().getDev_element_id(),
-                    devFieldValueRequest.getCustomFieldValue());
+            if(devFieldValueRequest.getCustomFieldValue()!=null){
+                devCustomFieldValueService.insertCustomValue(id, devFieldValueRequest.getDevFixedFieldValue().getDev_element_id(),
+                        devFieldValueRequest.getCustomFieldValue());
+            }
             booleanResultMessage.setValue(true);
             booleanResultMessage.setMesg("新增成功");
             booleanResultMessage.setStatuscode("200");
