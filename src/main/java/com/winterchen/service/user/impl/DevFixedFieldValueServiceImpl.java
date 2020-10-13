@@ -28,7 +28,11 @@ public class DevFixedFieldValueServiceImpl implements DevFixedFieldValueService 
     @Override
     public void insertFixedValue(String dev_element_id, DevFixedFieldValue devFixedFieldValue) throws Exception {
         devFixedFieldValue.setDev_element_id(dev_element_id);
-        devFixedFieldValue.setDev_type_pic(Base64.getDecoder().decode(devFixedFieldValue.getDev_type_pic_str()));
+        if(devFixedFieldValue.getDev_type_pic_str()!=null){
+            devFixedFieldValue.setDev_type_pic(Base64.getDecoder().decode(devFixedFieldValue.getDev_type_pic_str()));
+        }else {
+            devFixedFieldValue.setDev_type_pic(null);
+        }
         devFixedFieldValueMapper.insertValue(devFixedFieldValue);
     }
 

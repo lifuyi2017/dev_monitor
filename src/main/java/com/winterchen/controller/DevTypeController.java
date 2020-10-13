@@ -350,9 +350,6 @@ public class DevTypeController {
             devFixedFieldValue.setDev_type_production_enterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
             enterprise.setEnterprise_id(devFixedFieldValue.getDev_type_service_enterprise_id());
             devFixedFieldValue.setDev_type_service_enterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
-            User user = new User();
-            user.setUser_id(devFixedFieldValue.getDev_type_charge_user_id());
-            devFixedFieldValue.setDev_type_charge_user_name(userService.getUsersByUser(user).get(0).getUser_name());
             DevFieldValueRequest request = new DevFieldValueRequest();
             request.setDevFixedFieldValue(devFixedFieldValue);
             request.setCustomFieldValue(customValueMap.get(devFixedFieldValue.getDev_type_field_value_id()));
