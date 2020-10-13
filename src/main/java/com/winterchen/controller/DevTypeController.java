@@ -400,8 +400,10 @@ public class DevTypeController {
             List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
             devFieldValueRequest.getDevFixedFieldValue().setDev_element_id(devTypeElements.get(0).getDev_type_id());
             devFixedFieldValueService.updateByValueId(devFieldValueRequest.getDevFixedFieldValue());
-            devCustomFieldValueService.updateByValueId(devFieldValueRequest.getDevFixedFieldValue().getDev_element_id(),
-                    devFieldValueRequest.getDevFixedFieldValue().getDev_type_field_value_id(), devFieldValueRequest.getCustomFieldValue());
+            if(devFieldValueRequest.getCustomFieldValue()!=null){
+                devCustomFieldValueService.updateByValueId(devFieldValueRequest.getDevFixedFieldValue().getDev_element_id(),
+                        devFieldValueRequest.getDevFixedFieldValue().getDev_type_field_value_id(), devFieldValueRequest.getCustomFieldValue());
+            }
             resultMessage.setValue(true);
             resultMessage.setMesg("更新成功");
             resultMessage.setStatuscode("200");
