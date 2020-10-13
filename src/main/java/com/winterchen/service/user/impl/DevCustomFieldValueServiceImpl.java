@@ -106,9 +106,17 @@ public class DevCustomFieldValueServiceImpl implements DevCustomFieldValueServic
         if("1".equals(list.get(0).getDev_type_field_type()) || "2".equals(list.get(0).getDev_type_field_type())){
             value=customFieldValue.getValue_string();
         }else if("3".equals(list.get(0).getDev_type_field_type())){
-            value=sdf.format(customFieldValue.getValue_date());
+            if(customFieldValue.getValue_date()!=null){
+                value=sdf.format(customFieldValue.getValue_date());
+            }else {
+                value=null;
+            }
         }else {
-            value=Base64.getEncoder().encodeToString(customFieldValue.getValue_blob());
+            if(customFieldValue.getValue_blob()!=null){
+                value=Base64.getEncoder().encodeToString(customFieldValue.getValue_blob());
+            }else {
+                value=null;
+            }
         }
         return new CustomValue(list.get(0).getDev_type_field_name(),value);
     }

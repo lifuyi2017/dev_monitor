@@ -42,7 +42,9 @@ public class DevFixedFieldValueServiceImpl implements DevFixedFieldValueService 
         devFixedFieldValue.setDev_element_id(dev_element_id);
         List<DevFixedFieldValue> list=devFixedFieldValueMapper.queryForEntity(devFixedFieldValue);
         for(DevFixedFieldValue fieldValue:list){
-            fieldValue.setDev_type_pic_str(Base64.getEncoder().encodeToString(fieldValue.getDev_type_pic()));
+            if(fieldValue.getDev_type_pic()!=null){
+                fieldValue.setDev_type_pic_str(Base64.getEncoder().encodeToString(fieldValue.getDev_type_pic()));
+            }
         }
         return list;
     }
@@ -54,7 +56,9 @@ public class DevFixedFieldValueServiceImpl implements DevFixedFieldValueService 
 
     @Override
     public void updateByValueId(DevFixedFieldValue devFixedFieldValue) throws Exception {
-        devFixedFieldValue.setDev_type_pic(Base64.getDecoder().decode(devFixedFieldValue.getDev_type_pic_str()));
+        if(devFixedFieldValue.getDev_type_pic_str()!=null){
+            devFixedFieldValue.setDev_type_pic(Base64.getDecoder().decode(devFixedFieldValue.getDev_type_pic_str()));
+        }
         devFixedFieldValueMapper.updateByValueId(devFixedFieldValue);
     }
 }
