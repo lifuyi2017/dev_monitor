@@ -6,13 +6,16 @@ import com.winterchen.model.LogicRelation;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.google.common.collect.EvictingQueue;
+import com.winterchen.util.DateUtil;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
 /*        List<DevCustomField> devCustomFieldListNew = new ArrayList<>();
         DevCustomField devCustomField1 = new DevCustomField();
         devCustomField1.setDev_type_field_name("的讲话精神防护等级");
@@ -45,11 +48,16 @@ public class Main {
 //        relations.add(logicRelation);
 //        relations.add(logicRelation1);
 //        System.out.println(relations.size());
-        Queue<Integer> fifo = EvictingQueue.create(2);
-        fifo.add(1);
-        fifo.add(2);
-        fifo.add(3);
-        System.out.println(fifo);
+//        Queue<Integer> fifo = EvictingQueue.create(2);
+//        fifo.add(1);
+//        fifo.add(2);
+//        fifo.add(3);
+//        System.out.println(fifo);
+
+
+        String value="2020-10-13 08:00:00";
+        Date date = DateUtil.parseDate(value);
+        System.out.println("-----------");
     }
 
     public static byte[] getContent(String filePath) throws IOException {

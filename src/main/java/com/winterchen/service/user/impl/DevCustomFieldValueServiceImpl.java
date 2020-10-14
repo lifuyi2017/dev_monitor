@@ -6,6 +6,7 @@ import com.winterchen.model.CustomValue;
 import com.winterchen.model.DevCustomField;
 import com.winterchen.model.DevCustomFieldValue;
 import com.winterchen.service.user.DevCustomFieldValueService;
+import com.winterchen.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,6 @@ public class DevCustomFieldValueServiceImpl implements DevCustomFieldValueServic
     @Autowired
     private DevCustomFieldMapper devCustomFieldMapper;
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public void deleteByElementId(String dev_element_id) throws Exception {
@@ -107,7 +107,7 @@ public class DevCustomFieldValueServiceImpl implements DevCustomFieldValueServic
             value=customFieldValue.getValue_string();
         }else if("3".equals(list.get(0).getDev_type_field_type())){
             if(customFieldValue.getValue_date()!=null){
-                value=sdf.format(customFieldValue.getValue_date());
+                value= DateUtil.formatDateTime(customFieldValue.getValue_date());
             }else {
                 value=null;
             }
@@ -126,7 +126,7 @@ public class DevCustomFieldValueServiceImpl implements DevCustomFieldValueServic
             devCustomFieldValue.setValue_string(value);
         }else if("3".equals(dev_type_field_type)){
             if (value != null && !"".equals(value)) {
-                devCustomFieldValue.setValue_date(sdf.parse(value));
+                devCustomFieldValue.setValue_date(DateUtil.parseDate(value));
             }
         }else {
             if (value != null && !"".equals(value)) {
