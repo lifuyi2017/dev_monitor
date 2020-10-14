@@ -55,8 +55,13 @@ public class Main {
 //        System.out.println(fifo);
 
 
-        String value="2020-10-13 08:00:00";
-        Date date = DateUtil.parseDate(value);
+        String value="2020-10-14 16:10:04";
+        String value1="2020-10-14 16:10:04";
+        value.replaceAll(" ","wwwww");
+        System.out.println(value);
+        System.out.println(value.equals(value1));
+//        Date date1 = DateUtil.parseDate(value1);
+
         System.out.println("-----------");
     }
 

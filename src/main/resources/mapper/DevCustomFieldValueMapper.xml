@@ -24,6 +24,9 @@
         <if test="dev_element_id!=null">
             and dev_element_id=#{dev_element_id}
         </if>
+        <if test="dev_type_custom_field_id!=null">
+            and dev_type_custom_field_id=#{dev_type_custom_field_id}
+        </if>
     </select>
 
     <delete id="deleteByValueId">
