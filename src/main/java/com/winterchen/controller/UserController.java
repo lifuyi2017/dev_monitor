@@ -72,7 +72,7 @@ public class UserController {
         ResultMessage<LoginResult> resultMessage = new ResultMessage();
         try {
             List<User> usersByUser = userService.getUsersByUser(user);
-            if (usersByUser == null) {
+            if (usersByUser == null || usersByUser.size()==0) {
                 resultMessage.setValue(null);
                 resultMessage.setStatuscode("401");
                 resultMessage.setMesg("登录失败，用户不存在或者密码错误");
@@ -126,7 +126,7 @@ public class UserController {
                 User userName = new User();
                 userName.setUser_name(user.getUser_name());
                 List<User> userList = userService.getUsersByUserNoPage(userName);
-                if(userList!=null){
+                if(userList!=null && userList.size()>0){
                     booleanResultMessage.setValue(false);
                     booleanResultMessage.setStatuscode("402");
                     booleanResultMessage.setMesg("已经被占用的用户名");
@@ -136,7 +136,7 @@ public class UserController {
                     User userPhone = new User();
                     userPhone.setUser_phone(user.getUser_phone());
                     List<User> phoneList = userService.getUsersByUserNoPage(userPhone);
-                    if(phoneList!=null){
+                    if(phoneList!=null && phoneList.size()>0){
                         booleanResultMessage.setValue(false);
                         booleanResultMessage.setStatuscode("403");
                         booleanResultMessage.setMesg("已经被占用的手机号");

@@ -16,4 +16,6 @@ public interface DevCustomFieldValueMapper {
     void deleteByValueId(String dev_type_field_value_id);
 
     void updateById(DevCustomFieldValue value);
+
+    List<DevCustomFieldValue> getByIdList(List<String> valueIds);
 }

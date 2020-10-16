@@ -300,14 +300,13 @@ public class DevTypeController {
      */
     @ResponseBody
     @PostMapping("/getValueByElementId")
-    @UserLoginToken
+//    @UserLoginToken
     public ResultMessage<PageInfo<DevFieldValueRequest>> getValueByElementId(@RequestBody DevFieldValueRequestPage devFieldValueRequestPage) {
 //        ResultMessage<List<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
         ResultMessage<PageInfo<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
         try {
             PageInfo result;
             if(devFieldValueRequestPage.getPageNum()!=null && devFieldValueRequestPage.getPageSize()!=null){
-                PageHelper.startPage(devFieldValueRequestPage.getPageNum(), devFieldValueRequestPage.getPageSize());
                 ArrayList<DevFieldValueRequest> devFieldValueRequestArrayList = getElementList(devFieldValueRequestPage);
                 result = new PageInfo(devFieldValueRequestArrayList);
             }else {
@@ -337,11 +336,16 @@ public class DevTypeController {
         List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
         devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().setDev_element_id(devTypeElements.get(0).getDev_type_id());
         //查询固定字段
+        PageHelper.startPage(devFieldValueRequestPage.getPageNum(), devFieldValueRequestPage.getPageSize());
         List<DevFixedFieldValue> devFixedFieldValueList = devFixedFieldValueService.getValueListByElementId(
                 devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
+        ArrayList<String> valueIds = new ArrayList<>();
+        for(DevFixedFieldValue devFixedFieldValue:devFixedFieldValueList){
+            valueIds.add(devFixedFieldValue.getDev_type_field_value_id());
+        }
         //查询用户自定义字段
         Map<String, Map<String, String>> customValueMap = devCustomFieldValueService.getValueListByElementId(
-                devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
+                devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id(),valueIds);
         //进行合并
         for (DevFixedFieldValue devFixedFieldValue : devFixedFieldValueList) {
             //补全名称
