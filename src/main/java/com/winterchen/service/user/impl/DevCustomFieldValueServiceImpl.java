@@ -67,8 +67,6 @@ public class DevCustomFieldValueServiceImpl implements DevCustomFieldValueServic
             fieldNames.add(devCustomField1.getDev_type_field_name());
         }
         Map<String, Map<String, String>> map = new HashMap<>();
-//        DevCustomFieldValue devCustomFieldValue = new DevCustomFieldValue();
-//        devCustomFieldValue.setDev_element_id(dev_element_id);
         List<DevCustomFieldValue> devCustomFieldValueList = devCustomFieldValueMapper.getByIdList(valueIds);
         Map<String, String> valueMap;
         CustomValue value;

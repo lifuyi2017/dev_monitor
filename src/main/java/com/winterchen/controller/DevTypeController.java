@@ -341,7 +341,6 @@ public class DevTypeController {
         for(DevFixedFieldValue devFixedFieldValue:devFixedFieldValueList){
             valueIds.add(devFixedFieldValue.getDev_type_field_value_id());
         }
-
         //查询用户自定义字段
         Map<String, Map<String, String>> customValueMap = devCustomFieldValueService.getValueListByElementId(
                 devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id(),valueIds);
@@ -360,11 +359,6 @@ public class DevTypeController {
             request.setCustomFieldValue(customValueMap.get(devFixedFieldValue.getDev_type_field_value_id()));
             devFieldValueRequestArrayList.add(request);
         }
-//        if(devFieldValueRequestPage.getPageNum()!=null && devFieldValueRequestPage.getPageSize()!=null){
-//            result=new PageInfo(devFieldValueRequestArrayList);
-//        }else {
-//            result.setList(devFieldValueRequestArrayList);
-//        }
         result.setList(devFieldValueRequestArrayList);
         return result;
     }
