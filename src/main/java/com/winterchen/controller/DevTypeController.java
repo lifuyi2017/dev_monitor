@@ -336,7 +336,9 @@ public class DevTypeController {
         List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
         devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().setDev_element_id(devTypeElements.get(0).getDev_type_id());
         //查询固定字段
-        PageHelper.startPage(devFieldValueRequestPage.getPageNum(), devFieldValueRequestPage.getPageSize());
+        if(devFieldValueRequestPage.getPageNum()!=null && devFieldValueRequestPage.getPageSize()!=null){
+            PageHelper.startPage(devFieldValueRequestPage.getPageNum(), devFieldValueRequestPage.getPageSize());
+        }
         List<DevFixedFieldValue> devFixedFieldValueList = devFixedFieldValueService.getValueListByElementId(
                 devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
         ArrayList<String> valueIds = new ArrayList<>();
