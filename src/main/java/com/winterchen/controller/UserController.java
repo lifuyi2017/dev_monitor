@@ -78,6 +78,12 @@ public class UserController {
                 resultMessage.setMesg("登录失败，用户不存在或者密码错误");
             } else {
                 User user1 = usersByUser.get(0);
+                if("0".equals(user1.getUser_status())){
+                    resultMessage.setValue(null);
+                    resultMessage.setStatuscode("402");
+                    resultMessage.setMesg("该用户已被禁用");
+                    return resultMessage;
+                }
                 String token = TokenUtil.getToken(user1);
                 LoginResult loginResult = new LoginResult(user1, token);
                 resultMessage.setValue(loginResult);

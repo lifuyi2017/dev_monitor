@@ -82,7 +82,15 @@ public class CollectionController {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
             if(collectionManager.getCollection_id()!=null){
-                List<CollectionManager> collectionManagerList = collectionService.queryByEntity(collectionManager);
+                CollectionManager collect = new CollectionManager();
+                collect.setCollection_id(collectionManager.getCollection_id());
+                List<CollectionManager> collectionManagerList = collectionService.queryByEntity(collect);
+                if(collectionManagerList==null){
+                    booleanResultMessage.setValue(false);
+                    booleanResultMessage.setStatuscode("401");
+                    booleanResultMessage.setMesg("不存在的采集配置，请输入正确的采集id");
+                    return booleanResultMessage;
+                }
                 if("1".equals(collectionManagerList.get(0).getStatus())){
                     booleanResultMessage.setValue(false);
                     booleanResultMessage.setStatuscode("401");
