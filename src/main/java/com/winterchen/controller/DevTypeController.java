@@ -300,7 +300,7 @@ public class DevTypeController {
      */
     @ResponseBody
     @PostMapping("/getValueByElementId")
-//    @UserLoginToken
+    @UserLoginToken
     public ResultMessage<PageInfo<DevFieldValueRequest>> getValueByElementId(@RequestBody DevFieldValueRequestPage devFieldValueRequestPage) {
 //        ResultMessage<List<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
         ResultMessage<PageInfo<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
