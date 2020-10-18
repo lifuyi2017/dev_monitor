@@ -39,4 +39,11 @@
         dev_type_custom_field_id=#{dev_type_custom_field_id}
     </update>
 
+    <select id="getByIdList" resultType="com.winterchen.model.DevCustomFieldValue">
+        select * from dev_type_custom_value where dev_type_field_value_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>

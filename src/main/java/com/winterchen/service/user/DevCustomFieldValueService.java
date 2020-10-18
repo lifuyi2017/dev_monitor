@@ -1,7 +1,7 @@
 package com.winterchen.service.user;
 
-import com.winterchen.model.DevCustomField;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public interface DevCustomFieldValueService {
@@ -12,7 +12,7 @@ public interface DevCustomFieldValueService {
 
     void insertCustomValue(String id, String dev_element_id, Map<String, String> customFieldValue) throws Exception;
 
-    Map<String, Map<String, String>> getValueListByElementId(String dev_element_id) throws Exception;
+    Map<String, Map<String, String>> getValueListByElementId(String dev_element_id, List<String> valueIds) throws Exception;
 
     void deleteByValueId(String dev_type_field_value_id) throws Exception;
 

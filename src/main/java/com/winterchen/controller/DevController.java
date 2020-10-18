@@ -196,6 +196,12 @@ public class DevController {
             DevTypeElement devTypeElement = new DevTypeElement();
             devTypeElement.setDev_type_id(devInputRequest.getType_element_id());
             List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
+            if(devTypeElements==null){
+                booleanResultMessage.setStatuscode("401");
+                booleanResultMessage.setValue(false);
+                booleanResultMessage.setMesg("不存在的设备类型，请校验");
+                return booleanResultMessage;
+            }
             String appendId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5);
             String parentId;
             String elementName;

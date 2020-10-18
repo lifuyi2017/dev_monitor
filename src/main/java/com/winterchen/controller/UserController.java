@@ -72,12 +72,18 @@ public class UserController {
         ResultMessage<LoginResult> resultMessage = new ResultMessage();
         try {
             List<User> usersByUser = userService.getUsersByUser(user);
-            if (usersByUser == null) {
+            if (usersByUser == null || usersByUser.size()==0) {
                 resultMessage.setValue(null);
                 resultMessage.setStatuscode("401");
                 resultMessage.setMesg("登录失败，用户不存在或者密码错误");
             } else {
                 User user1 = usersByUser.get(0);
+                if("0".equals(user1.getUser_status())){
+                    resultMessage.setValue(null);
+                    resultMessage.setStatuscode("402");
+                    resultMessage.setMesg("该用户已被禁用");
+                    return resultMessage;
+                }
                 String token = TokenUtil.getToken(user1);
                 LoginResult loginResult = new LoginResult(user1, token);
                 resultMessage.setValue(loginResult);
@@ -116,6 +122,27 @@ public class UserController {
                 }
                 userService.updateById(user);
             } else {
+                //用户名和手机号
+                User userName = new User();
+                userName.setUser_name(user.getUser_name());
+                List<User> userList = userService.getUsersByUserNoPage(userName);
+                if(userList!=null && userList.size()>0){
+                    booleanResultMessage.setValue(false);
+                    booleanResultMessage.setStatuscode("402");
+                    booleanResultMessage.setMesg("已经被占用的用户名");
+                    return booleanResultMessage;
+                }
+                if(user.getUser_phone()!=null && !"".equals(user.getUser_phone())){
+                    User userPhone = new User();
+                    userPhone.setUser_phone(user.getUser_phone());
+                    List<User> phoneList = userService.getUsersByUserNoPage(userPhone);
+                    if(phoneList!=null && phoneList.size()>0){
+                        booleanResultMessage.setValue(false);
+                        booleanResultMessage.setStatuscode("403");
+                        booleanResultMessage.setMesg("已经被占用的手机号");
+                        return booleanResultMessage;
+                    }
+                }
                 user.setUser_status("1");
                 userService.addUser(user);
             }

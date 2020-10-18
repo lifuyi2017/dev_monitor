@@ -305,16 +305,8 @@ public class DevTypeController {
 //        ResultMessage<List<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
         ResultMessage<PageInfo<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
         try {
-            PageInfo result;
-            if(devFieldValueRequestPage.getPageNum()!=null && devFieldValueRequestPage.getPageSize()!=null){
-                PageHelper.startPage(devFieldValueRequestPage.getPageNum(), devFieldValueRequestPage.getPageSize());
-                ArrayList<DevFieldValueRequest> devFieldValueRequestArrayList = getElementList(devFieldValueRequestPage);
-                result = new PageInfo(devFieldValueRequestArrayList);
-            }else {
-                result=new PageInfo();
-                ArrayList<DevFieldValueRequest> devFieldValueRequestArrayList = getElementList(devFieldValueRequestPage);
-                result.setList(devFieldValueRequestArrayList);
-            }
+            PageInfo<DevFieldValueRequest> result = getElementList(devFieldValueRequestPage);
+            result = getElementList(devFieldValueRequestPage);
 //            resultMessage.setValue(devFieldValueRequestArrayList);
             resultMessage.setValue(result);
             resultMessage.setMesg("查询成功");
@@ -329,7 +321,8 @@ public class DevTypeController {
         }
     }
 
-    private ArrayList<DevFieldValueRequest> getElementList(DevFieldValueRequestPage devFieldValueRequestPage) throws Exception {
+    private PageInfo<DevFieldValueRequest> getElementList(DevFieldValueRequestPage devFieldValueRequestPage) throws Exception {
+        PageInfo<DevFieldValueRequest> result;
         ArrayList<DevFieldValueRequest> devFieldValueRequestArrayList = new ArrayList<>();
         //设置类型
         DevTypeElement devTypeElement = new DevTypeElement();
@@ -337,11 +330,20 @@ public class DevTypeController {
         List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
         devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().setDev_element_id(devTypeElements.get(0).getDev_type_id());
         //查询固定字段
+        result=new PageInfo();
+        if(devFieldValueRequestPage.getPageNum()!=null && devFieldValueRequestPage.getPageSize()!=null){
+            PageHelper.startPage(devFieldValueRequestPage.getPageNum(), devFieldValueRequestPage.getPageSize());
+        }
         List<DevFixedFieldValue> devFixedFieldValueList = devFixedFieldValueService.getValueListByElementId(
                 devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
+        result=new PageInfo(devFixedFieldValueList);
+        ArrayList<String> valueIds = new ArrayList<>();
+        for(DevFixedFieldValue devFixedFieldValue:devFixedFieldValueList){
+            valueIds.add(devFixedFieldValue.getDev_type_field_value_id());
+        }
         //查询用户自定义字段
         Map<String, Map<String, String>> customValueMap = devCustomFieldValueService.getValueListByElementId(
-                devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
+                devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id(),valueIds);
         //进行合并
         for (DevFixedFieldValue devFixedFieldValue : devFixedFieldValueList) {
             //补全名称
@@ -350,7 +352,8 @@ public class DevTypeController {
             request.setCustomFieldValue(customValueMap.get(devFixedFieldValue.getDev_type_field_value_id()));
             devFieldValueRequestArrayList.add(request);
         }
-        return devFieldValueRequestArrayList;
+        result.setList(devFieldValueRequestArrayList);
+        return result;
     }
 
 

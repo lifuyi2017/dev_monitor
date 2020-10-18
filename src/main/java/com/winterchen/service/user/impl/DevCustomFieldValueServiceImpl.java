@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -58,7 +57,7 @@ public class DevCustomFieldValueServiceImpl implements DevCustomFieldValueServic
      * 获取用户自定义字段的值
      */
     @Override
-    public Map<String, Map<String, String>> getValueListByElementId(String dev_element_id) throws Exception {
+    public Map<String, Map<String, String>> getValueListByElementId(String dev_element_id, List<String> valueIds) throws Exception {
         //获取自定义字段
         DevCustomField devCustomField = new DevCustomField();
         devCustomField.setDev_element_id(dev_element_id);
@@ -68,9 +67,7 @@ public class DevCustomFieldValueServiceImpl implements DevCustomFieldValueServic
             fieldNames.add(devCustomField1.getDev_type_field_name());
         }
         Map<String, Map<String, String>> map = new HashMap<>();
-        DevCustomFieldValue devCustomFieldValue = new DevCustomFieldValue();
-        devCustomFieldValue.setDev_element_id(dev_element_id);
-        List<DevCustomFieldValue> devCustomFieldValueList = devCustomFieldValueMapper.getByEntity(devCustomFieldValue);
+        List<DevCustomFieldValue> devCustomFieldValueList = devCustomFieldValueMapper.getByIdList(valueIds);
         Map<String, String> valueMap;
         CustomValue value;
         for (DevCustomFieldValue customFieldValue : devCustomFieldValueList) {
