@@ -306,8 +306,7 @@ public class DevTypeController {
         ResultMessage<PageInfo<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
         try {
             PageInfo<DevFieldValueRequest> result = getElementList(devFieldValueRequestPage);
-            result = getElementList(devFieldValueRequestPage);
-//            resultMessage.setValue(devFieldValueRequestArrayList);
+//            result = getElementList(devFieldValueRequestPage);
             resultMessage.setValue(result);
             resultMessage.setMesg("查询成功");
             resultMessage.setStatuscode("200");
@@ -337,20 +336,22 @@ public class DevTypeController {
         List<DevFixedFieldValue> devFixedFieldValueList = devFixedFieldValueService.getValueListByElementId(
                 devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
         result=new PageInfo(devFixedFieldValueList);
-        ArrayList<String> valueIds = new ArrayList<>();
-        for(DevFixedFieldValue devFixedFieldValue:devFixedFieldValueList){
-            valueIds.add(devFixedFieldValue.getDev_type_field_value_id());
-        }
-        //查询用户自定义字段
-        Map<String, Map<String, String>> customValueMap = devCustomFieldValueService.getValueListByElementId(
-                devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id(),valueIds);
-        //进行合并
-        for (DevFixedFieldValue devFixedFieldValue : devFixedFieldValueList) {
-            //补全名称
-            DevFieldValueRequest request = new DevFieldValueRequest();
-            request.setDevFixedFieldValue(devFixedFieldValue);
-            request.setCustomFieldValue(customValueMap.get(devFixedFieldValue.getDev_type_field_value_id()));
-            devFieldValueRequestArrayList.add(request);
+        if(devFixedFieldValueList!=null && devFixedFieldValueList.size()>0){
+            ArrayList<String> valueIds = new ArrayList<>();
+            for(DevFixedFieldValue devFixedFieldValue:devFixedFieldValueList){
+                valueIds.add(devFixedFieldValue.getDev_type_field_value_id());
+            }
+            //查询用户自定义字段
+            Map<String, Map<String, String>> customValueMap = devCustomFieldValueService.getValueListByElementId(
+                    devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id(),valueIds);
+            //进行合并
+            for (DevFixedFieldValue devFixedFieldValue : devFixedFieldValueList) {
+                //补全名称
+                DevFieldValueRequest request = new DevFieldValueRequest();
+                request.setDevFixedFieldValue(devFixedFieldValue);
+                request.setCustomFieldValue(customValueMap.get(devFixedFieldValue.getDev_type_field_value_id()));
+                devFieldValueRequestArrayList.add(request);
+            }
         }
         result.setList(devFieldValueRequestArrayList);
         return result;

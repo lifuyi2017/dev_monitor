@@ -28,7 +28,7 @@
     </select>
 
     <delete id="deleteByEnterpriseId">
-        DELETE from collection where dev_element_id in (SELECT * from dev_elements where enterprise_id=#{id})
+        DELETE from collection where dev_element_id in (SELECT dev_element_id from dev_elements where enterprise_id=#{id})
     </delete>
 
     <select id="queryByEntity" parameterType="com.winterchen.model.CollectionManager" resultType="com.winterchen.model.CollectionManager">

@@ -8,6 +8,7 @@ import com.winterchen.dao.MeasureMapper;
 import com.winterchen.dao.NetworkMapper;
 import com.winterchen.model.*;
 import com.winterchen.service.user.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,15 @@ public class InstrumentController {
     public ResultMessage<Boolean> addOrUpdateNetWork(@RequestBody Network network) {
         ResultMessage<Boolean> resultMessage = new ResultMessage();
         try {
+            if(StringUtils.isBlank(network.getNetwork_type()) || StringUtils.isBlank(network.getNetwork_code()) ||
+                    StringUtils.isBlank(network.getNetwork_name()) || StringUtils.isBlank(network.getNetwork_ip()) ||
+                    StringUtils.isBlank(network.getInput_address()) || StringUtils.isBlank(network.getOutput_agreement()) ||
+                    StringUtils.isBlank(network.getEnterprise_id())){
+                resultMessage.setValue(false);
+                resultMessage.setMesg("网关类型、网关编号、网关名称、网关IP地址、输入地址、输出协议、公司名称不能为空");
+                resultMessage.setStatuscode("401");
+                return resultMessage;
+            }
             if (network.getNetwork_id() != null && !"".equals(network.getNetwork_id().trim())) {
                 //修改
                 instrumentService.updateById(network);
@@ -146,6 +156,19 @@ public class InstrumentController {
     public ResultMessage<Boolean> addOrUpdateMeasure(@RequestBody Measure measure){
         ResultMessage<Boolean> resultMessage = new ResultMessage();
         try {
+            if(StringUtils.isBlank(measure.getMeasure_type()) ||
+                    StringUtils.isBlank(measure.getMeasure_code()) ||
+                    StringUtils.isBlank(measure.getMeasure_name()) ||
+                    StringUtils.isBlank(measure.getMeasure_ip()) ||
+                    StringUtils.isBlank(measure.getMeasure_channel_num()) ||
+                    StringUtils.isBlank(measure.getNetwork_id()) ||
+                    StringUtils.isBlank(measure.getEnterprise_id())
+            ){
+                resultMessage.setValue(false);
+                resultMessage.setMesg("测点类型、测点编号、测点名称、测点IP地址、测点通道数、所属网关名称、公司名称不能为空");
+                resultMessage.setStatuscode("401");
+                return resultMessage;
+            }
             if (measure.getMeasure_id() != null && !"".equals(measure.getMeasure_id().trim())) {
                 //修改
                 measureService.updateById(measure);
@@ -255,6 +278,17 @@ public class InstrumentController {
     public ResultMessage<Boolean> addOrUpdateChannel(@RequestBody Channel channel){
         ResultMessage<Boolean> resultMessage = new ResultMessage();
         try {
+            if(StringUtils.isBlank(channel.getEnterprise_id()) || StringUtils.isBlank(channel.getChannel_name()) ||
+                    StringUtils.isBlank(channel.getMeasure_id())  || StringUtils.isBlank(channel.getChannel_code())
+             || StringUtils.isBlank(channel.getSignal_type()) || StringUtils.isBlank(channel.getData_type()) ||
+                    StringUtils.isBlank(channel.getInput_type()) || StringUtils.isBlank(channel.getInput_type_range())
+             || StringUtils.isBlank(channel.getIs_output_power()) || StringUtils.isBlank(channel.getPin_num())){
+                resultMessage.setValue(false);
+                resultMessage.setMesg("通道编号、通道名称、信号类型、数模类型、" +
+                        "输入类型、输入类型范围、是否输出电源、通道pin数、所属测点、公司不能为空，请填写");
+                resultMessage.setStatuscode("401");
+                return resultMessage;
+            }
             if (channel.getChannel_id() != null && !"".equals(channel.getChannel_id().trim())) {
                 //修改
                 channelService.updateById(channel);
@@ -325,6 +359,8 @@ public class InstrumentController {
             List<Measure> measureList = measureService.queryByEntity(measure);
             if(measureList!=null && measureList.size()>0){
                 ch.setMeasure_name(measureList.get(0).getMeasure_name());
+            }else {
+                channelMapper.deleteByMeasureId(ch.getMeasure_id());
             }
         }
         return channelList;
@@ -361,6 +397,12 @@ public class InstrumentController {
     public ResultMessage<Boolean> addOrUpdateLogic(@RequestBody LogicNode logicNode){
         ResultMessage<Boolean> resultMessage = new ResultMessage();
         try {
+            if(StringUtils.isBlank(logicNode.getLogic_name()) || StringUtils.isBlank(logicNode.getLogic_code())){
+                resultMessage.setValue(false);
+                resultMessage.setMesg("逻辑名称与编码不能为空");
+                resultMessage.setStatuscode("401");
+                return resultMessage;
+            }
             if (logicNode.getLogic_id()!= null && !"".equals(logicNode.getLogic_id().trim())) {
                 //修改
                 logicService.updateById(logicNode);

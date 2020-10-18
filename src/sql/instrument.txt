@@ -220,7 +220,7 @@ localhost:8080/instrument/addOrUpdateChannel
 }
 =====================================================
 查询通道
-localhost:8080/instrument/queryChannel
+localhost:8082/instrument/queryChannel
 输入：
 {
     "channel": {},

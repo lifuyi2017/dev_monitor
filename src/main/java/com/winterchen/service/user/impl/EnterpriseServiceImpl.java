@@ -66,7 +66,9 @@ public class EnterpriseServiceImpl  implements EnterpriseService {
         devService.deleteByEnterpriseId(id);
 
         channelMapper.deleteByEnterpriseId(id);
+
         devFixedFieldValueMapper.deleteByEnterpriseId(id);
+
         userDao.deleteByEnterpriseId(id);
     }
 

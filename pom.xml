@@ -25,11 +25,11 @@
 	</properties>
 
 	<dependencies>
-		<!--	热部署-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-		</dependency>
+<!--		&lt;!&ndash;	热部署&ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-devtools</artifactId>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>org.eclipse.paho</groupId>

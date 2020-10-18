@@ -94,6 +94,7 @@ public class EnterpriseController {
             booleanResultMessage.setMesg("删除成功");
             return booleanResultMessage;
         } catch (Exception e) {
+            e.printStackTrace();
             booleanResultMessage.setValue(false);
             booleanResultMessage.setStatuscode("501");
             booleanResultMessage.setMesg("删除失败");

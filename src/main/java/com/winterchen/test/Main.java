@@ -1,17 +1,14 @@
 package com.winterchen.test;
 
-import com.winterchen.model.DevCustomField;
-import com.winterchen.model.LogicRelation;
+
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
-import com.google.common.collect.EvictingQueue;
-import com.winterchen.util.DateUtil;
 
 public class Main {
 
@@ -54,15 +51,7 @@ public class Main {
 //        fifo.add(3);
 //        System.out.println(fifo);
 
-
-        String value="2020-10-14 16:10:04";
-        String value1="2020-10-14 16:10:04";
-        value.replaceAll(" ","wwwww");
-        System.out.println(value);
-        System.out.println(value.equals(value1));
-//        Date date1 = DateUtil.parseDate(value1);
-
-        System.out.println("-----------");
+        System.out.println(StringUtils.isBlank("    "));
     }
 
     public static byte[] getContent(String filePath) throws IOException {
