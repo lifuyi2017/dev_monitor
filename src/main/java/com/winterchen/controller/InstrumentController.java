@@ -3,6 +3,9 @@ package com.winterchen.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.winterchen.annotation.UserLoginToken;
+import com.winterchen.dao.ChannelMapper;
+import com.winterchen.dao.MeasureMapper;
+import com.winterchen.dao.NetworkMapper;
 import com.winterchen.model.*;
 import com.winterchen.service.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,10 @@ public class InstrumentController {
     private LogicService logicService;
     @Autowired
     private EnterpriseService enterpriseService;
+    @Autowired
+    private ChannelMapper channelMapper;
+    @Autowired
+    private MeasureMapper measureMapper;
 
     /**
      * 新增或者更新网关
@@ -98,7 +105,12 @@ public class InstrumentController {
         for(Network network1:networkList){
             Enterprise enterprise = new Enterprise();
             enterprise.setEnterprise_id(network1.getEnterprise_id());
-            network1.setEnterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
+            List<Enterprise> enterByEntity = enterpriseService.getEnterByEntity(enterprise);
+            if(enterByEntity!=null && enterByEntity.size()>0){
+                network1.setEnterprise_name(enterByEntity.get(0).getEnterprise_name());
+            }else {
+                networkService.deleteByEnterpriseId(network1.getEnterprise_id());
+            }
         }
         return networkList;
     }
@@ -193,10 +205,20 @@ public class InstrumentController {
         for(Measure measure1:measureList){
             Network network = new Network();
             network.setNetwork_id(measure1.getNetwork_id());
-            measure1.setNetwork_name(networkService.queryByEntity(network).get(0).getNetwork_name());
+            List<Network> networks = networkService.queryByEntity(network);
+            if(networks!=null && networks.size()>0){
+                measure1.setNetwork_name(networks.get(0).getNetwork_name());
+            }else {
+                measureService.deleteByNetworkId(measure1.getNetwork_id());
+            }
             Enterprise enterprise = new Enterprise();
             enterprise.setEnterprise_id(measure1.getEnterprise_id());
-            measure1.setEnterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
+            List<Enterprise> enterByEntity = enterpriseService.getEnterByEntity(enterprise);
+            if(enterByEntity!=null && enterByEntity.size()>0){
+                measure1.setEnterprise_name(enterByEntity.get(0).getEnterprise_name());
+            }else {
+                measureMapper.deleteByEnterpriseId(measure1.getEnterprise_id());
+            }
         }
         return measureList;
     }
@@ -210,7 +232,7 @@ public class InstrumentController {
     public ResultMessage<Boolean> deleteMeasureById(@RequestBody Measure measure) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
-            measureService.deleteNetWorkById(measure.getMeasure_id());
+            measureService.deleteById(measure.getMeasure_id());
             booleanResultMessage.setMesg("删除成功");
             booleanResultMessage.setValue(true);
             booleanResultMessage.setStatuscode("200");
@@ -292,10 +314,18 @@ public class InstrumentController {
         for(Channel ch:channelList){
             Enterprise enterprise = new Enterprise();
             enterprise.setEnterprise_id(ch.getEnterprise_id());
-            ch.setEnterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
+            List<Enterprise> enterByEntity = enterpriseService.getEnterByEntity(enterprise);
+            if(enterByEntity!=null && enterByEntity.size()>0){
+                ch.setEnterprise_name(enterByEntity.get(0).getEnterprise_name());
+            }else {
+                channelMapper.deleteByEnterpriseId(ch.getEnterprise_id());
+            }
             Measure measure = new Measure();
             measure.setMeasure_id(ch.getMeasure_id());
-            ch.setMeasure_name(measureService.queryByEntity(measure).get(0).getMeasure_name());
+            List<Measure> measureList = measureService.queryByEntity(measure);
+            if(measureList!=null && measureList.size()>0){
+                ch.setMeasure_name(measureList.get(0).getMeasure_name());
+            }
         }
         return channelList;
     }

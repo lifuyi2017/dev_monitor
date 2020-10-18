@@ -76,4 +76,8 @@
             #{item}
         </foreach>
     </update>
+
+    <delete id="deleteByEnterpriseId">
+        delete from `user` where  enterprise_id=#{id}
+    </delete>
 </mapper>

@@ -27,6 +27,22 @@ public class DevFixedFieldValue implements Serializable {
     public DevFixedFieldValue() {
     }
 
+    public DevFixedFieldValue(String dev_type_field_value_id, String dev_type_operate_enterprise_id, String dev_type_service_enterprise_id, String dev_type_production_enterprise_id, String dev_type_operate_enterprise_name, String dev_type_service_enterprise_name, String dev_type_production_enterprise_name, String dev_element_id, String dev_type, String dev_type_code, String dev_type_name, String dev_type_charge_user_name, byte[] dev_type_pic) {
+        this.dev_type_field_value_id = dev_type_field_value_id;
+        this.dev_type_operate_enterprise_id = dev_type_operate_enterprise_id;
+        this.dev_type_service_enterprise_id = dev_type_service_enterprise_id;
+        this.dev_type_production_enterprise_id = dev_type_production_enterprise_id;
+        this.dev_type_operate_enterprise_name = dev_type_operate_enterprise_name;
+        this.dev_type_service_enterprise_name = dev_type_service_enterprise_name;
+        this.dev_type_production_enterprise_name = dev_type_production_enterprise_name;
+        this.dev_element_id = dev_element_id;
+        this.dev_type = dev_type;
+        this.dev_type_code = dev_type_code;
+        this.dev_type_name = dev_type_name;
+        this.dev_type_charge_user_name = dev_type_charge_user_name;
+        this.dev_type_pic = dev_type_pic;
+    }
+
     public DevFixedFieldValue(String dev_type_field_value_id, String dev_type_operate_enterprise_id, String dev_type_service_enterprise_id, String dev_type_production_enterprise_id, String dev_element_id, String dev_type, String dev_type_code, String dev_type_name, String dev_type_charge_user_name, String dev_type_pic_str) {
         this.dev_type_field_value_id = dev_type_field_value_id;
         this.dev_type_operate_enterprise_id = dev_type_operate_enterprise_id;

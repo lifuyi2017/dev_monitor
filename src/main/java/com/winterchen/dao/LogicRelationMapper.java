@@ -18,4 +18,6 @@ public interface LogicRelationMapper {
     void deleteByMeasureId(String measure_id);
 
     void deleteByChannelId(String channel_id);
+
+    void deleteByEnterpriseId(String id);
 }

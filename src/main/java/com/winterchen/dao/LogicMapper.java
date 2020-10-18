@@ -12,4 +12,6 @@ public interface LogicMapper {
     List<LogicNode> queryForEntity(LogicNode logicNode);
 
     void deleteById(String logic_id);
+
+    void deleteByEnterpriseId(String id);
 }

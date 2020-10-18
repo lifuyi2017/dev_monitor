@@ -12,4 +12,10 @@ public interface ChannelMapper {
     List<Channel> queryByEntity(Channel channel);
 
     void deleteById(String channel_id);
+
+    void deleteByEnterpriseId(String id);
+
+    List<String> getByMeasureId(String measure_id);
+
+    void deleteByMeasureId(String measure_id);
 }

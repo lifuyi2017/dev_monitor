@@ -12,4 +12,10 @@ public interface MeasureMapper {
     List<Measure> queryByEntity(Measure measure);
 
     void deleteNetWorkById(String measure_id);
+
+    void deleteByEnterpriseId(String id);
+
+    void deleteNetWorkId(String net_id);
+
+    List<String> getByNetWorkId(String net_id);
 }

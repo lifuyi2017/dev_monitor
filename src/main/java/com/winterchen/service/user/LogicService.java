@@ -12,4 +12,6 @@ public interface LogicService {
     List<LogicNode> queryByEntity(LogicNode logicNode) throws Exception;
 
     void deleteById(String logic_id);
+
+    void deleteByEnterpriseId(String id);
 }

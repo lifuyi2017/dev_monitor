@@ -14,4 +14,5 @@ public interface EnterpriseMapper{
 
     void deleteById(String id);
 
+    String getNameById(String enterprise_id);
 }

@@ -8,6 +8,7 @@ import com.winterchen.model.CollectionManagerRequest;
 import com.winterchen.model.ResultMessage;
 import com.winterchen.model.StartStopCollection;
 import com.winterchen.service.user.CollectionService;
+import com.winterchen.util.MqttUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class CollectionController {
                     collectionManager.setCollection_id(id);
                     List<CollectionManager> collectionManagerList = collectionService.queryByEntity(collectionManager);
                     CollectionManager collectionManager1 = collectionManagerList.get(0);
-                    putToMqtt(collectionManager1);
+                    MqttUtil.putToMqtt(collectionManager1);
                     collectionManager1.setStatus("1");
                     collectionService.updateByCollectionId(collectionManager1);
                 }
@@ -49,7 +50,7 @@ public class CollectionController {
                     collectionManager.setCollection_id(id);
                     List<CollectionManager> collectionManagerList = collectionService.queryByEntity(collectionManager);
                     CollectionManager collectionManager1 = collectionManagerList.get(0);
-                    removeMqtt(collectionManager1);
+                    MqttUtil.removeMqtt(collectionManager1);
                     collectionManager1.setStatus("0");
                     collectionService.updateByCollectionId(collectionManager1);
                 }
@@ -66,12 +67,6 @@ public class CollectionController {
         return booleanResultMessage;
     }
 
-    private void putToMqtt(CollectionManager collectionManager1) {
-    }
-
-    private void removeMqtt(CollectionManager collectionManager1) {
-
-    }
 
     /**
      * 新增或者修改

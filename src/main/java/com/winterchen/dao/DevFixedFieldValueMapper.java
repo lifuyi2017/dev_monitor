@@ -14,4 +14,6 @@ public interface DevFixedFieldValueMapper {
     void deleteByValueId(String dev_type_field_value_id);
 
     void updateByValueId(DevFixedFieldValue devFixedFieldValue);
+
+    void deleteByEnterpriseId(String id);
 }

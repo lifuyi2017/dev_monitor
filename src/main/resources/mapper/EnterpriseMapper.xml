@@ -32,4 +32,8 @@
         delete from enterprise where enterprise_id=#{enterprise_id}
     </delete>
 
+    <select id="getNameById" resultType="java.lang.String">
+        select enterprise_name from enterprise where enterprise_id=#{enterprise_id}
+    </select>
+
 </mapper>

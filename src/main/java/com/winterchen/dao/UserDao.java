@@ -22,4 +22,6 @@ public interface UserDao {
     void deleteByIds(List<Integer> ids);
 
     void editStatus(List<Integer> ids, String status);
+
+    void deleteByEnterpriseId(String id);
 }

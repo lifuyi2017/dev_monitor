@@ -36,4 +36,16 @@
         delete from measure where measure_id=#{measure_id}
     </delete>
 
+    <delete id="deleteByEnterpriseId">
+        delete from measure where enterprise_id=#{id}
+    </delete>
+
+    <delete id="deleteNetWorkId">
+        delete from measure where network_id=#{net_id}
+    </delete>
+
+    <select id="getByNetWorkId" resultType="java.lang.String">
+        select measure_id from measure where network_id=#{net_id}
+    </select>
+
 </mapper>

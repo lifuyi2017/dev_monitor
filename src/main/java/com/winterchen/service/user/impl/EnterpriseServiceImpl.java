@@ -3,10 +3,14 @@ package com.winterchen.service.user.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.winterchen.dao.EnterpriseMapper;
+import com.winterchen.dao.*;
+import com.winterchen.model.Channel;
 import com.winterchen.model.Enterprise;
 import com.winterchen.model.EnterpriseRequest;
+import com.winterchen.service.user.DevService;
 import com.winterchen.service.user.EnterpriseService;
+import com.winterchen.service.user.LogicService;
+import com.winterchen.service.user.NetworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,21 @@ public class EnterpriseServiceImpl  implements EnterpriseService {
 
     @Autowired
     private EnterpriseMapper enterpriseMapper;
+    @Autowired
+    private NetworkService networkService;
+    @Autowired
+    private MeasureMapper measureMapper;
+    @Autowired
+    private LogicService logicService;
+    @Autowired
+    private DevService devService;
+    @Autowired
+    private ChannelMapper channelMapper;
+    @Autowired
+    private DevFixedFieldValueMapper devFixedFieldValueMapper;
+    @Autowired
+    private UserDao userDao;
+
 
 
     @Override
@@ -40,6 +59,15 @@ public class EnterpriseServiceImpl  implements EnterpriseService {
     @Override
     public void deleteById(String id) throws Exception{
         enterpriseMapper.deleteById(id);
+        networkService.deleteByEnterpriseId(id);
+        measureMapper.deleteByEnterpriseId(id);
+
+        logicService.deleteByEnterpriseId(id);
+        devService.deleteByEnterpriseId(id);
+
+        channelMapper.deleteByEnterpriseId(id);
+        devFixedFieldValueMapper.deleteByEnterpriseId(id);
+        userDao.deleteByEnterpriseId(id);
     }
 
     @Override

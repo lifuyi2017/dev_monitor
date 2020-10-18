@@ -38,4 +38,16 @@
         delete from channel where channel_id=#{channel_id}
     </delete>
 
+    <delete id="deleteByEnterpriseId">
+        delete from channel where enterprise_id=#{id}
+    </delete>
+
+    <select id="getByMeasureId" resultType="java.lang.String">
+        select channel_id from channel where measure_id=#{measure_id}
+    </select>
+
+    <delete id="deleteByMeasureId">
+        delete from channel where measure_id=#{measure_id}
+    </delete>
+
 </mapper>

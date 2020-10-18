@@ -20,4 +20,8 @@ public interface CollectionManagerMapper {
     void deleteByElementId(String dev_element_id);
 
     void deleteById(String collection_id);
+
+    List<CollectionManager> getByEnterpriseId(String id);
+
+    void deleteByEnterpriseId(String id);
 }

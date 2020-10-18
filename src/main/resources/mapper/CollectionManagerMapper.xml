@@ -22,6 +22,15 @@
         delete from collection where collection_id=#{collection_id}
     </delete>
 
+    <select id="getByEnterpriseId" resultType="com.winterchen.model.CollectionManager">
+        select a.* from collection a,dev_elements b where a.dev_element_id=b.dev_element_id
+        and b.enterprise_id=#{id}
+    </select>
+
+    <delete id="deleteByEnterpriseId">
+        DELETE from collection where dev_element_id in (SELECT * from dev_elements where enterprise_id=#{id})
+    </delete>
+
     <select id="queryByEntity" parameterType="com.winterchen.model.CollectionManager" resultType="com.winterchen.model.CollectionManager">
         select * from collection where 1=1
         <if test="collection_id!=null">

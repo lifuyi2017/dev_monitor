@@ -26,4 +26,8 @@
         delete from logic_node where logic_id=#{logic_id}
     </delete>
 
+    <delete id="deleteByEnterpriseId">
+        delete from logic_node where enterprise_id=#{id}
+    </delete>
+
 </mapper>

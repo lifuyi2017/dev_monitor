@@ -22,4 +22,12 @@
         delete from network where network_id=#{network_id}
     </delete>
 
+    <delete id="deleteByEnterpriseId">
+        delete from network where enterprise_id=#{id}
+    </delete>
+
+    <select id="getIdByEnterpriseId" resultType="java.lang.String">
+        select network_id from network where enterprise_id=#{id}
+    </select>
+
 </mapper>

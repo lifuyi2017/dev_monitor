@@ -17,6 +17,7 @@
         <if test="type!=null">
             and `type`=#{type}
         </if>
+         order by dev_element_name
     </select>
 
     <insert id="insertEntity" parameterType="com.winterchen.model.DevTypeElement">

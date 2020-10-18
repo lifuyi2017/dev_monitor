@@ -14,4 +14,6 @@ public interface DevElementMapper {
     void deleteByElementId(String dev_element_id);
 
     void deleteByParentId(String dev_element_id);
+
+    void deleteByEnterpriseId(String id);
 }

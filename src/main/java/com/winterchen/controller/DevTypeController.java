@@ -345,13 +345,6 @@ public class DevTypeController {
         //进行合并
         for (DevFixedFieldValue devFixedFieldValue : devFixedFieldValueList) {
             //补全名称
-            Enterprise enterprise = new Enterprise();
-            enterprise.setEnterprise_id(devFixedFieldValue.getDev_type_operate_enterprise_id());
-            devFixedFieldValue.setDev_type_operate_enterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
-            enterprise.setEnterprise_id(devFixedFieldValue.getDev_type_production_enterprise_id());
-            devFixedFieldValue.setDev_type_production_enterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
-            enterprise.setEnterprise_id(devFixedFieldValue.getDev_type_service_enterprise_id());
-            devFixedFieldValue.setDev_type_service_enterprise_name(enterpriseService.getEnterByEntity(enterprise).get(0).getEnterprise_name());
             DevFieldValueRequest request = new DevFieldValueRequest();
             request.setDevFixedFieldValue(devFixedFieldValue);
             request.setCustomFieldValue(customValueMap.get(devFixedFieldValue.getDev_type_field_value_id()));

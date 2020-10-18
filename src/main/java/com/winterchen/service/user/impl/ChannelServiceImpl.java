@@ -43,4 +43,15 @@ public class ChannelServiceImpl implements ChannelService {
         logicRelationMapper.deleteByChannelId(channel_id);
         collectionManagerMapper.deleteByChannelId(channel_id);
     }
+
+    @Override
+    public void deleteByMeasureId(String m_id) {
+        List<String> chIds=channelMapper.getByMeasureId(m_id);
+        for(String chId:chIds){
+            logicRelationMapper.deleteByChannelId(chId);
+            collectionManagerMapper.deleteByChannelId(chId);
+        }
+        channelMapper.deleteByMeasureId(m_id);
+        logicRelationMapper.deleteByMeasureId(m_id);
+    }
 }

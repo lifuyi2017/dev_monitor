@@ -1,6 +1,7 @@
 package com.winterchen.service.user.impl;
 
 import com.winterchen.dao.DevFixedFieldValueMapper;
+import com.winterchen.dao.EnterpriseMapper;
 import com.winterchen.model.DevFixedFieldValue;
 import com.winterchen.service.user.DevFixedFieldValueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class DevFixedFieldValueServiceImpl implements DevFixedFieldValueService 
 
     @Autowired
     private DevFixedFieldValueMapper devFixedFieldValueMapper;
+    @Autowired
+    private EnterpriseMapper enterpriseMapper;
 
 
     @Override
@@ -33,6 +36,12 @@ public class DevFixedFieldValueServiceImpl implements DevFixedFieldValueService 
         }else {
             devFixedFieldValue.setDev_type_pic(null);
         }
+        devFixedFieldValue.setDev_type_operate_enterprise_name(
+                enterpriseMapper.getNameById(devFixedFieldValue.getDev_type_operate_enterprise_id()));
+        devFixedFieldValue.setDev_type_service_enterprise_name(
+                enterpriseMapper.getNameById(devFixedFieldValue.getDev_type_service_enterprise_id()));
+        devFixedFieldValue.setDev_type_production_enterprise_name(
+                enterpriseMapper.getNameById(devFixedFieldValue.getDev_type_production_enterprise_id()));
         devFixedFieldValueMapper.insertValue(devFixedFieldValue);
     }
 
@@ -59,6 +68,12 @@ public class DevFixedFieldValueServiceImpl implements DevFixedFieldValueService 
         if(devFixedFieldValue.getDev_type_pic_str()!=null){
             devFixedFieldValue.setDev_type_pic(Base64.getDecoder().decode(devFixedFieldValue.getDev_type_pic_str()));
         }
+        devFixedFieldValue.setDev_type_operate_enterprise_name(
+                enterpriseMapper.getNameById(devFixedFieldValue.getDev_type_operate_enterprise_id()));
+        devFixedFieldValue.setDev_type_service_enterprise_name(
+                enterpriseMapper.getNameById(devFixedFieldValue.getDev_type_service_enterprise_id()));
+        devFixedFieldValue.setDev_type_production_enterprise_name(
+                enterpriseMapper.getNameById(devFixedFieldValue.getDev_type_production_enterprise_id()));
         devFixedFieldValueMapper.updateByValueId(devFixedFieldValue);
     }
 }

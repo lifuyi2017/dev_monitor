@@ -56,7 +56,12 @@ public class LogicServiceImpl implements LogicService {
         for(LogicNode logic:logicNodeList){
             Enterprise enterprise = new Enterprise();
             enterprise.setEnterprise_id(logic.getEnterprise_id());
-            logic.setEnterprise_name(enterpriseMapper.getEnterByEntity(enterprise).get(0).getEnterprise_name());
+            List<Enterprise> enterByEntity = enterpriseMapper.getEnterByEntity(enterprise);
+            if(enterByEntity!=null && enterByEntity.size()>0){
+                logic.setEnterprise_name(enterByEntity.get(0).getEnterprise_name());
+            }else {
+                logicMapper.deleteByEnterpriseId(logic.getEnterprise_id());
+            }
             LogicRelation logicRelation = new LogicRelation();
             logicRelation.setLogic_id(logic.getLogic_id());
             List<LogicRelation> logicRelationList=logicRelationMapper.queryForEntity(logicRelation);
@@ -67,12 +72,22 @@ public class LogicServiceImpl implements LogicService {
                 for(String id:ids){
                     Channel channel = new Channel();
                     channel.setChannel_id(id);
-                    channelNameList.add(channelMapper.queryByEntity(channel).get(0).getChannel_name());
+                    List<Channel> channelList = channelMapper.queryByEntity(channel);
+                    if(channelList!=null && channelList.size()>0){
+                        channelNameList.add(channelList.get(0).getChannel_name());
+                    }else {
+                        logicRelationMapper.deleteByChannelId(id);
+                    }
                 }
                 relation.setChannel_name_list(channelNameList);
                 Measure measure = new Measure();
                 measure.setMeasure_id(relation.getMeasure_id());
-                relation.setMeasure_name(measureMapper.queryByEntity(measure).get(0).getMeasure_name());
+                List<Measure> measureList = measureMapper.queryByEntity(measure);
+                if(measureList!=null && measureList.size()>0){
+                    relation.setMeasure_name(measureList.get(0).getMeasure_name());
+                }else {
+                    logicRelationMapper.deleteByMeasureId(relation.getMeasure_id());
+                }
                 relation.setChannel_id_list(ids);
                 if(!relations.contains(relation)){
                     relations.add(relation);
@@ -88,5 +103,11 @@ public class LogicServiceImpl implements LogicService {
         logicMapper.deleteById(logic_id);
         logicRelationMapper.deleteById(logic_id);
         collectionManagerMapper.deleteByLogicId(logic_id);
+    }
+
+    @Override
+    public void deleteByEnterpriseId(String id) {
+        logicRelationMapper.deleteByEnterpriseId(id);
+        logicMapper.deleteByEnterpriseId(id);
     }
 }

@@ -45,4 +45,8 @@
         delete from logic_relation where channel_id=#{channel_id}
     </delete>
 
+    <delete id="deleteByEnterpriseId">
+        delete from logic_relation where logic_id in (select logic_id from logic_node WHERE enterprise_id=#{id})
+    </delete>
+
 </mapper>

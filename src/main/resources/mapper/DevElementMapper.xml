@@ -22,6 +22,7 @@
             <if test="enterprise_id!=null">
                 and enterprise_id=#{enterprise_id}
             </if>
+             order by dev_element_name
     </select>
 
     <insert id="insertEntity" parameterType="com.winterchen.model.DevElement">
@@ -40,5 +41,10 @@
     <delete id="deleteByParentId">
         delete from dev_elements where dev_parent_element_id=#{dev_element_id}
     </delete>
+
+    <delete id="deleteByEnterpriseId">
+        delete from dev_elements where enterprise_id=#{id}
+    </delete>
+
 
 </mapper>

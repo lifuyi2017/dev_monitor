@@ -8,4 +8,6 @@ public interface NetworkService {
     List<Network> queryByEntity(Network network) throws Exception;
 
     void deleteNetWorkById(String network_id) throws Exception;
+
+    void deleteByEnterpriseId(String id);
 }

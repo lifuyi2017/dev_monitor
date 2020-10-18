@@ -13,10 +13,12 @@
     <insert id="insertValue">
         insert into dev_type_fixed_field(dev_type_field_value_id,dev_type_operate_enterprise_id,
         dev_type_service_enterprise_id,dev_type_production_enterprise_id,dev_element_id,
-        dev_type,dev_type_code,dev_type_name,dev_type_charge_user_name,dev_type_pic) value (
+        dev_type,dev_type_code,dev_type_name,dev_type_charge_user_name,dev_type_pic,dev_type_operate_enterprise_name
+        ,dev_type_service_enterprise_name,dev_type_production_enterprise_name) value (
         #{dev_type_field_value_id},#{dev_type_operate_enterprise_id},#{dev_type_service_enterprise_id},
         #{dev_type_production_enterprise_id},#{dev_element_id},#{dev_type},#{dev_type_code},
-        #{dev_type_name},#{dev_type_charge_user_name},#{dev_type_pic}
+        #{dev_type_name},#{dev_type_charge_user_name},#{dev_type_pic},#{dev_type_operate_enterprise_name}
+        ,#{dev_type_service_enterprise_name},#{dev_type_production_enterprise_name}
         )
     </insert>
     
@@ -36,6 +38,14 @@
         dev_type_production_enterprise_id=#{dev_type_production_enterprise_id},
         dev_element_id=#{dev_element_id},dev_type=#{dev_type},dev_type_code=#{dev_type_code},
         dev_type_name=#{dev_type_name},dev_type_charge_user_name=#{dev_type_charge_user_name},
-        dev_type_pic=#{dev_type_pic} where dev_type_field_value_id=#{dev_type_field_value_id}
+        dev_type_pic=#{dev_type_pic},dev_type_operate_enterprise_name=#{dev_type_operate_enterprise_name},
+        dev_type_service_enterprise_name=#{dev_type_service_enterprise_name},
+        dev_type_production_enterprise_name=#{dev_type_production_enterprise_name}
+        where dev_type_field_value_id=#{dev_type_field_value_id}
     </update>
+
+    <delete id="deleteByEnterpriseId">
+         delete from dev_type_fixed_field  where dev_type_operate_enterprise_id=#{id} or
+         dev_type_service_enterprise_id=#{id} or dev_type_production_enterprise_id=#{dev_type_production_enterprise_id}
+    </delete>
 </mapper>

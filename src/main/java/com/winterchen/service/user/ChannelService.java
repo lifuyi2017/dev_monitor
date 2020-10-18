@@ -12,4 +12,6 @@ public interface ChannelService {
     List<Channel> queryByEntity(Channel channel) throws Exception;
 
     void deleteNetWorkById(String channel_id) throws Exception;
+
+    void deleteByMeasureId(String m_id);
 }

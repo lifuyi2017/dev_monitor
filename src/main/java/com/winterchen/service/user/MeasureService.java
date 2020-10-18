@@ -11,5 +11,7 @@ public interface MeasureService {
 
     List<Measure> queryByEntity(Measure measure) throws Exception;
 
-    void deleteNetWorkById(String measure_id);
+    void deleteById(String measure_id);
+
+    void deleteByNetworkId(String net_id);
 }
