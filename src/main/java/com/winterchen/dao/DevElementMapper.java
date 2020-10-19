@@ -16,4 +16,6 @@ public interface DevElementMapper {
     void deleteByParentId(String dev_element_id);
 
     void deleteByEnterpriseId(String id);
+
+    Integer sunCount(String dev_element_id);
 }

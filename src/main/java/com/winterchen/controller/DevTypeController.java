@@ -3,6 +3,7 @@ package com.winterchen.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.winterchen.annotation.UserLoginToken;
+import com.winterchen.dao.DevTypeMapper;
 import com.winterchen.model.*;
 import com.winterchen.service.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,7 @@ public class DevTypeController {
     @Autowired
     private DevTypeService devTypeService;
     @Autowired
-    private EnterpriseService enterpriseService;
-    @Autowired
-    private UserService userService;
+    private DevTypeMapper devTypeMapper;
 
     /**
      * 新增设备或组件：type=1是设备，type=2是组件
@@ -42,15 +41,15 @@ public class DevTypeController {
     @ResponseBody
     @PostMapping("/addDevTypeOrDevElement")
     @UserLoginToken
-    public ResultMessage<Boolean> addDevTypeOrDevElement(@RequestBody DevTypeElement devTypeElement) {
-        ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
+    public ResultMessage<String> addDevTypeOrDevElement(@RequestBody DevTypeElement devTypeElement) {
+        ResultMessage<String> booleanResultMessage = new ResultMessage<>();
         try {
             String id = UUID.randomUUID().toString().replaceAll("-", "");
             if ("2".equals(devTypeElement.getType())) {
                 //插入组件
                 if (devTypeElement.getDev_parent_element_id() == null || "".equals(devTypeElement.getDev_parent_element_id().trim())) {
                     booleanResultMessage.setStatuscode("401");
-                    booleanResultMessage.setValue(false);
+                    booleanResultMessage.setValue("");
                     booleanResultMessage.setMesg("添加组件时必须设置父组件id");
                     return booleanResultMessage;
                 }
@@ -66,13 +65,13 @@ public class DevTypeController {
                 devTypeService.insertEntity(devTypeElement);
             }
             booleanResultMessage.setStatuscode("200");
-            booleanResultMessage.setValue(true);
+            booleanResultMessage.setValue(id);
             booleanResultMessage.setMesg("添加成功");
             return booleanResultMessage;
         } catch (Exception e) {
             e.printStackTrace();
             booleanResultMessage.setStatuscode("501");
-            booleanResultMessage.setValue(false);
+            booleanResultMessage.setValue("");
             booleanResultMessage.setMesg("服务端错误：" + e.toString());
             return booleanResultMessage;
         }
@@ -145,6 +144,9 @@ public class DevTypeController {
             DevTypeElement devTypeElement = new DevTypeElement();
             devTypeElement.setType("1");
             List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
+            for(DevTypeElement dev:devTypeElements){
+                dev.setHasSon(devTypeMapper.sonCount(dev.getDev_element_id())>0);
+            }
             resultMessage.setValue(devTypeElements);
             resultMessage.setMesg("查询成功");
             resultMessage.setStatuscode("200");
@@ -168,6 +170,9 @@ public class DevTypeController {
         ResultMessage<List<DevTypeElement>> resultMessage = new ResultMessage<>();
         try {
             List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
+            for(DevTypeElement dev:devTypeElements){
+                dev.setHasSon(devTypeMapper.sonCount(dev.getDev_element_id())>0);
+            }
             resultMessage.setValue(devTypeElements);
             resultMessage.setMesg("查询成功");
             resultMessage.setStatuscode("200");

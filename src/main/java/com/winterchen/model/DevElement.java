@@ -29,6 +29,16 @@ public class DevElement implements Serializable {
      */
     private String enterprise_id;
 
+    private Boolean hasSon;
+
+    public Boolean getHasSon() {
+        return hasSon;
+    }
+
+    public void setHasSon(Boolean hasSon) {
+        this.hasSon = hasSon;
+    }
+
     public DevElement() {
     }
 

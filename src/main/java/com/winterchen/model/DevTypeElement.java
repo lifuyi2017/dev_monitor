@@ -25,6 +25,16 @@ public class DevTypeElement implements Serializable {
      */
     private String type;
 
+    private Boolean hasSon;
+
+    public Boolean getHasSon() {
+        return hasSon;
+    }
+
+    public void setHasSon(Boolean hasSon) {
+        this.hasSon = hasSon;
+    }
+
     public DevTypeElement() {
     }
 

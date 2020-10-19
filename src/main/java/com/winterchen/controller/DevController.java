@@ -2,6 +2,7 @@ package com.winterchen.controller;
 
 
 import com.winterchen.annotation.UserLoginToken;
+import com.winterchen.dao.DevElementMapper;
 import com.winterchen.model.*;
 import com.winterchen.service.user.CollectionService;
 import com.winterchen.service.user.DevService;
@@ -24,6 +25,8 @@ public class DevController {
     private DevTypeService devTypeService;
     @Autowired
     private CollectionService collectionService;
+    @Autowired
+    private DevElementMapper devElementMapper;
 
     @ResponseBody
     @GetMapping("test")
@@ -45,15 +48,15 @@ public class DevController {
     @ResponseBody
     @PostMapping("/addDevOrDevElement")
     @UserLoginToken
-    public ResultMessage<Boolean> addDevOrDevElement(@RequestBody DevElement devElement) {
-        ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
+    public ResultMessage<String> addDevOrDevElement(@RequestBody DevElement devElement) {
+        ResultMessage<String> booleanResultMessage = new ResultMessage<>();
         try {
             String id = UUID.randomUUID().toString().replaceAll("-", "");
             if ("2".equals(devElement.getType())) {
                 //插入组件
                 if (devElement.getDev_parent_element_id() == null || "".equals(devElement.getDev_parent_element_id().trim())) {
                     booleanResultMessage.setStatuscode("401");
-                    booleanResultMessage.setValue(false);
+                    booleanResultMessage.setValue("");
                     booleanResultMessage.setMesg("添加组件时必须设置父组件id");
                     return booleanResultMessage;
                 }
@@ -69,13 +72,13 @@ public class DevController {
                 devService.insertEntity(devElement);
             }
             booleanResultMessage.setStatuscode("200");
-            booleanResultMessage.setValue(true);
+            booleanResultMessage.setValue(id);
             booleanResultMessage.setMesg("添加成功");
             return booleanResultMessage;
         } catch (Exception e) {
             e.printStackTrace();
             booleanResultMessage.setStatuscode("501");
-            booleanResultMessage.setValue(false);
+            booleanResultMessage.setValue("");
             booleanResultMessage.setMesg("服务端错误：" + e.toString());
             return booleanResultMessage;
         }
@@ -147,6 +150,9 @@ public class DevController {
             devElement.setType("1");
             devElement.setEnterprise_id(enterprise.getEnterprise_id());
             List<DevElement> devTypeElements = devService.queryByEntity(devElement);
+            for(DevElement dev:devTypeElements){
+                dev.setHasSon(devElementMapper.sunCount(dev.getDev_element_id())>0);
+            }
             resultMessage.setValue(devTypeElements);
             resultMessage.setMesg("查询成功");
             resultMessage.setStatuscode("200");
@@ -171,6 +177,9 @@ public class DevController {
         ResultMessage<List<DevElement>> resultMessage = new ResultMessage<>();
         try {
             List<DevElement> devTypeElements = devService.queryByEntity(devElement);
+            for(DevElement dev:devTypeElements){
+                dev.setHasSon(devElementMapper.sunCount(dev.getDev_element_id())>0);
+            }
             resultMessage.setValue(devTypeElements);
             resultMessage.setMesg("查询成功");
             resultMessage.setStatuscode("200");
