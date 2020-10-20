@@ -37,4 +37,8 @@
         delete from dev_type_elements where dev_parent_element_id=#{dev_element_id}
     </delete>
 
+    <select id="sonCount" resultType="java.lang.Integer">
+        select count(1) from dev_type_elements where dev_parent_element_id=#{dev_element_id}
+    </select>
+
 </mapper>

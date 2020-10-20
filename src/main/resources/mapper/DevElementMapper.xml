@@ -46,5 +46,9 @@
         delete from dev_elements where enterprise_id=#{id}
     </delete>
 
+    <select id="sunCount" resultType="java.lang.Integer">
+        select count(1) from dev_elements where dev_parent_element_id=#{dev_element_id}
+    </select>
+
 
 </mapper>

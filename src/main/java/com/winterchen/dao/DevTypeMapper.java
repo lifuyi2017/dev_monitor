@@ -14,4 +14,6 @@ public interface DevTypeMapper {
     void deleteByElementId(String dev_element_id);
 
     void deleteByParentId(String dev_element_id);
+
+    Integer sonCount(String dev_element_id);
 }
