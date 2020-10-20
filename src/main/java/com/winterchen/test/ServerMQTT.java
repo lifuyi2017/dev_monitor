@@ -101,9 +101,9 @@ public class ServerMQTT {
         mqttClient.connect(options);
         MqttTopic topic = mqttClient.getTopic(TOPIC);
         MqttMessage mqttMessage = new MqttMessage();
-        mqttMessage.setQos(1);
+        mqttMessage.setQos(2);
         mqttMessage.setRetained(true);
-        String str="{\"clieId\":\"123444\",\"mag\":\"哈哈\"}";
+        String str="{\"clieId\":\"123444\",\"mag\":\"哈21112哈\"}";
         mqttMessage.setPayload(str.getBytes());
         MqttDeliveryToken publish = topic.publish(mqttMessage);
         publish.waitForCompletion();

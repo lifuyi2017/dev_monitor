@@ -4,11 +4,9 @@ import com.winterchen.dao.ChannelMapper;
 import com.winterchen.dao.CollectionManagerMapper;
 import com.winterchen.dao.LogicMapper;
 import com.winterchen.dao.MeasureMapper;
-import com.winterchen.model.Channel;
-import com.winterchen.model.CollectionManager;
-import com.winterchen.model.LogicNode;
-import com.winterchen.model.Measure;
+import com.winterchen.model.*;
 import com.winterchen.service.user.CollectionService;
+import com.winterchen.util.MqttUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +60,24 @@ public class CollectionServiceImpl implements CollectionService {
     @Override
     public void deleteById(String collection_id) {
         collectionManagerMapper.deleteById(collection_id);
+    }
+
+    @Override
+    public void putToMqtt(CollectionManager collectionManager1) throws Exception {
+        CollectionMqtt collectionMqtt=getMessage(collectionManager1,"1");
+        MqttUtil.putToMqtt(collectionMqtt);
+    }
+
+    private CollectionMqtt getMessage(CollectionManager collectionManager, String flag) {
+        Measure queryMeasure = new Measure();
+        queryMeasure.setMeasure_id(collectionManager.getMeasure_id());
+        Measure measure = measureMapper.queryByEntity(queryMeasure).get(0);
+        Channel queryChannel = new Channel();
+        queryChannel.setChannel_id(collectionManager.getChannel_id());
+        Channel channel = channelMapper.queryByEntity(queryChannel).get(0);
+        return new CollectionMqtt(measure.getMeasure_code(),channel.getChannel_code(),
+                collectionManager.getCollection_frequency(),collectionManager.getCollection_cycle(),
+                collectionManager.getCollection_accuracy(),collectionManager.getCollection_interval(),flag);
     }
 
 }

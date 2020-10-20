@@ -14,4 +14,6 @@ public interface CollectionService {
     void deleteByElementId(String dev_element_id);
 
     void deleteById(String collection_id);
+
+    void putToMqtt(CollectionManager collectionManager1) throws Exception;
 }

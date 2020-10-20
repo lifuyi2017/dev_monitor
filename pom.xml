@@ -103,18 +103,23 @@
 			<artifactId>druid-spring-boot-starter</artifactId>
 			<version>1.1.9</version>
 		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.51</version>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
-<!--			<plugin>-->
-<!--				<groupId>org.springframework.boot</groupId>-->
-<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--			</plugin>-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-<!--				<version>1.4.0.RELEASE</version>-->
+			</plugin>
+<!--			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+&lt;!&ndash;				<version>1.4.0.RELEASE</version>&ndash;&gt;
 				<configuration>
 					<layout>ZIP</layout>
 					<executable>true</executable>
@@ -129,7 +134,7 @@
 						</include>
 					</includes>
 				</configuration>
-			</plugin>
+			</plugin>-->
 		</plugins>
 	</build>
 

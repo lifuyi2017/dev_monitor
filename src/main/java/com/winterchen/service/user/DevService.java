@@ -13,5 +13,5 @@ public interface DevService {
 
     void deleteElementAndSubElements(String dev_element_id) throws Exception;
 
-    void deleteByEnterpriseId(String id);
+    void deleteByEnterpriseId(String id) throws Exception;
 }

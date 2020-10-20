@@ -1,9 +1,10 @@
 package com.winterchen.service.user.impl;
 
+import com.winterchen.dao.ChannelMapper;
 import com.winterchen.dao.CollectionManagerMapper;
 import com.winterchen.dao.DevElementMapper;
-import com.winterchen.model.CollectionManager;
-import com.winterchen.model.DevElement;
+import com.winterchen.dao.MeasureMapper;
+import com.winterchen.model.*;
 import com.winterchen.service.user.CollectionService;
 import com.winterchen.service.user.DevService;
 import com.winterchen.util.MqttUtil;
@@ -19,6 +20,8 @@ public class DevServiceImpl implements DevService {
     private DevElementMapper devElementMapper;
     @Autowired
     private CollectionManagerMapper collectionManagerMapper;
+    @Autowired
+    private CollectionService collectionService;
 
     @Override
     public List<DevElement> queryByEntity(DevElement queryParent) throws Exception {
@@ -42,10 +45,10 @@ public class DevServiceImpl implements DevService {
     }
 
     @Override
-    public void deleteByEnterpriseId(String id) {
+    public void deleteByEnterpriseId(String id) throws Exception {
         List<CollectionManager> collectionManagerList=collectionManagerMapper.getByEnterpriseId(id);
         for(CollectionManager collectionManager:collectionManagerList){
-            MqttUtil.removeMqtt(collectionManager);
+            collectionService.putToMqtt(collectionManager);
         }
         collectionManagerMapper.deleteByEnterpriseId(id);
         devElementMapper.deleteByEnterpriseId(id);

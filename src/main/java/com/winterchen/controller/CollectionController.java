@@ -3,10 +3,9 @@ package com.winterchen.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.winterchen.annotation.UserLoginToken;
-import com.winterchen.model.CollectionManager;
-import com.winterchen.model.CollectionManagerRequest;
-import com.winterchen.model.ResultMessage;
-import com.winterchen.model.StartStopCollection;
+import com.winterchen.dao.ChannelMapper;
+import com.winterchen.dao.MeasureMapper;
+import com.winterchen.model.*;
 import com.winterchen.service.user.CollectionService;
 import com.winterchen.util.MqttUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,10 @@ public class CollectionController {
 
     @Autowired
     private CollectionService collectionService;
+    @Autowired
+    private MeasureMapper measureMapper;
+    @Autowired
+    private ChannelMapper channelMapper;
 
     /**
      * 开始停止采集
@@ -40,7 +43,7 @@ public class CollectionController {
                     collectionManager.setCollection_id(id);
                     List<CollectionManager> collectionManagerList = collectionService.queryByEntity(collectionManager);
                     CollectionManager collectionManager1 = collectionManagerList.get(0);
-                    MqttUtil.putToMqtt(collectionManager1);
+                    collectionService.putToMqtt(collectionManager1);
                     collectionManager1.setStatus("1");
                     collectionService.updateByCollectionId(collectionManager1);
                 }
@@ -50,7 +53,7 @@ public class CollectionController {
                     collectionManager.setCollection_id(id);
                     List<CollectionManager> collectionManagerList = collectionService.queryByEntity(collectionManager);
                     CollectionManager collectionManager1 = collectionManagerList.get(0);
-                    MqttUtil.removeMqtt(collectionManager1);
+                    collectionService.putToMqtt(collectionManager1);
                     collectionManager1.setStatus("0");
                     collectionService.updateByCollectionId(collectionManager1);
                 }
@@ -66,6 +69,8 @@ public class CollectionController {
         }
         return booleanResultMessage;
     }
+
+
 
 
     /**

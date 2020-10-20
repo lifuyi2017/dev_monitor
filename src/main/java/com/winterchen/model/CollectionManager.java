@@ -8,9 +8,13 @@ public class CollectionManager implements Serializable {
 
     private String collection_id;
     private String collection_type;
+    //频率
     private String collection_frequency;
+    //时长
     private String collection_cycle;
+    //精度
     private String collection_accuracy;
+    //时间间隔
     private String collection_interval;
     private String measure_id;
     private String channel_id;
