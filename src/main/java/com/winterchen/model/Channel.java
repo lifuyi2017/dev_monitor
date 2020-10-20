@@ -1,10 +1,11 @@
 package com.winterchen.model;
 
+import com.winterchen.annotation.NotBlank;
+
 import java.io.Serializable;
 
 public class Channel implements Serializable {
     private static final long serialVersionUID = 5111387602389352183L;
-
     private String channel_id;
     private String channel_code;
     private String channel_name;
