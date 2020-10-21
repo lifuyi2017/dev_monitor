@@ -16,8 +16,9 @@ public class CollectionMqtt implements Serializable {
     //时间间隔
     private String collection_interval;
     private String flag;
+    private String date_time;
 
-    public CollectionMqtt(String measure_code, String channel_code, String collection_frequency, String collection_cycle, String collection_accuracy, String collection_interval, String flag) {
+    public CollectionMqtt(String measure_code, String channel_code, String collection_frequency, String collection_cycle, String collection_accuracy, String collection_interval, String flag, String date_time) {
         this.measure_code = measure_code;
         this.channel_code = channel_code;
         this.collection_frequency = collection_frequency;
@@ -25,6 +26,15 @@ public class CollectionMqtt implements Serializable {
         this.collection_accuracy = collection_accuracy;
         this.collection_interval = collection_interval;
         this.flag = flag;
+        this.date_time = date_time;
+    }
+
+    public String getDate_time() {
+        return date_time;
+    }
+
+    public void setDate_time(String date_time) {
+        this.date_time = date_time;
     }
 
     public CollectionMqtt() {

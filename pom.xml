@@ -112,14 +112,14 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
 <!--			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-&lt;!&ndash;				<version>1.4.0.RELEASE</version>&ndash;&gt;
+			</plugin>-->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+<!--				<version>1.4.0.RELEASE</version>-->
 				<configuration>
 					<layout>ZIP</layout>
 					<executable>true</executable>
@@ -134,7 +134,7 @@
 						</include>
 					</includes>
 				</configuration>
-			</plugin>-->
+			</plugin>
 		</plugins>
 	</build>
 

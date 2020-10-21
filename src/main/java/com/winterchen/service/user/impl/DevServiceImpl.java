@@ -1,13 +1,10 @@
 package com.winterchen.service.user.impl;
 
-import com.winterchen.dao.ChannelMapper;
 import com.winterchen.dao.CollectionManagerMapper;
 import com.winterchen.dao.DevElementMapper;
-import com.winterchen.dao.MeasureMapper;
 import com.winterchen.model.*;
 import com.winterchen.service.user.CollectionService;
 import com.winterchen.service.user.DevService;
-import com.winterchen.util.MqttUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +45,7 @@ public class DevServiceImpl implements DevService {
     public void deleteByEnterpriseId(String id) throws Exception {
         List<CollectionManager> collectionManagerList=collectionManagerMapper.getByEnterpriseId(id);
         for(CollectionManager collectionManager:collectionManagerList){
-            collectionService.putToMqtt(collectionManager);
+            collectionService.putToMqtt(collectionManager, "0");
         }
         collectionManagerMapper.deleteByEnterpriseId(id);
         devElementMapper.deleteByEnterpriseId(id);

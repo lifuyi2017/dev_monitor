@@ -43,7 +43,7 @@ public class CollectionController {
                     collectionManager.setCollection_id(id);
                     List<CollectionManager> collectionManagerList = collectionService.queryByEntity(collectionManager);
                     CollectionManager collectionManager1 = collectionManagerList.get(0);
-                    collectionService.putToMqtt(collectionManager1);
+                    collectionService.putToMqtt(collectionManager1,"1");
                     collectionManager1.setStatus("1");
                     collectionService.updateByCollectionId(collectionManager1);
                 }
@@ -53,7 +53,7 @@ public class CollectionController {
                     collectionManager.setCollection_id(id);
                     List<CollectionManager> collectionManagerList = collectionService.queryByEntity(collectionManager);
                     CollectionManager collectionManager1 = collectionManagerList.get(0);
-                    collectionService.putToMqtt(collectionManager1);
+                    collectionService.putToMqtt(collectionManager1,"0");
                     collectionManager1.setStatus("0");
                     collectionService.updateByCollectionId(collectionManager1);
                 }

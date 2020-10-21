@@ -6,8 +6,8 @@ import com.winterchen.dao.LogicMapper;
 import com.winterchen.dao.MeasureMapper;
 import com.winterchen.model.*;
 import com.winterchen.service.user.CollectionService;
+import com.winterchen.util.DateUtil;
 import com.winterchen.util.MqttUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -63,8 +63,8 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public void putToMqtt(CollectionManager collectionManager1) throws Exception {
-        CollectionMqtt collectionMqtt=getMessage(collectionManager1,"1");
+    public void putToMqtt(CollectionManager collectionManager1, String flag) throws Exception {
+        CollectionMqtt collectionMqtt=getMessage(collectionManager1,flag);
         MqttUtil.putToMqtt(collectionMqtt);
     }
 
@@ -77,7 +77,8 @@ public class CollectionServiceImpl implements CollectionService {
         Channel channel = channelMapper.queryByEntity(queryChannel).get(0);
         return new CollectionMqtt(measure.getMeasure_code(),channel.getChannel_code(),
                 collectionManager.getCollection_frequency(),collectionManager.getCollection_cycle(),
-                collectionManager.getCollection_accuracy(),collectionManager.getCollection_interval(),flag);
+                collectionManager.getCollection_accuracy(),collectionManager.getCollection_interval(),flag,
+                DateUtil.getDateTime());
     }
 
 }
