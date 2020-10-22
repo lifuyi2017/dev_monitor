@@ -14,4 +14,6 @@ public interface LogicMapper {
     void deleteById(String logic_id);
 
     void deleteByEnterpriseId(String id);
+
+    void updateByEnterpriseIdNull(String id);
 }

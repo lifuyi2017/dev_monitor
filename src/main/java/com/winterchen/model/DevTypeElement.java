@@ -1,5 +1,7 @@
 package com.winterchen.model;
 
+import com.winterchen.annotation.NotBlank;
+
 import java.io.Serializable;
 
 public class DevTypeElement implements Serializable {
@@ -15,6 +17,7 @@ public class DevTypeElement implements Serializable {
     /**
      * 组件名称
      */
+    @NotBlank(message = "名称不能为空")
     private String dev_element_name;
     /**
      * 组件类型id：即设备类型id

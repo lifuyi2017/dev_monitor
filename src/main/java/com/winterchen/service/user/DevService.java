@@ -1,6 +1,7 @@
 package com.winterchen.service.user;
 
 import com.winterchen.model.DevElement;
+import com.winterchen.model.ResultMessage;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface DevService {
 
     void editDevOrDevElementById(DevElement devElement) throws Exception;
 
-    void deleteElementAndSubElements(String dev_element_id) throws Exception;
+    ResultMessage<Boolean> deleteElementAndSubElements(String dev_element_id) throws Exception;
 
-    void deleteByEnterpriseId(String id) throws Exception;
+    ResultMessage<Boolean> deleteByEnterpriseId(String id) throws Exception;
 }

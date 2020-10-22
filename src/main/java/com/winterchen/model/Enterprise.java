@@ -1,13 +1,18 @@
 package com.winterchen.model;
 
+import com.winterchen.annotation.NotBlank;
+
 import java.io.Serializable;
 
 public class Enterprise implements Serializable {
     private static final long serialVersionUID = -8382035963349615385L;
 
     private String enterprise_id;
+    @NotBlank(message = "名称不能为空")
     private String enterprise_name;
+    @NotBlank(message = "编码不能为空")
     private String enterprise_code;
+    @NotBlank(message = "类型不能为空")
     private String enterprise_type;
 
     public Enterprise() {

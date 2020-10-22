@@ -1,6 +1,7 @@
 package com.winterchen.service.user;
 
 import com.winterchen.model.Channel;
+import com.winterchen.model.ResultMessage;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface ChannelService {
 
     List<Channel> queryByEntity(Channel channel) throws Exception;
 
-    void deleteNetWorkById(String channel_id) throws Exception;
+    ResultMessage<Boolean> deleteById(String channel_id) throws Exception;
 
-    void deleteByMeasureId(String m_id);
+    ResultMessage<Boolean> deleteByMeasureId(String m_id);
 }

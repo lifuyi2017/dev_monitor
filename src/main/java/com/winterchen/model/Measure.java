@@ -1,5 +1,7 @@
 package com.winterchen.model;
 
+import com.winterchen.annotation.NotBlank;
+
 import java.io.Serializable;
 
 public class Measure implements Serializable {
@@ -7,11 +9,15 @@ public class Measure implements Serializable {
 
     private String measure_id;
     private String measure_type;
+    @NotBlank(message = "物理节点编号不能为空")
     private String measure_code;
+    @NotBlank(message = "物理节点名称不能为空")
     private String measure_name;
     private String measure_ip;
+    @NotBlank(message = "通道数不能为空")
     private String measure_channel_num;
     private String network_id;
+//    @NotBlank(message = "公司不能为空")
     private String enterprise_id;
 
     private String network_name;

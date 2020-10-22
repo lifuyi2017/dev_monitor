@@ -18,4 +18,6 @@ public interface DevElementMapper {
     void deleteByEnterpriseId(String id);
 
     Integer sunCount(String dev_element_id);
+
+    List<String> getTypeIdByEnterpriseId(String id);
 }

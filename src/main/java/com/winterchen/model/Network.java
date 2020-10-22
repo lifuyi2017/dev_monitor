@@ -1,5 +1,7 @@
 package com.winterchen.model;
 
+import com.winterchen.annotation.NotBlank;
+
 import java.io.Serializable;
 
 public class Network implements Serializable {

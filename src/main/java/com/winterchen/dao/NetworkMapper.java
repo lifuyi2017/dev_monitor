@@ -12,4 +12,6 @@ public interface NetworkMapper {
     void deleteByEnterpriseId(String id);
 
     List<String> getIdByEnterpriseId(String id);
+
+    void updateByEnterpriseIdNull(String id);
 }

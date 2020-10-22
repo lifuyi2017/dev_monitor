@@ -48,4 +48,35 @@
          delete from dev_type_fixed_field  where dev_type_operate_enterprise_id=#{id} or
          dev_type_service_enterprise_id=#{id} or dev_type_production_enterprise_id=#{dev_type_production_enterprise_id}
     </delete>
+
+    <update id="updateByOperateEnterpriseId" parameterType="com.winterchen.model.Enterprise">
+        update dev_type_fixed_field set dev_type_operate_enterprise_name=#{enterprise_name}
+         where dev_type_operate_enterprise_id=#{enterprise_id}
+    </update>
+
+    <update id="updateByServiceEnterpriseId" parameterType="com.winterchen.model.Enterprise">
+         update dev_type_fixed_field set dev_type_service_enterprise_name=#{enterprise_name}
+         where dev_type_service_enterprise_id=#{enterprise_id}
+    </update>
+
+    <update id="updateByProductionEnterpriseId" parameterType="com.winterchen.model.Enterprise">
+        update dev_type_fixed_field set dev_type_production_enterprise_name=#{enterprise_name}
+         where dev_type_production_enterprise_id=#{enterprise_id}
+    </update>
+
+    <update id="updateByOperateEnterpriseIdNull">
+        update dev_type_fixed_field set dev_type_operate_enterprise_name=null and dev_type_operate_enterprise_id=null where
+        dev_type_operate_enterprise_id=#{id}
+    </update>
+
+    <update id="updateByServiceEnterpriseIdNull">
+        update dev_type_fixed_field set dev_type_service_enterprise_name=null and dev_type_service_enterprise_id=null where
+        dev_type_service_enterprise_id=#{id}
+    </update>
+
+    <update id="updateByProductionEnterpriseIdNull">
+        update dev_type_fixed_field set dev_type_production_enterprise_name=null and dev_type_production_enterprise_id=null where
+        dev_type_production_enterprise_id=#{id}
+    </update>
+
 </mapper>

@@ -24,4 +24,8 @@ public interface CollectionManagerMapper {
     List<CollectionManager> getByEnterpriseId(String id);
 
     void deleteByEnterpriseId(String id);
+
+    Integer queryOnCollectCountByEntity(CollectionManager collectionManager);
+
+    void updateByLogicIdNull(String logic_id);
 }

@@ -50,4 +50,8 @@
         delete from channel where measure_id=#{measure_id}
     </delete>
 
+    <update id="updateByEnterpriseIdNull">
+        update channel set enterprise_id=null where enterprise_id=#{id}
+    </update>
+
 </mapper>

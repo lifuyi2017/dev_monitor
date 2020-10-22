@@ -6,6 +6,7 @@ import com.winterchen.annotation.UserLoginToken;
 import com.winterchen.dao.DevTypeMapper;
 import com.winterchen.model.*;
 import com.winterchen.service.user.*;
+import com.winterchen.util.EntityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +45,13 @@ public class DevTypeController {
     public ResultMessage<String> addDevTypeOrDevElement(@RequestBody DevTypeElement devTypeElement) {
         ResultMessage<String> booleanResultMessage = new ResultMessage<>();
         try {
+            String s = EntityUtil.checkObjectField(devTypeElement);
+            if(!"true".equals(s)){
+                booleanResultMessage.setStatuscode("401");
+                booleanResultMessage.setMesg(s);
+                booleanResultMessage.setValue("");
+                return booleanResultMessage;
+            }
             String id = UUID.randomUUID().toString().replaceAll("-", "");
             if ("2".equals(devTypeElement.getType())) {
                 //插入组件

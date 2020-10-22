@@ -7,15 +7,20 @@ import java.io.Serializable;
 public class Channel implements Serializable {
     private static final long serialVersionUID = 5111387602389352183L;
     private String channel_id;
+    @NotBlank(message = "编码不能为空")
     private String channel_code;
+    @NotBlank(message = "名称不能为空")
     private String channel_name;
+    @NotBlank(message = "信号类型不能为空")
     private String signal_type;
     private String data_type;
     private String input_type;
     private String input_type_range;
     private String is_output_power;
     private String pin_num;
+    @NotBlank(message = "所属测点不能为空")
     private String measure_id;
+//    @NotBlank(message = "")
     private String enterprise_id;
 
 

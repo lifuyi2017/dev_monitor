@@ -18,4 +18,6 @@ public interface ChannelMapper {
     List<String> getByMeasureId(String measure_id);
 
     void deleteByMeasureId(String measure_id);
+
+    void updateByEnterpriseIdNull(String id);
 }

@@ -34,7 +34,10 @@ public class CollectionServiceImpl implements CollectionService {
             collect.setChannel_name(channelMapper.queryByEntity(channel).get(0).getChannel_name());
             LogicNode logicNode = new LogicNode();
             logicNode.setLogic_id(collect.getLogic_id());
-            collect.setLogic_name(logicMapper.queryForEntity(logicNode).get(0).getLogic_name());
+            List<LogicNode> logicNodes = logicMapper.queryForEntity(logicNode);
+            if(logicNodes !=null && logicNodes.size()>0){
+                collect.setLogic_name(logicNodes.get(0).getLogic_name());
+            }
             Measure measure = new Measure();
             measure.setMeasure_id(collect.getMeasure_id());
             collect.setMeasure_name(measureMapper.queryByEntity(measure).get(0).getMeasure_name());

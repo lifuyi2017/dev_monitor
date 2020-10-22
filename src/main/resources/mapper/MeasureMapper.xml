@@ -32,7 +32,7 @@
         </if>
     </select>
 
-    <delete id="deleteNetWorkById">
+    <delete id="deleteById">
         delete from measure where measure_id=#{measure_id}
     </delete>
 
@@ -47,5 +47,13 @@
     <select id="getByNetWorkId" resultType="java.lang.String">
         select measure_id from measure where network_id=#{net_id}
     </select>
+
+    <update id="updateByEnterpriseIdNull">
+        update measure set enterprise_id=null where enterprise_id=#{id}
+    </update>
+
+    <update id="updateNetWorkIdNull">
+        update measure set network_id=null where network_id=#{network_id}
+    </update>
 
 </mapper>

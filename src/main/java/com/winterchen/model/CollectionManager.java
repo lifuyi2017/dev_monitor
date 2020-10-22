@@ -1,5 +1,7 @@
 package com.winterchen.model;
 
+import com.winterchen.annotation.NotBlank;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,16 +11,23 @@ public class CollectionManager implements Serializable {
     private String collection_id;
     private String collection_type;
     //频率
+    @NotBlank(message = "频率不能为空")
     private String collection_frequency;
     //时长
+    @NotBlank(message = "时长不能为空")
     private String collection_cycle;
     //精度
+    @NotBlank(message = "精度不能为空")
     private String collection_accuracy;
     //时间间隔
+    @NotBlank(message = "时间间隔不能为空")
     private String collection_interval;
+    @NotBlank(message = "物理节点不能为空")
     private String measure_id;
+    @NotBlank(message = "采集通道不能为空")
     private String channel_id;
     private String logic_id;
+    @NotBlank(message = "设备id不能为空")
     private String dev_element_id;
     private String status;
     private Date update_time;

@@ -9,5 +9,7 @@ public interface NetworkService {
 
     void deleteNetWorkById(String network_id) throws Exception;
 
-    void deleteByEnterpriseId(String id);
+//    void deleteByEnterpriseId(String id);
+
+    void updateByEnterpriseIdNull(String id);
 }

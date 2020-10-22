@@ -31,16 +31,22 @@ public class NetworkServiceImpl implements NetworkService {
     @Override
     public void deleteNetWorkById(String network_id) throws Exception {
         networkMapper.deleteNetWorkById(network_id);
-        measureService.deleteByNetworkId(network_id);
+        measureService.updateNetWorkIdNull(network_id);
+//        measureService.deleteByNetworkId(network_id);
     }
 
+//    @Override
+//    public void deleteByEnterpriseId(String id) {
+//        List<String> ids=networkMapper.getIdByEnterpriseId(id);
+//        for(String net_id:ids){
+//            measureService.deleteByNetworkId(net_id);
+//        }
+//        networkMapper.deleteByEnterpriseId(id);
+//    }
+
     @Override
-    public void deleteByEnterpriseId(String id) {
-        List<String> ids=networkMapper.getIdByEnterpriseId(id);
-        for(String net_id:ids){
-            measureService.deleteByNetworkId(net_id);
-        }
-        networkMapper.deleteByEnterpriseId(id);
+    public void updateByEnterpriseIdNull(String id) {
+        networkMapper.updateByEnterpriseIdNull(id);
     }
 
 }

@@ -8,6 +8,7 @@ import com.winterchen.model.Enterprise;
 import com.winterchen.model.EnterpriseRequest;
 import com.winterchen.model.ResultMessage;
 import com.winterchen.service.user.EnterpriseService;
+import com.winterchen.util.EntityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,13 @@ public class EnterpriseController {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         booleanResultMessage.setValue(true);
         try {
+            String s = EntityUtil.checkObjectField(enterprise);
+            if(!"true".equals(s)){
+                booleanResultMessage.setStatuscode("401");
+                booleanResultMessage.setMesg(s);
+                booleanResultMessage.setValue(false);
+                return booleanResultMessage;
+            }
             Enterprise queryEnter = new Enterprise();
             queryEnter.setEnterprise_id(enterprise.getEnterprise_id() == null ? "" : enterprise.getEnterprise_id());
             List<Enterprise> list = enterpriseService.getEnterByEntityNoPage(queryEnter);
@@ -88,11 +96,11 @@ public class EnterpriseController {
     public ResultMessage<Boolean> deleteById(@RequestBody Enterprise enterprise) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
-            enterpriseService.deleteById(enterprise.getEnterprise_id());
-            booleanResultMessage.setValue(true);
-            booleanResultMessage.setStatuscode("200");
-            booleanResultMessage.setMesg("删除成功");
-            return booleanResultMessage;
+            return enterpriseService.deleteById(enterprise.getEnterprise_id());
+//            booleanResultMessage.setValue(true);
+//            booleanResultMessage.setStatuscode("200");
+//            booleanResultMessage.setMesg("删除成功");
+//            return booleanResultMessage;
         } catch (Exception e) {
             e.printStackTrace();
             booleanResultMessage.setValue(false);

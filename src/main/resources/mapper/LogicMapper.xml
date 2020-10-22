@@ -30,4 +30,8 @@
         delete from logic_node where enterprise_id=#{id}
     </delete>
 
+    <update id="updateByEnterpriseIdNull">
+        update logic_node set enterprise_id=null where enterprise_id=#{id}
+    </update>
+
 </mapper>

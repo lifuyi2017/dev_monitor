@@ -27,6 +27,22 @@
         and b.enterprise_id=#{id}
     </select>
 
+    <select id="queryOnCollectCountByEntity" parameterType="com.winterchen.model.CollectionManager" resultType="java.lang.Integer">
+        select count(1) from collection where status='1'
+        <if test="dev_element_id!=null">
+            and dev_element_id=#{dev_element_id}
+        </if>
+        <if test="collection_id!=null">
+            and collection_id=#{collection_id}
+        </if>
+        <if test="measure_id!=null">
+            and measure_id=#{measure_id}
+        </if>
+        <if test="channel_id!=null">
+            and channel_id=#{channel_id}
+        </if>
+    </select>
+
     <delete id="deleteByEnterpriseId">
         DELETE from collection where dev_element_id in (SELECT dev_element_id from dev_elements where enterprise_id=#{id})
     </delete>
@@ -67,5 +83,9 @@
         #{collection_frequency},#{collection_cycle},#{collection_accuracy},#{collection_interval},#{measure_id},#{channel_id},
         #{logic_id},#{dev_element_id},#{status})
     </insert>
+
+    <update id="updateByLogicIdNull">
+        update collection set logic_id=null where logic_id=#{logic_id}
+    </update>
 
 </mapper>

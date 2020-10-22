@@ -1,5 +1,7 @@
 package com.winterchen.model;
 
+import com.winterchen.annotation.NotBlank;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,7 +9,9 @@ public class LogicNode implements Serializable {
     private static final long serialVersionUID = -4118684387863013764L;
 
     private String logic_id;
+    @NotBlank(message = "编码不能为空")
     private String logic_code;
+    @NotBlank(message = "名称不能为空")
     private String logic_name;
     private String enterprise_id;
 

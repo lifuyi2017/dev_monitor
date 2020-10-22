@@ -30,4 +30,8 @@
         select network_id from network where enterprise_id=#{id}
     </select>
 
+    <update id="updateByEnterpriseIdNull">
+        update network set enterprise_id=null where enterprise_id=#{id}
+    </update>
+
 </mapper>

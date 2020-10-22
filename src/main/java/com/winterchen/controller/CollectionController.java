@@ -7,6 +7,7 @@ import com.winterchen.dao.ChannelMapper;
 import com.winterchen.dao.MeasureMapper;
 import com.winterchen.model.*;
 import com.winterchen.service.user.CollectionService;
+import com.winterchen.util.EntityUtil;
 import com.winterchen.util.MqttUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,6 +82,13 @@ public class CollectionController {
     public ResultMessage<Boolean> addOrUpdateCollection(@RequestBody CollectionManager collectionManager){
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
+            String s = EntityUtil.checkObjectField(collectionManager);
+            if(!"true".equals(s)){
+                booleanResultMessage.setStatuscode("401");
+                booleanResultMessage.setMesg(s);
+                booleanResultMessage.setValue(false);
+                return booleanResultMessage;
+            }
             if(collectionManager.getCollection_id()!=null){
                 CollectionManager collect = new CollectionManager();
                 collect.setCollection_id(collectionManager.getCollection_id());

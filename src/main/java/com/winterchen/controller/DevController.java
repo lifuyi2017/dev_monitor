@@ -7,6 +7,7 @@ import com.winterchen.model.*;
 import com.winterchen.service.user.CollectionService;
 import com.winterchen.service.user.DevService;
 import com.winterchen.service.user.DevTypeService;
+import com.winterchen.util.EntityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,13 @@ public class DevController {
     public ResultMessage<String> addDevOrDevElement(@RequestBody DevElement devElement) {
         ResultMessage<String> booleanResultMessage = new ResultMessage<>();
         try {
+            String s = EntityUtil.checkObjectField(devElement);
+            if(!"true".equals(s)){
+                booleanResultMessage.setStatuscode("401");
+                booleanResultMessage.setMesg(s);
+                booleanResultMessage.setValue("");
+                return booleanResultMessage;
+            }
             String id = UUID.randomUUID().toString().replaceAll("-", "");
             if ("2".equals(devElement.getType())) {
                 //插入组件
@@ -120,13 +128,7 @@ public class DevController {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
             //删除当前值、删除子节点
-            devService.deleteElementAndSubElements(devElement.getDev_element_id());
-            //删除采集点数据
-            collectionService.deleteByElementId(devElement.getDev_element_id());
-            booleanResultMessage.setStatuscode("200");
-            booleanResultMessage.setMesg("删除成功");
-            booleanResultMessage.setValue(true);
-            return booleanResultMessage;
+            return  devService.deleteElementAndSubElements(devElement.getDev_element_id());
         } catch (Exception e) {
             e.printStackTrace();
             booleanResultMessage.setStatuscode("501");

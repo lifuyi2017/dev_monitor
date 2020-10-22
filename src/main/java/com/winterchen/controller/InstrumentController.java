@@ -8,6 +8,7 @@ import com.winterchen.dao.MeasureMapper;
 import com.winterchen.dao.NetworkMapper;
 import com.winterchen.model.*;
 import com.winterchen.service.user.*;
+import com.winterchen.util.EntityUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,13 +48,11 @@ public class InstrumentController {
     public ResultMessage<Boolean> addOrUpdateNetWork(@RequestBody Network network) {
         ResultMessage<Boolean> resultMessage = new ResultMessage();
         try {
-            if(StringUtils.isBlank(network.getNetwork_type()) || StringUtils.isBlank(network.getNetwork_code()) ||
-                    StringUtils.isBlank(network.getNetwork_name()) || StringUtils.isBlank(network.getNetwork_ip()) ||
-                    StringUtils.isBlank(network.getInput_address()) || StringUtils.isBlank(network.getOutput_agreement()) ||
-                    StringUtils.isBlank(network.getEnterprise_id())){
-                resultMessage.setValue(false);
-                resultMessage.setMesg("网关类型、网关编号、网关名称、网关IP地址、输入地址、输出协议、公司名称不能为空");
+            String s = EntityUtil.checkObjectField(network);
+            if(!"true".equals(s)){
                 resultMessage.setStatuscode("401");
+                resultMessage.setMesg(s);
+                resultMessage.setValue(false);
                 return resultMessage;
             }
             if (network.getNetwork_id() != null && !"".equals(network.getNetwork_id().trim())) {
@@ -114,12 +113,12 @@ public class InstrumentController {
         List<Network> networkList = networkService.queryByEntity(network);
         for(Network network1:networkList){
             Enterprise enterprise = new Enterprise();
-            enterprise.setEnterprise_id(network1.getEnterprise_id());
-            List<Enterprise> enterByEntity = enterpriseService.getEnterByEntity(enterprise);
-            if(enterByEntity!=null && enterByEntity.size()>0){
-                network1.setEnterprise_name(enterByEntity.get(0).getEnterprise_name());
-            }else {
-                networkService.deleteByEnterpriseId(network1.getEnterprise_id());
+            if(network1.getEnterprise_id()!=null){
+                enterprise.setEnterprise_id(network1.getEnterprise_id());
+                List<Enterprise> enterByEntity = enterpriseService.getEnterByEntity(enterprise);
+                if(enterByEntity!=null && enterByEntity.size()>0){
+                    network1.setEnterprise_name(enterByEntity.get(0).getEnterprise_name());
+                }
             }
         }
         return networkList;
@@ -156,17 +155,11 @@ public class InstrumentController {
     public ResultMessage<Boolean> addOrUpdateMeasure(@RequestBody Measure measure){
         ResultMessage<Boolean> resultMessage = new ResultMessage();
         try {
-            if(StringUtils.isBlank(measure.getMeasure_type()) ||
-                    StringUtils.isBlank(measure.getMeasure_code()) ||
-                    StringUtils.isBlank(measure.getMeasure_name()) ||
-                    StringUtils.isBlank(measure.getMeasure_ip()) ||
-                    StringUtils.isBlank(measure.getMeasure_channel_num()) ||
-                    StringUtils.isBlank(measure.getNetwork_id()) ||
-                    StringUtils.isBlank(measure.getEnterprise_id())
-            ){
-                resultMessage.setValue(false);
-                resultMessage.setMesg("测点类型、测点编号、测点名称、测点IP地址、测点通道数、所属网关名称、公司名称不能为空");
+            String s = EntityUtil.checkObjectField(measure);
+            if(!"true".equals(s)){
                 resultMessage.setStatuscode("401");
+                resultMessage.setMesg(s);
+                resultMessage.setValue(false);
                 return resultMessage;
             }
             if (measure.getMeasure_id() != null && !"".equals(measure.getMeasure_id().trim())) {
@@ -226,21 +219,21 @@ public class InstrumentController {
     private List<Measure> getMeasureList(Measure measure) throws Exception {
         List<Measure> measureList = measureService.queryByEntity(measure);
         for(Measure measure1:measureList){
-            Network network = new Network();
-            network.setNetwork_id(measure1.getNetwork_id());
-            List<Network> networks = networkService.queryByEntity(network);
-            if(networks!=null && networks.size()>0){
-                measure1.setNetwork_name(networks.get(0).getNetwork_name());
-            }else {
-                measureService.deleteByNetworkId(measure1.getNetwork_id());
+            if(measure1.getNetwork_id()!=null){
+                Network network = new Network();
+                network.setNetwork_id(measure1.getNetwork_id());
+                List<Network> networks = networkService.queryByEntity(network);
+                if(networks!=null && networks.size()>0){
+                    measure1.setNetwork_name(networks.get(0).getNetwork_name());
+                }
             }
-            Enterprise enterprise = new Enterprise();
-            enterprise.setEnterprise_id(measure1.getEnterprise_id());
-            List<Enterprise> enterByEntity = enterpriseService.getEnterByEntity(enterprise);
-            if(enterByEntity!=null && enterByEntity.size()>0){
-                measure1.setEnterprise_name(enterByEntity.get(0).getEnterprise_name());
-            }else {
-                measureMapper.deleteByEnterpriseId(measure1.getEnterprise_id());
+            if(measure1.getEnterprise_id()!=null){
+                Enterprise enterprise = new Enterprise();
+                enterprise.setEnterprise_id(measure1.getEnterprise_id());
+                List<Enterprise> enterByEntity = enterpriseService.getEnterByEntity(enterprise);
+                if(enterByEntity!=null && enterByEntity.size()>0){
+                    measure1.setEnterprise_name(enterByEntity.get(0).getEnterprise_name());
+                }
             }
         }
         return measureList;
@@ -255,10 +248,7 @@ public class InstrumentController {
     public ResultMessage<Boolean> deleteMeasureById(@RequestBody Measure measure) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
-            measureService.deleteById(measure.getMeasure_id());
-            booleanResultMessage.setMesg("删除成功");
-            booleanResultMessage.setValue(true);
-            booleanResultMessage.setStatuscode("200");
+            return  measureService.deleteById(measure.getMeasure_id());
         } catch (Exception e) {
             e.printStackTrace();
             booleanResultMessage.setMesg("服务端错误：" + e.toString());
@@ -278,15 +268,11 @@ public class InstrumentController {
     public ResultMessage<Boolean> addOrUpdateChannel(@RequestBody Channel channel){
         ResultMessage<Boolean> resultMessage = new ResultMessage();
         try {
-            if(StringUtils.isBlank(channel.getEnterprise_id()) || StringUtils.isBlank(channel.getChannel_name()) ||
-                    StringUtils.isBlank(channel.getMeasure_id())  || StringUtils.isBlank(channel.getChannel_code())
-             || StringUtils.isBlank(channel.getSignal_type()) || StringUtils.isBlank(channel.getData_type()) ||
-                    StringUtils.isBlank(channel.getInput_type()) || StringUtils.isBlank(channel.getInput_type_range())
-             || StringUtils.isBlank(channel.getIs_output_power()) || StringUtils.isBlank(channel.getPin_num())){
-                resultMessage.setValue(false);
-                resultMessage.setMesg("通道编号、通道名称、信号类型、数模类型、" +
-                        "输入类型、输入类型范围、是否输出电源、通道pin数、所属测点、公司不能为空，请填写");
+            String s = EntityUtil.checkObjectField(channel);
+            if(!"true".equals(s)){
                 resultMessage.setStatuscode("401");
+                resultMessage.setMesg(s);
+                resultMessage.setValue(false);
                 return resultMessage;
             }
             if (channel.getChannel_id() != null && !"".equals(channel.getChannel_id().trim())) {
@@ -346,21 +332,23 @@ public class InstrumentController {
     private List<Channel> getChannelList(Channel channel) throws Exception {
         List<Channel> channelList = channelService.queryByEntity(channel);
         for(Channel ch:channelList){
-            Enterprise enterprise = new Enterprise();
-            enterprise.setEnterprise_id(ch.getEnterprise_id());
-            List<Enterprise> enterByEntity = enterpriseService.getEnterByEntity(enterprise);
-            if(enterByEntity!=null && enterByEntity.size()>0){
-                ch.setEnterprise_name(enterByEntity.get(0).getEnterprise_name());
-            }else {
-                channelMapper.deleteByEnterpriseId(ch.getEnterprise_id());
+            if(ch.getEnterprise_id()!=null){
+                Enterprise enterprise = new Enterprise();
+                enterprise.setEnterprise_id(ch.getEnterprise_id());
+                List<Enterprise> enterByEntity = enterpriseService.getEnterByEntity(enterprise);
+                if(enterByEntity!=null && enterByEntity.size()>0){
+                    ch.setEnterprise_name(enterByEntity.get(0).getEnterprise_name());
+                }
             }
-            Measure measure = new Measure();
-            measure.setMeasure_id(ch.getMeasure_id());
-            List<Measure> measureList = measureService.queryByEntity(measure);
-            if(measureList!=null && measureList.size()>0){
-                ch.setMeasure_name(measureList.get(0).getMeasure_name());
-            }else {
-                channelMapper.deleteByMeasureId(ch.getMeasure_id());
+            if(ch.getMeasure_id()!=null){
+                Measure measure = new Measure();
+                measure.setMeasure_id(ch.getMeasure_id());
+                List<Measure> measureList = measureService.queryByEntity(measure);
+                if(measureList!=null && measureList.size()>0){
+                    ch.setMeasure_name(measureList.get(0).getMeasure_name());
+                }else {
+                    channelMapper.deleteByMeasureId(ch.getMeasure_id());
+                }
             }
         }
         return channelList;
@@ -375,10 +363,7 @@ public class InstrumentController {
     public ResultMessage<Boolean> deleteChannelById(@RequestBody Channel channel){
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage();
         try {
-            channelService.deleteNetWorkById(channel.getChannel_id());
-            booleanResultMessage.setMesg("删除成功");
-            booleanResultMessage.setValue(true);
-            booleanResultMessage.setStatuscode("200");
+            return channelService.deleteById(channel.getChannel_id());
         } catch (Exception e) {
             e.printStackTrace();
             booleanResultMessage.setMesg("服务端错误：" + e.toString());
@@ -397,10 +382,11 @@ public class InstrumentController {
     public ResultMessage<Boolean> addOrUpdateLogic(@RequestBody LogicNode logicNode){
         ResultMessage<Boolean> resultMessage = new ResultMessage();
         try {
-            if(StringUtils.isBlank(logicNode.getLogic_name()) || StringUtils.isBlank(logicNode.getLogic_code())){
-                resultMessage.setValue(false);
-                resultMessage.setMesg("逻辑名称与编码不能为空");
+            String s = EntityUtil.checkObjectField(logicNode);
+            if(!"true".equals(s)){
                 resultMessage.setStatuscode("401");
+                resultMessage.setMesg(s);
+                resultMessage.setValue(false);
                 return resultMessage;
             }
             if (logicNode.getLogic_id()!= null && !"".equals(logicNode.getLogic_id().trim())) {
