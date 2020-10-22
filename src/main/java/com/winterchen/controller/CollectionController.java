@@ -3,12 +3,9 @@ package com.winterchen.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.winterchen.annotation.UserLoginToken;
-import com.winterchen.dao.ChannelMapper;
-import com.winterchen.dao.MeasureMapper;
 import com.winterchen.model.*;
 import com.winterchen.service.user.CollectionService;
 import com.winterchen.util.EntityUtil;
-import com.winterchen.util.MqttUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +20,7 @@ public class CollectionController {
 
     @Autowired
     private CollectionService collectionService;
-    @Autowired
-    private MeasureMapper measureMapper;
-    @Autowired
-    private ChannelMapper channelMapper;
+
 
     /**
      * 开始停止采集
@@ -39,24 +33,52 @@ public class CollectionController {
         try {
             if("1".equals(startStopCollection.getStatus())){
                 //开始采集
+                List<CollectionManager> collectionManagerList;
                 for(String id:startStopCollection.getIds()){
                     CollectionManager collectionManager = new CollectionManager();
                     collectionManager.setCollection_id(id);
-                    List<CollectionManager> collectionManagerList = collectionService.queryByEntity(collectionManager);
+                    collectionManagerList = collectionService.queryByEntity(collectionManager);
+                    if("1".equals(collectionManagerList.get(0).getStatus())){
+                        booleanResultMessage.setValue(false);
+                        booleanResultMessage.setStatuscode("401");
+                        booleanResultMessage.setMesg("错误操作，所选的采集列表中已经有采集配置在进行采集任务了");
+                        return booleanResultMessage;
+                    }
+                }
+                for(String id:startStopCollection.getIds()){
+                    CollectionManager collectionManager = new CollectionManager();
+                    collectionManager.setCollection_id(id);
+                    collectionManagerList = collectionService.queryByEntity(collectionManager);
                     CollectionManager collectionManager1 = collectionManagerList.get(0);
-                    collectionService.putToMqtt(collectionManager1,"1");
-                    collectionManager1.setStatus("1");
-                    collectionService.updateByCollectionId(collectionManager1);
+                    if("0".equals(collectionManager1.getStatus())){
+                        collectionService.putToMqtt(collectionManager1,"1");
+                        collectionManager1.setStatus("1");
+                        collectionService.updateByCollectionId(collectionManager1);
+                    }
                 }
             }else {
+                List<CollectionManager> collectionManagerList;
                 for(String id:startStopCollection.getIds()){
                     CollectionManager collectionManager = new CollectionManager();
                     collectionManager.setCollection_id(id);
-                    List<CollectionManager> collectionManagerList = collectionService.queryByEntity(collectionManager);
+                    collectionManagerList = collectionService.queryByEntity(collectionManager);
+                    if("0".equals(collectionManagerList.get(0).getStatus())){
+                        booleanResultMessage.setValue(false);
+                        booleanResultMessage.setStatuscode("401");
+                        booleanResultMessage.setMesg("错误操作，所选的采集列表中已经有采集配置停止了采集任务了");
+                        return booleanResultMessage;
+                    }
+                }
+                for(String id:startStopCollection.getIds()){
+                    CollectionManager collectionManager = new CollectionManager();
+                    collectionManager.setCollection_id(id);
+                    collectionManagerList = collectionService.queryByEntity(collectionManager);
                     CollectionManager collectionManager1 = collectionManagerList.get(0);
-                    collectionService.putToMqtt(collectionManager1,"0");
-                    collectionManager1.setStatus("0");
-                    collectionService.updateByCollectionId(collectionManager1);
+                    if("1".equals(collectionManager1.getStatus())){
+                        collectionService.putToMqtt(collectionManager1,"0");
+                        collectionManager1.setStatus("0");
+                        collectionService.updateByCollectionId(collectionManager1);
+                    }
                 }
             }
             booleanResultMessage.setValue(true);
@@ -70,9 +92,6 @@ public class CollectionController {
         }
         return booleanResultMessage;
     }
-
-
-
 
     /**
      * 新增或者修改
