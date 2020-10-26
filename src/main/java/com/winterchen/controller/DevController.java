@@ -262,7 +262,7 @@ public class DevController {
      */
     @ResponseBody
     @PostMapping("/copyDev")
-//    @UserLoginToken
+    @UserLoginToken
     @Transactional
     public ResultMessage<Boolean> copyDev(@RequestBody DevInputRequest devInputRequest){
         ResultMessage<Boolean> result = new ResultMessage<>();

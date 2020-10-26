@@ -68,6 +68,15 @@ public class DevTypeController {
                 devTypeElement.setDev_element_id(id);
                 devTypeService.insertEntity(devTypeElement);
             } else {
+                DevTypeElement devElement1 = new DevTypeElement();
+                devElement1.setDev_element_name(devElement1.getDev_element_name());
+                List<DevTypeElement> devElements = devTypeService.queryByEntity(devElement1);
+                if(devElements!=null && devElements.size()>0){
+                    booleanResultMessage.setStatuscode("401");
+                    booleanResultMessage.setMesg("已存在同名的设备");
+                    booleanResultMessage.setValue("");
+                    return booleanResultMessage;
+                }
                 devTypeElement.setDev_element_id(id);
                 devTypeElement.setDev_type_id(id);
                 devTypeService.insertEntity(devTypeElement);
