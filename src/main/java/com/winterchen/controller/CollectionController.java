@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,15 +46,28 @@ public class CollectionController {
                         return booleanResultMessage;
                     }
                 }
+                List<CollectionManager> optList=new ArrayList<>();
                 for(String id:startStopCollection.getIds()){
                     CollectionManager collectionManager = new CollectionManager();
                     collectionManager.setCollection_id(id);
                     collectionManagerList = collectionService.queryByEntity(collectionManager);
                     CollectionManager collectionManager1 = collectionManagerList.get(0);
-                    if("0".equals(collectionManager1.getStatus())){
-                        collectionService.putToMqtt(collectionManager1,"1");
-                        collectionManager1.setStatus("1");
-                        collectionService.updateByCollectionId(collectionManager1);
+                    if(collectionManager1.getMeasure_id()!=null && collectionManager1.getChannel_id()!=null ){
+                        optList.add(collectionManager1);
+                    }else {
+                        booleanResultMessage.setValue(false);
+                        booleanResultMessage.setStatuscode("401");
+                        booleanResultMessage.setMesg("错误操作，在开始采集前需要补充完物理节点和通道信息");
+                        return booleanResultMessage;
+                    }
+                }
+                if(optList.size()>0){
+                    for(CollectionManager collect:optList){
+                        if("0".equals(collect.getStatus())){
+                            collectionService.putToMqtt(collect,"1");
+                            collect.setStatus("1");
+                            collectionService.updateByCollectionId(collect);
+                        }
                     }
                 }
             }else {
@@ -69,15 +83,28 @@ public class CollectionController {
                         return booleanResultMessage;
                     }
                 }
+                List<CollectionManager> optList=new ArrayList<>();
                 for(String id:startStopCollection.getIds()){
                     CollectionManager collectionManager = new CollectionManager();
                     collectionManager.setCollection_id(id);
                     collectionManagerList = collectionService.queryByEntity(collectionManager);
                     CollectionManager collectionManager1 = collectionManagerList.get(0);
-                    if("1".equals(collectionManager1.getStatus())){
-                        collectionService.putToMqtt(collectionManager1,"0");
-                        collectionManager1.setStatus("0");
-                        collectionService.updateByCollectionId(collectionManager1);
+                    if(collectionManager1.getMeasure_id()!=null && collectionManager1.getChannel_id()!=null ){
+                        optList.add(collectionManager1);
+                    }else {
+                        booleanResultMessage.setValue(false);
+                        booleanResultMessage.setStatuscode("401");
+                        booleanResultMessage.setMesg("错误操作，在结束采集前需要补充完物理节点和通道信息");
+                        return booleanResultMessage;
+                    }
+                }
+                if(optList.size()>0){
+                    for(CollectionManager collect:optList){
+                        if("1".equals(collect.getStatus())){
+                            collectionService.putToMqtt(collect,"0");
+                            collect.setStatus("0");
+                            collectionService.updateByCollectionId(collect);
+                        }
                     }
                 }
             }
@@ -101,10 +128,21 @@ public class CollectionController {
     public ResultMessage<Boolean> addOrUpdateCollection(@RequestBody CollectionManager collectionManager){
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
+            //判断字段是否weinull
             String s = EntityUtil.checkObjectField(collectionManager);
             if(!"true".equals(s)){
                 booleanResultMessage.setStatuscode("401");
                 booleanResultMessage.setMesg(s);
+                booleanResultMessage.setValue(false);
+                return booleanResultMessage;
+            }
+            //进一步判断通道是否被占用
+            CollectionManager collectQ = new CollectionManager();
+            collectQ.setChannel_id(collectionManager.getChannel_id());
+            List<CollectionManager> collectionManagers = collectionService.queryByEntity(collectQ);
+            if(collectionManagers!=null && collectionManagers.size()>0){
+                booleanResultMessage.setStatuscode("401");
+                booleanResultMessage.setMesg("错误，该通道已经被占用");
                 booleanResultMessage.setValue(false);
                 return booleanResultMessage;
             }
@@ -204,7 +242,6 @@ public class CollectionController {
         }
         return booleanResultMessage;
     }
-
 
 
 }

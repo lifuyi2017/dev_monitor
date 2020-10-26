@@ -8,10 +8,13 @@ import com.winterchen.service.user.CollectionService;
 import com.winterchen.service.user.DevService;
 import com.winterchen.service.user.DevTypeService;
 import com.winterchen.util.EntityUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -75,6 +78,16 @@ public class DevController {
                 devElement.setDev_element_id(id);
                 devService.insertEntity(devElement);
             } else {
+                DevElement devElement1 = new DevElement();
+                devElement1.setDev_element_name(devElement.getDev_element_name());
+                devElement1.setEnterprise_id(devElement.getEnterprise_id());
+                List<DevElement> devElements = devService.queryByEntity(devElement1);
+                if(devElements!=null && devElements.size()>0){
+                    booleanResultMessage.setStatuscode("401");
+                    booleanResultMessage.setMesg("已存在同名的设备");
+                    booleanResultMessage.setValue("");
+                    return booleanResultMessage;
+                }
                 devElement.setDev_element_id(id);
                 devElement.setDev_type_id(id);
                 devService.insertEntity(devElement);
@@ -244,5 +257,73 @@ public class DevController {
         }
     }
 
+    /**
+     * 复制设备
+     */
+    @ResponseBody
+    @PostMapping("/copyDev")
+//    @UserLoginToken
+    @Transactional
+    public ResultMessage<Boolean> copyDev(@RequestBody DevInputRequest devInputRequest){
+        ResultMessage<Boolean> result = new ResultMessage<>();
+        try {
+            DevElement queryDev = new DevElement();
+            queryDev.setDev_element_id(devInputRequest.getType_element_id());
+            queryDev.setType("1");
+            List<DevElement> devElements1 = devService.queryByEntity(queryDev);
+            if(devElements1==null || devElements1.size()==0){
+                result.setStatuscode("401");
+                result.setMesg("错误，只能复制设备");
+                result.setValue(false);
+                return result;
+            }
+            DevElement devElement = new DevElement();
+            devElement.setDev_type_id(devInputRequest.getType_element_id());
+            List<DevElement> devElements = devService.queryByEntity(devElement);
+            String replaceId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5);
+            String parentId;
+            String elementName;
+            for (DevElement dev:devElements) {
+                if (dev.getDev_parent_element_id() != null) {
+                    parentId = replaceId+dev.getDev_parent_element_id().substring(6);
+                    elementName = dev.getDev_element_name();
+                } else {
+                    parentId = null;
+                    elementName = devInputRequest.getDev_element_name();
+                }
+                DevElement devCopy = new DevElement(replaceId+dev.getDev_element_id().substring(6),
+                        parentId, elementName, replaceId+dev.getDev_type_id().substring(6),
+                        dev.getType(), devInputRequest.getEnterprise_id());
+                devService.insertEntity(devCopy);
+                CollectionManager collectionManager = new CollectionManager();
+                collectionManager.setDev_element_id(dev.getDev_element_id());
+                List<CollectionManager> collectionManagers = collectionService.queryByEntity(collectionManager);
+                if(collectionManagers!=null && collectionManagers.size()>0){
+                    for(CollectionManager collection:collectionManagers){
+                        String id = UUID.randomUUID().toString().replaceAll("-", "");
+                        CollectionManager insertCollection = new CollectionManager();
+                        BeanUtils.copyProperties(collection,insertCollection,"collection_id",
+                                "dev_element_id","status","update_time","measure_id","channel_id");
+                        insertCollection.setCollection_id(id);
+                        insertCollection.setDev_element_id(replaceId+dev.getDev_element_id().substring(6));
+                        insertCollection.setStatus("0");
+                        insertCollection.setUpdate_time(new Date());
+                        insertCollection.setMeasure_id(null);
+                        insertCollection.setChannel_id(null);
+                    }
+                }
+            }
+            result.setStatuscode("200");
+            result.setValue(true);
+            result.setMesg("复制成功");
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            result.setStatuscode("501");
+            result.setMesg("服务端错误：" + e.toString());
+            result.setValue(false);
+            return result;
+        }
+    }
 
 }
