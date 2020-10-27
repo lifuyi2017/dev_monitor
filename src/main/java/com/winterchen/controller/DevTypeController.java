@@ -69,7 +69,7 @@ public class DevTypeController {
                 devTypeService.insertEntity(devTypeElement);
             } else {
                 DevTypeElement devElement1 = new DevTypeElement();
-                devElement1.setDev_element_name(devElement1.getDev_element_name());
+                devElement1.setDev_element_name(devTypeElement.getDev_element_name());
                 devElement1.setType("1");
                 List<DevTypeElement> devElements = devTypeService.queryByEntity(devElement1);
                 if(devElements!=null && devElements.size()>0){
