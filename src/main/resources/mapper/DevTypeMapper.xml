@@ -17,6 +17,9 @@
         <if test="type!=null">
             and `type`=#{type}
         </if>
+        <if test="dev_element_name!=null">
+            and dev_element_name=#{dev_element_name}
+        </if>
          order by dev_element_name
     </select>
 
