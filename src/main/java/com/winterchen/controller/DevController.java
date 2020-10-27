@@ -81,6 +81,7 @@ public class DevController {
                 DevElement devElement1 = new DevElement();
                 devElement1.setDev_element_name(devElement.getDev_element_name());
                 devElement1.setEnterprise_id(devElement.getEnterprise_id());
+                devElement1.setType("1");
                 List<DevElement> devElements = devService.queryByEntity(devElement1);
                 if(devElements!=null && devElements.size()>0){
                     booleanResultMessage.setStatuscode("401");
