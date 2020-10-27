@@ -214,15 +214,15 @@ public class DevController {
     @ResponseBody
     @PostMapping("/loadDevTypeTemplate")
     @UserLoginToken
-    public ResultMessage<Boolean> loadDevTypeTemplate(@RequestBody DevInputRequest devInputRequest) {
-        ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
+    public ResultMessage<String> loadDevTypeTemplate(@RequestBody DevInputRequest devInputRequest) {
+        ResultMessage<String> booleanResultMessage = new ResultMessage<>();
         try {
             DevTypeElement devTypeElement = new DevTypeElement();
             devTypeElement.setDev_type_id(devInputRequest.getType_element_id());
             List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
             if(devTypeElements==null){
                 booleanResultMessage.setStatuscode("401");
-                booleanResultMessage.setValue(false);
+                booleanResultMessage.setValue(null);
                 booleanResultMessage.setMesg("不存在的设备类型，请校验");
                 return booleanResultMessage;
             }
@@ -245,14 +245,14 @@ public class DevController {
                 devService.insertEntity(devElement);
             }
             booleanResultMessage.setStatuscode("200");
-            booleanResultMessage.setValue(true);
+            booleanResultMessage.setValue(devInputRequest.getType_element_id()+appendId);
             booleanResultMessage.setMesg("导入成功");
             return booleanResultMessage;
         } catch (Exception e) {
             e.printStackTrace();
             booleanResultMessage.setStatuscode("501");
             booleanResultMessage.setMesg("服务端错误：" + e.toString());
-            booleanResultMessage.setValue(false);
+            booleanResultMessage.setValue(null);
             return booleanResultMessage;
         }
     }
@@ -264,8 +264,8 @@ public class DevController {
     @PostMapping("/copyDev")
     @UserLoginToken
     @Transactional
-    public ResultMessage<Boolean> copyDev(@RequestBody DevInputRequest devInputRequest){
-        ResultMessage<Boolean> result = new ResultMessage<>();
+    public ResultMessage<String> copyDev(@RequestBody DevInputRequest devInputRequest){
+        ResultMessage<String> result = new ResultMessage<>();
         try {
             DevElement queryDev = new DevElement();
             queryDev.setDev_element_id(devInputRequest.getType_element_id());
@@ -274,7 +274,7 @@ public class DevController {
             if(devElements1==null || devElements1.size()==0){
                 result.setStatuscode("401");
                 result.setMesg("错误，只能复制设备");
-                result.setValue(false);
+                result.setValue(null);
                 return result;
             }
             DevElement devElement = new DevElement();
@@ -314,14 +314,14 @@ public class DevController {
                 }
             }
             result.setStatuscode("200");
-            result.setValue(true);
+            result.setValue(replaceId+devInputRequest.getType_element_id().substring(6));
             result.setMesg("复制成功");
             return result;
         }catch (Exception e){
             e.printStackTrace();
             result.setStatuscode("501");
             result.setMesg("服务端错误：" + e.toString());
-            result.setValue(false);
+            result.setValue(null);
             return result;
         }
     }
