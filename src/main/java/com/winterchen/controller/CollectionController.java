@@ -137,6 +137,12 @@ public class CollectionController {
                 booleanResultMessage.setValue(false);
                 return booleanResultMessage;
             }
+            if(collectionManager.getChannel_id()==null && collectionManager.getChannel_id().size()==0){
+                booleanResultMessage.setStatuscode("401");
+                booleanResultMessage.setMesg("请设置通道");
+                booleanResultMessage.setValue(false);
+                return booleanResultMessage;
+            }
             //进一步判断通道是否被占用
             for(String chId:collectionManager.getChannel_id()){
                 List<CollectionManager> collectionManagers =collectionService.getByChId(chId);
