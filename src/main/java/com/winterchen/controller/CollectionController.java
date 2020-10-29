@@ -6,6 +6,7 @@ import com.winterchen.annotation.UserLoginToken;
 import com.winterchen.model.*;
 import com.winterchen.service.user.CollectionService;
 import com.winterchen.util.EntityUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -125,7 +126,7 @@ public class CollectionController {
      */
     @PostMapping("/addOrUpdateCollection")
     @UserLoginToken
-    public ResultMessage<Boolean> addOrUpdateCollection(@RequestBody CollectionManager collectionManager){
+    public ResultMessage<Boolean> addOrUpdateCollection(@RequestBody CollectionManagerHttp collectionManager){
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
             //判断字段是否weinull
@@ -137,14 +138,14 @@ public class CollectionController {
                 return booleanResultMessage;
             }
             //进一步判断通道是否被占用
-            CollectionManager collectQ = new CollectionManager();
-            collectQ.setChannel_id(collectionManager.getChannel_id());
-            List<CollectionManager> collectionManagers = collectionService.queryByEntity(collectQ);
-            if(collectionManagers!=null && collectionManagers.size()>0){
-                booleanResultMessage.setStatuscode("401");
-                booleanResultMessage.setMesg("错误，该通道已经被占用");
-                booleanResultMessage.setValue(false);
-                return booleanResultMessage;
+            for(String chId:collectionManager.getChannel_id()){
+                List<CollectionManager> collectionManagers =collectionService.getByChId(chId);
+                if(collectionManagers!=null && collectionManagers.size()>0){
+                    booleanResultMessage.setStatuscode("401");
+                    booleanResultMessage.setMesg("错误，所选通道中有已经被占用的");
+                    booleanResultMessage.setValue(false);
+                    return booleanResultMessage;
+                }
             }
             if(collectionManager.getCollection_id()!=null){
                 CollectionManager collect = new CollectionManager();
@@ -162,7 +163,10 @@ public class CollectionController {
                     booleanResultMessage.setMesg("请先停止采集任务");
                 }else {
                     collectionManager.setStatus("0");
-                    collectionService.updateByCollectionId(collectionManager);
+                    CollectionManager collection = new CollectionManager();
+                    BeanUtils.copyProperties(collectionManager,collection,"channel_id");
+                    collection.setChannel_id(EntityUtil.listToString(collectionManager.getChannel_id()));
+                    collectionService.updateByCollectionId(collection);
                     booleanResultMessage.setValue(true);
                     booleanResultMessage.setStatuscode("200");
                     booleanResultMessage.setMesg("操作成功");
@@ -170,7 +174,10 @@ public class CollectionController {
             }else {
                 collectionManager.setCollection_id(UUID.randomUUID().toString().replaceAll("-", ""));
                 collectionManager.setStatus("0");
-                collectionService.insert(collectionManager);
+                CollectionManager collection = new CollectionManager();
+                BeanUtils.copyProperties(collectionManager,collection,"channel_id");
+                collection.setChannel_id(EntityUtil.listToString(collectionManager.getChannel_id()));
+                collectionService.insert(collection);
                 booleanResultMessage.setValue(true);
                 booleanResultMessage.setStatuscode("200");
                 booleanResultMessage.setMesg("操作成功");
@@ -189,20 +196,11 @@ public class CollectionController {
      */
     @PostMapping("/queryCollection")
     @UserLoginToken
-    public  ResultMessage<PageInfo<CollectionManager>> queryCollection(@RequestBody CollectionManagerRequest collectionManagerRequest){
-        ResultMessage<PageInfo<CollectionManager>> logicPage = new ResultMessage<>();
+    public  ResultMessage<PageInfo<CollectionManagerHttp>> queryCollection(@RequestBody CollectionManagerRequest collectionManagerRequest){
+        ResultMessage<PageInfo<CollectionManagerHttp>> logicPage = new ResultMessage<>();
         try {
-            PageInfo result;
-            if(collectionManagerRequest.getPageNum()!=null && collectionManagerRequest.getPageSize()!=null){
-                PageHelper.startPage(collectionManagerRequest.getPageNum(), collectionManagerRequest.getPageSize());
-                List<CollectionManager> collectionManagerList = collectionService.queryByEntity(collectionManagerRequest.getCollectionManager());
-                result = new PageInfo(collectionManagerList);
-            }else {
-                result =new PageInfo();
-                List<CollectionManager> collectionManagerList = collectionService.queryByEntity(collectionManagerRequest.getCollectionManager());
-                result.setList(collectionManagerList);
-            }
-            logicPage.setValue(result);
+            PageInfo<CollectionManagerHttp> pageInfo=collectionService.queryByEntityBPage(collectionManagerRequest);
+            logicPage.setValue(pageInfo);
             logicPage.setStatuscode("200");
             logicPage.setMesg("查询成功");
         } catch (Exception e) {

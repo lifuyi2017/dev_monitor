@@ -10,9 +10,7 @@
         delete from collection where measure_id=#{measure_id}
     </delete>
 
-    <delete id="deleteByChannelId">
-        delete from collection where channel_id=#{channel_id}
-    </delete>
+
 
     <delete id="deleteByElementId">
         delete from collection where dev_element_id=#{dev_element_id}
@@ -39,7 +37,7 @@
             and measure_id=#{measure_id}
         </if>
         <if test="channel_id!=null">
-            and channel_id=#{channel_id}
+            and channel_id like concat('%',#{channel_id},'%')
         </if>
     </select>
 
@@ -54,9 +52,6 @@
         </if>
         <if test="measure_id!=null">
             and measure_id=#{measure_id}
-        </if>
-        <if test="channel_id!=null">
-            and channel_id=#{channel_id}
         </if>
         <if test="logic_id!=null">
             and logic_id=#{logic_id}
@@ -87,5 +82,9 @@
     <update id="updateByLogicIdNull">
         update collection set logic_id=null where logic_id=#{logic_id}
     </update>
+
+    <select id="getByChId"  resultType="com.winterchen.model.CollectionManager">
+        select * from collection where channel_id like concat('%',#{id},'%')
+    </select>
 
 </mapper>

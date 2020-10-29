@@ -8,6 +8,8 @@ import com.winterchen.test.PushCallback;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+import java.util.ArrayList;
+
 public class MqttUtil {
 
     private static String HOST="tcp://106.55.249.130:1883";
@@ -37,7 +39,10 @@ public class MqttUtil {
     }
 
     public static void main(String[] args) {
-        CollectionMqtt collectionMqtt = new CollectionMqtt("设备编号","通道编号","采集频率",
+        ArrayList<String> objects = new ArrayList<>();
+        objects.add("hhh");
+        objects.add("hhwww");
+        CollectionMqtt collectionMqtt = new CollectionMqtt("设备编号",objects,"采集频率",
                 "采集时长","采集精度","采集间隔","1",DateUtil.getDateTime());
         String s = JSONArray.toJSON(collectionMqtt).toString();
         System.out.println(s);

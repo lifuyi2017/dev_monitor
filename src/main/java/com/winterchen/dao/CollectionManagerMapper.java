@@ -9,8 +9,6 @@ public interface CollectionManagerMapper {
 
     void deleteByMeasureId(String measure_id);
 
-    void deleteByChannelId(String channel_id);
-
     List<CollectionManager> queryByEntity(CollectionManager collectionManager);
 
     void updateByCollectionId(CollectionManager collectionManager1);
@@ -28,4 +26,6 @@ public interface CollectionManagerMapper {
     Integer queryOnCollectCountByEntity(CollectionManager collectionManager);
 
     void updateByLogicIdNull(String logic_id);
+
+    List<CollectionManager> getByChId(String id);
 }

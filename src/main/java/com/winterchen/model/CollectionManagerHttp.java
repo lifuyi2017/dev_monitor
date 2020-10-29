@@ -4,9 +4,10 @@ import com.winterchen.annotation.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-public class CollectionManager implements Serializable {
-    private static final long serialVersionUID = 8030861049086343371L;
+public class CollectionManagerHttp implements Serializable {
+    private static final long serialVersionUID = 8832924100049616206L;
 
     private String collection_id;
     private String collection_type;
@@ -25,19 +26,22 @@ public class CollectionManager implements Serializable {
     @NotBlank(message = "物理节点不能为空")
     private String measure_id;
     @NotBlank(message = "采集通道不能为空")
-    private String channel_id;
+    private List<String> channel_id;
     private String logic_id;
     @NotBlank(message = "设备id不能为空")
     private String dev_element_id;
     private String status;
     private Date update_time;
 
+    private String measure_name;
+    private List<String> channel_code;
+    private String logic_name;
 
 
-    public CollectionManager() {
+    public CollectionManagerHttp() {
     }
 
-    public CollectionManager(String collection_id, String collection_type, String collection_frequency, String collection_cycle, String collection_accuracy, String collection_interval, String measure_id, String channel_id, String logic_id, String dev_element_id, String status, Date update_time) {
+    public CollectionManagerHttp(String collection_id, String collection_type, String collection_frequency, String collection_cycle, String collection_accuracy, String collection_interval, String measure_id, List<String> channel_id, String logic_id, String dev_element_id, String status, Date update_time, String measure_name, List<String> channel_code, String logic_name) {
         this.collection_id = collection_id;
         this.collection_type = collection_type;
         this.collection_frequency = collection_frequency;
@@ -50,8 +54,10 @@ public class CollectionManager implements Serializable {
         this.dev_element_id = dev_element_id;
         this.status = status;
         this.update_time = update_time;
+        this.measure_name = measure_name;
+        this.channel_code = channel_code;
+        this.logic_name = logic_name;
     }
-
 
     public String getCollection_id() {
         return collection_id;
@@ -109,11 +115,11 @@ public class CollectionManager implements Serializable {
         this.measure_id = measure_id;
     }
 
-    public String getChannel_id() {
+    public List<String> getChannel_id() {
         return channel_id;
     }
 
-    public void setChannel_id(String channel_id) {
+    public void setChannel_id(List<String> channel_id) {
         this.channel_id = channel_id;
     }
 
@@ -149,4 +155,28 @@ public class CollectionManager implements Serializable {
         this.update_time = update_time;
     }
 
+    public String getMeasure_name() {
+        return measure_name;
+    }
+
+    public void setMeasure_name(String measure_name) {
+        this.measure_name = measure_name;
+    }
+
+
+    public List<String> getChannel_code() {
+        return channel_code;
+    }
+
+    public void setChannel_code(List<String> channel_code) {
+        this.channel_code = channel_code;
+    }
+
+    public String getLogic_name() {
+        return logic_name;
+    }
+
+    public void setLogic_name(String logic_name) {
+        this.logic_name = logic_name;
+    }
 }
