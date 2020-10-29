@@ -86,6 +86,11 @@ public class CollectionServiceImpl implements CollectionService {
         return result;
     }
 
+    @Override
+    public List<CollectionManager> getByChIdAndId(CollectionManager col) {
+        return collectionManagerMapper.getByChIdAndId(col);
+    }
+
     private CollectionManagerHttp getCollectManagerByCollect(CollectionManager collect) {
         CollectionManagerHttp collectionHttp = new CollectionManagerHttp();
         BeanUtils.copyProperties(collect,collectionHttp,"channel_id");

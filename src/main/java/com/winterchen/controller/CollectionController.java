@@ -145,7 +145,12 @@ public class CollectionController {
             }
             //进一步判断通道是否被占用
             for(String chId:collectionManager.getChannel_id()){
-                List<CollectionManager> collectionManagers =collectionService.getByChId(chId);
+                CollectionManager col = new CollectionManager();
+                col.setChannel_id(chId);
+                if(collectionManager.getCollection_id()!=null){
+                    col.setCollection_id(collectionManager.getCollection_id());
+                }
+                List<CollectionManager> collectionManagers =collectionService.getByChIdAndId(col);
                 if(collectionManagers!=null && collectionManagers.size()>0){
                     booleanResultMessage.setStatuscode("401");
                     booleanResultMessage.setMesg("错误，所选通道中有已经被占用的");

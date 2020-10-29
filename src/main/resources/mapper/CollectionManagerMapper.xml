@@ -87,4 +87,11 @@
         select * from collection where channel_id like concat('%',#{id},'%')
     </select>
 
+    <select id="getByChIdAndId" parameterType="com.winterchen.model.CollectionManager" resultType="com.winterchen.model.CollectionManager">
+        select * from collection where channel_id like concat('%',#{channel_id},'%')
+        <if test="collection_id!=null">
+            and collection_id!=#{collection_id}
+        </if>
+    </select>
+
 </mapper>

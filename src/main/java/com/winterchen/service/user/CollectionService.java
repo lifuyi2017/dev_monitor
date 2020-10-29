@@ -23,4 +23,6 @@ public interface CollectionService {
     List<CollectionManager> getByChId(String collectQ);
 
     PageInfo<CollectionManagerHttp> queryByEntityBPage(CollectionManagerRequest collectionManagerRequest);
+
+    List<CollectionManager> getByChIdAndId(CollectionManager col);
 }

@@ -28,4 +28,6 @@ public interface CollectionManagerMapper {
     void updateByLogicIdNull(String logic_id);
 
     List<CollectionManager> getByChId(String id);
+
+    List<CollectionManager> getByChIdAndId(CollectionManager col);
 }
