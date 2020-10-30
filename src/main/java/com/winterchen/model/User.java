@@ -1,5 +1,7 @@
 package com.winterchen.model;
 
+import com.winterchen.annotation.NotBlank;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,11 +9,15 @@ public class User implements Serializable {
     private static final long serialVersionUID = 6414098616140717985L;
 
     private Integer user_id;
+    @NotBlank(message = "用户名不能为空")
     private String user_name;
+    @NotBlank(message = "用户密码不能为空")
     private String user_password;
     private String user_real_name;
+    @NotBlank(message = "用户手机号不能为空")
     private String user_phone;
     private String user_status;
+    @NotBlank(message = "用户所属企业不能为空")
     private String enterprise_id;
     private String enterprise_name;
     private Date update_time;

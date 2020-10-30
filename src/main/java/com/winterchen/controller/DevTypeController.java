@@ -328,8 +328,19 @@ public class DevTypeController {
 //        ResultMessage<List<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
         ResultMessage<PageInfo<DevFieldValueRequest>> resultMessage = new ResultMessage<>();
         try {
+            //设置类型
+            DevTypeElement devTypeElement = new DevTypeElement();
+            devTypeElement.setDev_element_id(devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
+            List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
+            if(devTypeElements==null || devTypeElements.size()==0){
+                resultMessage.setValue(null);
+                resultMessage.setMesg("查询失败，不存在的设备id："+devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
+                resultMessage.setStatuscode("200");
+                System.out.println("查询失败，不存在的设备id："+devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
+                return resultMessage;
+            }
+            devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().setDev_element_id(devTypeElements.get(0).getDev_type_id());
             PageInfo<DevFieldValueRequest> result = getElementList(devFieldValueRequestPage);
-//            result = getElementList(devFieldValueRequestPage);
             resultMessage.setValue(result);
             resultMessage.setMesg("查询成功");
             resultMessage.setStatuscode("200");
@@ -346,11 +357,6 @@ public class DevTypeController {
     private PageInfo<DevFieldValueRequest> getElementList(DevFieldValueRequestPage devFieldValueRequestPage) throws Exception {
         PageInfo<DevFieldValueRequest> result;
         ArrayList<DevFieldValueRequest> devFieldValueRequestArrayList = new ArrayList<>();
-        //设置类型
-        DevTypeElement devTypeElement = new DevTypeElement();
-        devTypeElement.setDev_element_id(devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().getDev_element_id());
-        List<DevTypeElement> devTypeElements = devTypeService.queryByEntity(devTypeElement);
-        devFieldValueRequestPage.getDevFieldValueRequest().getDevFixedFieldValue().setDev_element_id(devTypeElements.get(0).getDev_type_id());
         //查询固定字段
         result=new PageInfo();
         if(devFieldValueRequestPage.getPageNum()!=null && devFieldValueRequestPage.getPageSize()!=null){

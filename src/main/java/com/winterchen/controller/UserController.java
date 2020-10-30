@@ -7,6 +7,7 @@ import com.winterchen.annotation.UserLoginToken;
 import com.winterchen.model.*;
 import com.winterchen.service.user.EnterpriseService;
 import com.winterchen.service.user.UserService;
+import com.winterchen.util.EntityUtil;
 import com.winterchen.util.TokenCache;
 import com.winterchen.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,10 +105,11 @@ public class UserController {
     public ResultMessage<Boolean> addOrUpdateUser(@RequestBody User user) {
         ResultMessage<Boolean> booleanResultMessage = new ResultMessage<>();
         try {
-            if (user.getEnterprise_id() == null || ("").equals(user.getEnterprise_id().trim())) {
-                booleanResultMessage.setValue(false);
+            String s = EntityUtil.checkObjectField(user);
+            if(!"true".equals(s)){
                 booleanResultMessage.setStatuscode("401");
-                booleanResultMessage.setMesg("请设置企业id");
+                booleanResultMessage.setMesg(s);
+                booleanResultMessage.setValue(false);
                 return booleanResultMessage;
             }
             if (user.getUser_id() != null) {
@@ -119,6 +121,28 @@ public class UserController {
                     booleanResultMessage.setStatuscode("401");
                     booleanResultMessage.setMesg("没有这个用户");
                     return booleanResultMessage;
+                }
+                if(!userList.get(0).getUser_name().equals(user.getUser_name())){
+                    User userName = new User();
+                    userName.setUser_name(user.getUser_name());
+                    List<User> usersByUserNoPage = userService.getUsersByUserNoPage(userName);
+                    if(usersByUserNoPage.size()>0){
+                        booleanResultMessage.setValue(false);
+                        booleanResultMessage.setStatuscode("401");
+                        booleanResultMessage.setMesg("用户名已经被占用");
+                        return booleanResultMessage;
+                    }
+                }
+                if(!userList.get(0).getUser_phone().equals(user.getUser_phone())){
+                    User userPhone = new User();
+                    userPhone.setUser_phone(user.getUser_phone());
+                    List<User> usersByUserNoPage = userService.getUsersByUserNoPage(userPhone);
+                    if(usersByUserNoPage.size()>0){
+                        booleanResultMessage.setValue(false);
+                        booleanResultMessage.setStatuscode("401");
+                        booleanResultMessage.setMesg("电话号码已经被占用");
+                        return booleanResultMessage;
+                    }
                 }
                 userService.updateById(user);
             } else {

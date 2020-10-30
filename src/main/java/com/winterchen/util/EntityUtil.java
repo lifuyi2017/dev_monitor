@@ -45,25 +45,25 @@ public class EntityUtil {
     }
 
     public static List<String> stringToList(String str){
-        if(str!=null){
-            return Arrays.asList(str.split(","));
-        }else {
-            return null;
-        }
+        String[] array = str.split(",");
+        List<String> transferedList = new ArrayList<>();
+        Arrays.stream(array).forEach(arr -> transferedList.add(arr));
+        return transferedList;
+//        if(str!=null){
+//            return Arrays.asList(str.split(","));
+//        }else {
+//            return null;
+//        }
     }
 
     public static void main(String[] args) throws IllegalAccessException {
-/*        ArrayList<String> list = new ArrayList<>();
-        list.add("wwwww");
-        list.add("wsadsad");
+//        ArrayList<String> list = new ArrayList<>();
+        List<String> list = Arrays.asList("cdc,dsd,uiuj".split(","));
 //        list.add("wdefrdfw");
         System.out.println(listToString(list));
-        list.remove("wwwww");
+        list.remove("cdc");
         List<String> strings = stringToList(listToString(list));
-        System.out.println("---------");*/
-        CollectionManagerHttp collectionManagerHttp = new CollectionManagerHttp();
-        CollectionManager collectionManager = new CollectionManager();
-        BeanUtils.copyProperties(collectionManagerHttp,collectionManager,"channel_id");
-        BeanUtils.copyProperties(collectionManager,collectionManagerHttp,"channel_id");
+        System.out.println("---------");
+
     }
 }

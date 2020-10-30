@@ -90,7 +90,10 @@ public class DevServiceImpl implements DevService {
             ResultMessage<Boolean> result = new ResultMessage();
             for (DevElement dev : devElements) {
                 result = deleteByParentId(dev.getDev_element_id());
+//                devElementMapper.deleteByElementId(dev.getDev_element_id());
             }
+            collectionManagerMapper.deleteByElementId(dev_element_id);
+            devElementMapper.deleteByElementId(dev_element_id);
             return result;
         } else {
             collectionManagerMapper.deleteByElementId(dev_element_id);
