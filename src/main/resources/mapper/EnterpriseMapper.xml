@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lifuyi.dev_monitor.dao.EnterpriseMapper" >
+
+
+    <select id="getType" resultType="com.lifuyi.dev_monitor.model.enterprise.Resp.EnterpriseTypeResp">
+        select * from enterprise_type;
+    </select>
+
+    <select id="getListByEntity" resultType="com.lifuyi.dev_monitor.model.enterprise.Enterprise">
+        select  * from enterprise_info where 1=1
+        <if test="enterprise_id!=null">
+            and enterprise_id=#{enterprise_id}
+        </if>
+        <if test="enterprise_name!=null">
+            and enterprise_name=#{enterprise_name}
+        </if>
+        <if test="enterprise_code!=null">
+            and enterprise_code=#{enterprise_code}
+        </if>
+        <if test="enterprise_type_id!=null">
+            and enterprise_type_id=#{enterprise_type_id}
+        </if>
+    </select>
+
+    <insert id="insertOrUpdateById" parameterType="com.lifuyi.dev_monitor.model.enterprise.Enterprise">
+        insert into enterprise_info(enterprise_id,enterprise_code,enterprise_name,enterprise_type_id)
+        values (#{enterprise_id},#{enterprise_code},#{enterprise_name},#{enterprise_type_id})
+        ON DUPLICATE KEY UPDATE enterprise_code=#{enterprise_code},enterprise_name=#{enterprise_name},
+        enterprise_type_id=#{enterprise_type_id}
+    </insert>
+
+    <insert id="insertOrUpdateBinging" parameterType="com.lifuyi.dev_monitor.model.enterprise.EnterpriseBinging">
+        insert into enterprise_binding(id,not_service_id,service_id) values (#{id},#{not_service_id},#{service_id})
+        ON DUPLICATE KEY UPDATE not_service_id=#{not_service_id},service_id=#{service_id}
+    </insert>
+
+
+
+</mapper>
