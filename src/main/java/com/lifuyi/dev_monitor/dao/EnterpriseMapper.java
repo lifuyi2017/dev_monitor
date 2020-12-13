@@ -14,4 +14,14 @@ public interface EnterpriseMapper {
     void insertOrUpdateById(Enterprise enterprise);
 
     void insertOrUpdateBinging(EnterpriseBinging enterpriseBinging);
+
+    List<String> getServiceNames(String enterprise_id);
+
+    EnterpriseTypeResp getTypeById(Integer enterprise_type_id);
+
+    Integer verificationName(String id, String name);
+
+    Integer verificationCode(String id, String code);
+
+    void deleteBingingByNotServiceId(String id);
 }
