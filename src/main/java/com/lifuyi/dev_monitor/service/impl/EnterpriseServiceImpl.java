@@ -123,4 +123,9 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         return new ResultMessage<PageInfo<EnterpriseResp>>("200", "查询成功", pageInfo);
     }
 
+    @Override
+    public ResultMessage<List<Enterprise>> getEnterprise(Enterprise enterprise) {
+        return new ResultMessage<List<Enterprise>>("200","查询成功",enterpriseMapper.getListByEntity(enterprise));
+    }
+
 }

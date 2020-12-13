@@ -1,8 +1,10 @@
 package com.lifuyi.dev_monitor.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.lifuyi.dev_monitor.annotation.UserLoginToken;
 import com.lifuyi.dev_monitor.dao.EnterpriseMapper;
 import com.lifuyi.dev_monitor.model.ResultMessage;
+import com.lifuyi.dev_monitor.model.enterprise.Enterprise;
 import com.lifuyi.dev_monitor.model.enterprise.Req.EnterprisePageReq;
 import com.lifuyi.dev_monitor.model.enterprise.Req.EnterpriseReq;
 import com.lifuyi.dev_monitor.model.enterprise.Resp.EnterpriseResp;
@@ -48,12 +50,12 @@ public class EnterpriseController {
         return enterpriseService.getEnterprisePage(pageReq);
     }
 
-//    @ResponseBody
-//    @PostMapping("/getEnterprise")
+    @ResponseBody
+    @PostMapping("/getEnterprise")
 //    @UserLoginToken
-//    public ResultMessage<List<Enterprise>> getEnterprise(@RequestBody Enterprise enterprise) {
-//        return enterpriseService.getEnterprise(enterprise);
-//    }
+    public ResultMessage<List<Enterprise>> getEnterprise(@RequestBody Enterprise enterprise) {
+        return enterpriseService.getEnterprise(enterprise);
+    }
 
 
 }
