@@ -13,7 +13,7 @@
             and enterprise_id=#{enterprise_id}
         </if>
         <if test="enterprise_name!=null">
-            and enterprise_name=#{enterprise_name}
+            and enterprise_name like  concat('%',#{enterprise_name},'%')
         </if>
         <if test="enterprise_code!=null">
             and enterprise_code=#{enterprise_code}

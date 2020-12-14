@@ -24,8 +24,6 @@ localhost:8082/enterprise/getType
     ]
 }
 
-
-
 2：新增或者修改
 localhost:8082/enterprise/addOrUpdate
 输入
@@ -64,6 +62,107 @@ localhost:8082/enterprise/addOrUpdate
     "statuscode": "200",
     "mesg": "操作成功",
     "value": false
+}
+
+
+
+3:查询(带分页)
+localhost:8082/enterprise/getEnterprisePage
+输入：
+{
+    "pageNum":1,
+    "pageSize":4
+}
+{
+    "enterprise_name":"使用",
+    "pageNum":1,
+    "pageSize":4
+}
+输出：
+{
+    "statuscode": "200",
+    "mesg": "查询成功",
+    "value": {
+        "total": 2,
+        "list": [
+            {
+                "enterprise_id": "478806afa6634357ab770d81a387c044",
+                "enterprise_code": "codscce1",
+                "enterprise_name": "设备使用商1",
+                "enterpriseTypeResp": {
+                    "id": 2,
+                    "type_name": "设备使用商"
+                },
+                "update_time": "2020-12-14T06:22:16.000+0000",
+                "service_names": [
+                    "设备使用商1"
+                ]
+            },
+            {
+                "enterprise_id": "fe849995573f441b96897f47f59bdde1",
+                "enterprise_code": "codscdsdfce1",
+                "enterprise_name": "设备使用商2",
+                "enterpriseTypeResp": {
+                    "id": 2,
+                    "type_name": "设备使用商"
+                },
+                "update_time": "2020-12-14T06:23:11.000+0000",
+                "service_names": [
+                    "设备使用商2"
+                ]
+            }
+        ],
+        "pageNum": 1,
+        "pageSize": 4,
+        "size": 2,
+        "startRow": 1,
+        "endRow": 2,
+        "pages": 1,
+        "prePage": 0,
+        "nextPage": 0,
+        "isFirstPage": true,
+        "isLastPage": true,
+        "hasPreviousPage": false,
+        "hasNextPage": false,
+        "navigatePages": 8,
+        "navigatepageNums": [
+            1
+        ],
+        "navigateFirstPage": 1,
+        "navigateLastPage": 1,
+        "firstPage": 1,
+        "lastPage": 1
+    }
+}
+
+
+4:查询(不带分页)
+localhost:8082/enterprise/getEnterprise
+输入
+可选参数是enterprise_id、enterprise_code、enterprise_name、enterprise_type_id
+{
+    "enterprise_type_id":2
+}
+输出
+{
+    "statuscode": "200",
+    "mesg": "查询成功",
+    "value": [
+        {
+            "enterprise_id": "478806afa6634357ab770d81a387c044",
+            "enterprise_code": "codscce1",
+            "enterprise_name": "设备使用商1",
+            "enterprise_type_id": 2,
+            "update_time": "2020-12-14T06:22:16.000+0000"
+        },
+        {
+            "enterprise_id": "fe849995573f441b96897f47f59bdde1",
+            "enterprise_code": "codscdsdfce1",
+            "enterprise_name": "设备使用商2",
+            "enterprise_type_id": 2,
+            "update_time": "2020-12-14T06:23:11.000+0000"
+        }
+    ]
 }
 
 
