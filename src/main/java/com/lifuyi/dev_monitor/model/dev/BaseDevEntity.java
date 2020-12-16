@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class BaseDevEntity {
 
+    private String id;
+
     private String dev_code;
     private Integer dev_type_id;
     private String dev_name;
@@ -17,8 +19,8 @@ public class BaseDevEntity {
 
     private Object object;
 
-
-    public BaseDevEntity(String dev_code, Integer dev_type_id, String dev_name, String manager, String service_enterprise_id, String produce_enterprise_id, String third_enterprise_id, String install_instructions, String pic_url, Object object) {
+    public BaseDevEntity(String id, String dev_code, Integer dev_type_id, String dev_name, String manager, String service_enterprise_id, String produce_enterprise_id, String third_enterprise_id, String install_instructions, String pic_url, Object object) {
+        this.id = id;
         this.dev_code = dev_code;
         this.dev_type_id = dev_type_id;
         this.dev_name = dev_name;
@@ -29,5 +31,8 @@ public class BaseDevEntity {
         this.install_instructions = install_instructions;
         this.pic_url = pic_url;
         this.object = object;
+    }
+
+    public BaseDevEntity() {
     }
 }

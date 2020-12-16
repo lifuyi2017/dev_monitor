@@ -5,19 +5,28 @@ import com.lifuyi.dev_monitor.model.dev.DevType;
 import com.lifuyi.dev_monitor.model.enterprise.Resp.EnterpriseTypeResp;
 import com.lifuyi.dev_monitor.service.DevService;
 import com.lifuyi.dev_monitor.util.UploadUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.List;
 import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/dev")
 @CrossOrigin
+@Api(description = "设备管理")
 public class DevController {
 
     @Autowired
@@ -26,36 +35,40 @@ public class DevController {
     /**
      * 查询类型
      */
-//    @ResponseBody
-//    @PostMapping("/getType")
-//    public ResultMessage<List<DevType>> getType(){
-//
-//    }
+    @ResponseBody
+    @PostMapping("/getType")
+    @ApiOperation(value = "获取设备类型", notes = "获取设备类型")
+    public ResultMessage<List<DevType>> getType(){
+        return new ResultMessage<List<DevType>>("200","查询成功",devService.getType());
+    }
 
     /**
      * 上传图片
      */
     @ResponseBody
     @PostMapping("/uploadPic")
+    @ApiResponses({ @ApiResponse(code = 200, message = "图片id"),@ApiResponse(code = 401, message = "上传失败") })
     public ResultMessage<String> uploadPic(@RequestParam("imgFile") MultipartFile imgFile) {
-        if (imgFile.isEmpty()) {
-            return new ResultMessage<String>("401", "不能为空", "失败");
-        }
-        String filename = imgFile.getOriginalFilename();
-        String prefix = filename.substring(filename.lastIndexOf(".") + 1);
-        filename = UUID.randomUUID().toString().replace("-", "") + "." + prefix;
+        return UploadUtils.uploadPic(imgFile);
+    }
+
+    /**
+     * 下载图片
+     */
+    //文件下载相关代码
+    @GetMapping(value = "/previewPic")
+    @ApiOperation(value = "预览图片", notes = "输入id,返回base64")
+    public ResultMessage<String> previewPic() {
         try {
-            // 构建真实的文件路径
-            File newFile = new File("D:\\log" + File.separator + filename);
-            System.err.println(newFile.getAbsolutePath());
-            // 上传图片到 -》 “绝对路径”
-            imgFile.transferTo(newFile);
-            return new ResultMessage<String>("200", "上传成功", filename);
-        } catch (IOException e) {
+            FileInputStream fileInputStream = new FileInputStream("D:\\log\\ecfe36ac60204c4897962a124cdbf144.PNG");
+            InputStreamResource inputStreamResource = new InputStreamResource(fileInputStream);
+            return new ResultMessage<Resource>("200","查询成功",inputStreamResource);
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-            return new ResultMessage<String>("401", "上传异常:" + e.getMessage(), "失败");
+            return new ResultMessage<Resource>("401","查询失败",null);
         }
     }
+
 
 
 

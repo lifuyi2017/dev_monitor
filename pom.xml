@@ -27,6 +27,32 @@
     <dependencies>
 
         <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework/springloaded &ndash;&gt;
+        &lt;!&ndash;配置idea自动加载配置文件&ndash;&gt;
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>springloaded</artifactId>
+        </dependency>
+        &lt;!&ndash; Spring Boot的开发者工具采取了库的形式 &ndash;&gt;
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>-->
+
+
+
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.20</version>
@@ -114,14 +140,25 @@
 
     <build>
         <plugins>
-            <!--			<plugin>
-                            <groupId>org.springframework.boot</groupId>
-                            <artifactId>spring-boot-maven-plugin</artifactId>
-                        </plugin>-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!--				<version>1.4.0.RELEASE</version>-->
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
+        </plugins>
+
+
+<!--        <plugins>
+            &lt;!&ndash;			<plugin>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-maven-plugin</artifactId>
+                        </plugin>&ndash;&gt;
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                &lt;!&ndash;				<version>1.4.0.RELEASE</version>&ndash;&gt;
                 <configuration>
                     <layout>ZIP</layout>
                     <executable>true</executable>
@@ -137,7 +174,7 @@
                     </includes>
                 </configuration>
             </plugin>
-        </plugins>
+        </plugins>-->
     </build>
 
 
