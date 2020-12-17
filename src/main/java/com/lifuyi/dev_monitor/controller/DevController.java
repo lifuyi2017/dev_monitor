@@ -55,19 +55,14 @@ public class DevController {
     /**
      * 下载图片
      */
-    //文件下载相关代码
     @GetMapping(value = "/previewPic")
     @ApiOperation(value = "预览图片", notes = "输入id,返回base64")
-    public ResultMessage<String> previewPic() {
-        try {
-            FileInputStream fileInputStream = new FileInputStream("D:\\log\\ecfe36ac60204c4897962a124cdbf144.PNG");
-            InputStreamResource inputStreamResource = new InputStreamResource(fileInputStream);
-            return new ResultMessage<Resource>("200","查询成功",inputStreamResource);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return new ResultMessage<Resource>("401","查询失败",null);
-        }
+    public ResultMessage<String> previewPic(@RequestParam("imgId") String imgId) {
+       return  UploadUtils.previewPic(imgId);
     }
+
+
+
 
 
 

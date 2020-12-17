@@ -7,17 +7,14 @@ public class WaterPump {
 
     private String id;
 
-    private String dev_code;
-
     private String power;
     private String speed;
     private String flow;
     private String lift;
     private String bearing;
 
-    public WaterPump(String id, String dev_code, String power, String speed, String flow, String lift, String bearing) {
+    public WaterPump(String id, String power, String speed, String flow, String lift, String bearing) {
         this.id = id;
-        this.dev_code = dev_code;
         this.power = power;
         this.speed = speed;
         this.flow = flow;
