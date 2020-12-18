@@ -73,9 +73,51 @@ public class DevServiceImpl implements DevService {
      * @return
      */
     @Override
-    public ResultMessage<PageInfo<BaseDevEntity>> getDevByPages(BaseDevEntityReq req) {
+    public ResultMessage<PageInfo<BaseDevPagesRsp>> getDevByPages(BaseDevEntityReq req) {
         PageHelper.startPage(req.getPageNum(), req.getPageSize());
         List<BaseDevPagesRsp> list=devMapper.getBaseListByEntity(req.getBaseDevEntity());
-
+        PageInfo<BaseDevPagesRsp> baseDevPagesRspPageInfo = new PageInfo<BaseDevPagesRsp>(list);
+        switch (req.getBaseDevEntity().getDev_type_id()){
+            case 1:
+                for(BaseDevPagesRsp resp:list){
+                    Motor motor=devMapper.getMotorById(resp.getId());
+                    resp.setObject(motor);
+                }
+                break;
+            case 2:
+                for(BaseDevPagesRsp resp:list){
+                    WaterPump waterPump=devMapper.getWaterPumpById(resp.getId());
+                    resp.setObject(waterPump);
+                }
+                break;
+            case 3:
+                for(BaseDevPagesRsp resp:list){
+                    Fan fan=devMapper.getFanById(resp.getId());
+                    resp.setObject(fan);
+                }
+                break;
+            default:
+                for(BaseDevPagesRsp resp:list){
+                    switch (resp.getDev_type_name()){
+                        case "电机":
+                            Motor motor=devMapper.getMotorById(resp.getId());
+                            resp.setObject(motor);
+                            break;
+                        case "水泵":
+                            WaterPump waterPump=devMapper.getWaterPumpById(resp.getId());
+                            resp.setObject(waterPump);
+                            break;
+                        case "风机":
+                            Fan fan=devMapper.getFanById(resp.getId());
+                            resp.setObject(fan);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+        }
+        baseDevPagesRspPageInfo.setList(list);
+        return new ResultMessage<PageInfo<BaseDevPagesRsp>>("200","查询成功",baseDevPagesRspPageInfo);
     }
 }

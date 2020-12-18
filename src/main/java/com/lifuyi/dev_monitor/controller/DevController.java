@@ -5,6 +5,7 @@ import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
 import com.lifuyi.dev_monitor.model.dev.DevType;
 import com.lifuyi.dev_monitor.model.dev.Req.BaseDevEntityReq;
+import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevPagesRsp;
 import com.lifuyi.dev_monitor.model.enterprise.Resp.EnterpriseTypeResp;
 import com.lifuyi.dev_monitor.service.DevService;
 import com.lifuyi.dev_monitor.util.UploadUtils;
@@ -75,7 +76,7 @@ public class DevController {
 
     @PostMapping(value = "/getDevByPages")
     @ApiOperation(value = "带分页的查找设备", notes = "")
-    public ResultMessage<PageInfo<BaseDevEntity>> getDevByPages(@RequestBody BaseDevEntityReq baseDevEntityReq){
+    public ResultMessage<PageInfo<BaseDevPagesRsp>> getDevByPages(@RequestBody BaseDevEntityReq baseDevEntityReq){
         return devService.getDevByPages(baseDevEntityReq);
     }
 

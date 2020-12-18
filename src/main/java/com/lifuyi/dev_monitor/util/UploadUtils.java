@@ -13,8 +13,8 @@ import java.util.UUID;
 public class UploadUtils {
 
     // 项目根路径下的目录  -- SpringBoot static 目录相当于是根路径下（SpringBoot 默认）
-    public final static String url = "D:\\log";
-//    public final static String url = "/home/ubuntu/code/dev_test/pic";
+//    public final static String url = "D:\\log";
+    public final static String url = "/home/ubuntu/code/dev_test/pic";
 
     public static ResultMessage<String> uploadPic(MultipartFile imgFile){
         if (imgFile.isEmpty()) {

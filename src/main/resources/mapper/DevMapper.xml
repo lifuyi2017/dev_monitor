@@ -75,5 +75,17 @@
              and enterprise_id=#{enterprise_id}
          </if>
     </select>
+
+    <select id="getMotorById" resultType="com.lifuyi.dev_monitor.model.dev.Motor">
+        select * from motor where id=#{id}
+    </select>
+
+    <select id="getWaterPumpById" resultType="com.lifuyi.dev_monitor.model.dev.WaterPump">
+        select * from water_pump where id=#{id}
+    </select>
+
+    <select id="getFanById" resultType="com.lifuyi.dev_monitor.model.dev.Fan">
+        select * from fan where id=#{id}
+    </select>
     
 </mapper>

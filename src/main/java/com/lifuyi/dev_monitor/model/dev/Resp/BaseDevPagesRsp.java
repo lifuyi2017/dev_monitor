@@ -11,7 +11,7 @@ public class BaseDevPagesRsp {
     @ApiModelProperty(value = "编号" ,position = 2)
     private String dev_code;
     @ApiModelProperty(value = "类型名称" ,position = 3)
-    private Integer dev_type_name;
+    private String dev_type_name;
     @ApiModelProperty(value = "设备名称" ,position = 4)
     private String dev_name;
     @ApiModelProperty(value = "负责人" ,position = 5)
@@ -31,10 +31,10 @@ public class BaseDevPagesRsp {
     @ApiModelProperty(value = "根据类型变动的字段组，这版本只有电机，风机，水泵，如果有新增，叫向哥规划到下个版本" ,position = 12)
     private Object object;
 
-    public BaseDevPagesRsp(String id, String dev_code, Integer dev_type_id, String dev_name, String manager, String service_enterprise_name, String produce_enterprise_name, String third_enterprise_name, String install_instructions, String pic_url, String enterprise_name, Object object) {
+    public BaseDevPagesRsp(String id, String dev_code, String dev_type_name, String dev_name, String manager, String service_enterprise_name, String produce_enterprise_name, String third_enterprise_name, String install_instructions, String pic_url, String enterprise_name, Object object) {
         this.id = id;
         this.dev_code = dev_code;
-        this.dev_type_name = dev_type_id;
+        this.dev_type_name = dev_type_name;
         this.dev_name = dev_name;
         this.manager = manager;
         this.service_enterprise_name = service_enterprise_name;

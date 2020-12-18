@@ -10,4 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @CrossOrigin
 @Api(description = "用户管理")
 public class UserController {
+
+
+
 }

@@ -5,6 +5,7 @@ import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
 import com.lifuyi.dev_monitor.model.dev.DevType;
 import com.lifuyi.dev_monitor.model.dev.Req.BaseDevEntityReq;
+import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevPagesRsp;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ public interface DevService {
 
     ResultMessage<Boolean> insertOrUpdateDev(BaseDevEntity baseDevEntity);
 
-    ResultMessage<PageInfo<BaseDevEntity>> getDevByPages(BaseDevEntityReq req);
+    ResultMessage<PageInfo<BaseDevPagesRsp>> getDevByPages(BaseDevEntityReq req);
 }

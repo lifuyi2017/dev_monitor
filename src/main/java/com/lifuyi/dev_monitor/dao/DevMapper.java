@@ -19,4 +19,10 @@ public interface DevMapper {
     void insertOrUpdateFan(Fan fan);
 
     List<BaseDevPagesRsp> getBaseListByEntity(BaseDevEntity baseDevEntity);
+
+    Motor getMotorById(String id);
+
+    WaterPump getWaterPumpById(String id);
+
+    Fan getFanById(String id);
 }
