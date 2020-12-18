@@ -13,4 +13,67 @@
         </if>
     </select>
 
+    <select id="getBaseDevByCode" resultType="com.lifuyi.dev_monitor.model.dev.BaseDevEntity" >
+        select * from dev_base_info where dev_code=#{dev_code}
+    </select>
+
+    <insert id="insertOrUpdateBase" parameterType="com.lifuyi.dev_monitor.model.dev.BaseDevEntity">
+        insert into dev_base_info(id,dev_code,dev_type_id,dev_name,manager,service_enterprise_id,
+        produce_enterprise_id,third_enterprise_id,install_instructions,pic_url,enterprise_id)
+        values (#{id},#{dev_code},#{dev_type_id},#{dev_name},#{manager},#{service_enterprise_id},
+        #{produce_enterprise_id},#{third_enterprise_id},#{install_instructions},#{pic_url},#{enterprise_id})
+        ON DUPLICATE KEY UPDATE
+        dev_code=#{dev_code},dev_type_id=#{dev_type_id},dev_name=#{dev_name},manager=#{manager},
+        service_enterprise_id=#{service_enterprise_id},produce_enterprise_id=#{produce_enterprise_id},
+        third_enterprise_id=#{third_enterprise_id},install_instructions=#{install_instructions},
+        pic_url=#{pic_url},enterprise_id=#{enterprise_id}
+    </insert>
+
+
+    <insert id="insertOrUpdateMotor" parameterType="com.lifuyi.dev_monitor.model.dev.Motor">
+        insert into motor(id,power,speed,electric_current,voltage,bearing) values (#{id},
+        #{power},#{speed},#{electric_current},#{voltage},#{bearing})  ON DUPLICATE KEY UPDATE 
+        power=#{power},speed=#{speed},electric_current=#{electric_current},voltage=#{voltage},
+        bearing=#{bearing}
+    </insert>
+
+    <insert id="insertOrUpdateWaterPump" parameterType="com.lifuyi.dev_monitor.model.dev.WaterPump">
+        insert into water_pump(id,power,speed,flow,lift,bearing) values(#{id},#{power},
+        #{speed},#{flow},#{lift},#{bearing})
+         ON DUPLICATE KEY UPDATE
+         power=#{power},speed=#{speed},flow=#{flow},lift=#{lift},bearing=#{bearing}
+    </insert>
+
+    <insert id="insertOrUpdateFan" parameterType="com.lifuyi.dev_monitor.model.dev.Fan">
+        insert into fan(id,power,speed,flow,wind_pressure,bearing) values (#{id},#{power},
+        #{speed},#{flow},#{wind_pressure},#{bearing}) ON DUPLICATE KEY UPDATE  power=#{power},
+        speed=#{speed},flow=#{flow},wind_pressure=#{wind_pressure},bearing=#{bearing}
+    </insert>
+
+    <select id="getBaseListByEntity" parameterType="com.lifuyi.dev_monitor.model.dev.BaseDevEntity" resultType="com.lifuyi.dev_monitor.model.dev.Resp.BaseDevPagesRsp">
+        select id,dev_code,
+        (select type_name from dev_type where id=#{dev_type_id}) as dev_type_name,dev_name,manager,
+        (select enterprise_name from enterprise_info where enterprise_id=#{service_enterprise_id}) as service_enterprise_name,
+        (select enterprise_name from enterprise_info where enterprise_id=#{produce_enterprise_id}) as produce_enterprise_name,
+        (select enterprise_name from enterprise_info where enterprise_id=#{third_enterprise_id}) as third_enterprise_name,
+        install_instructions,pic_url,
+        (select enterprise_name from enterprise_info where enterprise_id=#{enterprise_id}) as enterprise_name,
+         from dev_base_info where 1=1 
+         <if test="id!=null">
+             and id=#{id} 
+         </if>
+         <if test="dev_code!=null">
+             and dev_code=#{dev_code}
+         </if>
+         <if test="dev_name!=null">
+             and dev_name like concat('%',#{dev_name},'%')
+         </if>
+         <if test="dev_type_id!=null">
+             and dev_type_id=#{dev_type_id}
+         </if>
+         <if test="enterprise_id!=null">
+             and enterprise_id=#{enterprise_id}
+         </if>
+    </select>
+    
 </mapper>
