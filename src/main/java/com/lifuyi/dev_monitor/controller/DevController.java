@@ -74,12 +74,24 @@ public class DevController {
     }
 
 
+    /**
+     * 分页查找
+     * @return
+     */
     @PostMapping(value = "/getDevByPages")
     @ApiOperation(value = "带分页的查找设备", notes = "")
     public ResultMessage<PageInfo<BaseDevPagesRsp>> getDevByPages(@RequestBody BaseDevEntityReq baseDevEntityReq){
         return devService.getDevByPages(baseDevEntityReq);
     }
 
+    /**
+     * 不带分页查找
+     */
+    @PostMapping(value = "/getDevList")
+    @ApiOperation(value = "不带分页的查找设备", notes = "")
+    public ResultMessage<List<BaseDevPagesRsp>> getDevList(@RequestBody BaseDevEntity baseDevEntity){
+        return devService.getDevList(baseDevEntity);
+    }
 
 
 

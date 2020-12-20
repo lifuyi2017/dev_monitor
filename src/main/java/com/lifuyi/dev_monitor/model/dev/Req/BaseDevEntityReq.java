@@ -13,7 +13,7 @@ public class BaseDevEntityReq {
     private BaseDevEntity baseDevEntity;
     @ApiModelProperty(value = "页码" ,position = 2)
     private Integer pageNum;
-    @ApiModelProperty(value = "每页数量" ,position = 2)
+    @ApiModelProperty(value = "每页数量" ,position = 3)
     private Integer pageSize;
 
     public BaseDevEntityReq(BaseDevEntity baseDevEntity, Integer pageNum, Integer pageSize) {

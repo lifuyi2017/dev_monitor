@@ -15,4 +15,6 @@ public interface DevService {
     ResultMessage<Boolean> insertOrUpdateDev(BaseDevEntity baseDevEntity);
 
     ResultMessage<PageInfo<BaseDevPagesRsp>> getDevByPages(BaseDevEntityReq req);
+
+    ResultMessage<List<BaseDevPagesRsp>> getDevList(BaseDevEntity baseDevEntity);
 }

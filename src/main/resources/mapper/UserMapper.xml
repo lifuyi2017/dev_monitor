@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lifuyi.dev_monitor.dao.UserMapper">
+
+    <select id="getByUserName" resultType="com.lifuyi.dev_monitor.model.user.User">
+        select * from `user` where user_name=#{user_name}
+    </select>
+
+    <select id="getByUserPhone" resultType="com.lifuyi.dev_monitor.model.user.User">
+        select * from `user` where phone=#{phone}
+    </select>
+
+    <insert id="insertOrUpdateUser" parameterType="com.lifuyi.dev_monitor.model.user.User">
+        insert into user (id,user_name,user_password,user_real_name,user_phone,user_status,enterprise_id,
+        register_time,update_time,role_id) values (#{id},#{user_name},#{user_password},#[user_real_name},#{user_phone},
+        #{user_status},#{enterprise_id},#{register_time},#{update_time},#{role_id})
+        ON DUPLICATE KEY UPDATE
+        user_name=#{user_name},user_password=#{user_password},user_real_name=#{user_real_name},
+        user_phone=#{user_phone},user_status=#{user_status},enterprise_id=#{enterprise_id},
+        register_time=#{register_time},update_time=#{update_time},role_id=#{role_id}
+    </insert>
+
+    <select id="getUserByEntity" parameterType="com.lifuyi.dev_monitor.model.user.User"
+     resultType="com.lifuyi.dev_monitor.model.user.Resp.UserResp">
+        select id,user_name,user_password,user_real_name,user_phone,user_status,
+        (select enterprise_name from enterprise_info where enterprise_id=enterprise_id) enterprise_name,
+        register_time,update_time,
+        (select role_name from role where id=role_id) as role_name
+          from user where 1=1
+        <if test="id!=null">
+            and id=#{id}
+        </if>
+        <if test="user_name!=null">
+            and user_name=#{user_name}
+        </if>
+        <if test="enterprise_id!=null">
+            and enterprise_id=#{enterprise_id}
+        </if>
+        <if test="role_id!=null">
+            and role_id=#{role_id}
+        </if>
+    </select>
+
+
+</mapper>

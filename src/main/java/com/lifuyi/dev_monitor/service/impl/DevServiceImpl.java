@@ -77,7 +77,25 @@ public class DevServiceImpl implements DevService {
         PageHelper.startPage(req.getPageNum(), req.getPageSize());
         List<BaseDevPagesRsp> list=devMapper.getBaseListByEntity(req.getBaseDevEntity());
         PageInfo<BaseDevPagesRsp> baseDevPagesRspPageInfo = new PageInfo<BaseDevPagesRsp>(list);
-        switch (req.getBaseDevEntity().getDev_type_id()){
+        setDevObject(list,req.getBaseDevEntity());
+        baseDevPagesRspPageInfo.setList(list);
+        return new ResultMessage<PageInfo<BaseDevPagesRsp>>("200","查询成功",baseDevPagesRspPageInfo);
+    }
+
+    @Override
+    public ResultMessage<List<BaseDevPagesRsp>> getDevList(BaseDevEntity baseDevEntity) {
+        List<BaseDevPagesRsp> list = devMapper.getBaseListByEntity(baseDevEntity);
+        setDevObject(list,baseDevEntity);
+        return new ResultMessage<List<BaseDevPagesRsp>>("200","查询成功",list);
+    }
+
+    /**
+     * 设置object
+     * @param list
+     * @param baseDevEntity
+     */
+    private void setDevObject(List<BaseDevPagesRsp> list, BaseDevEntity baseDevEntity) {
+        switch (baseDevEntity.getDev_type_id()){
             case 1:
                 for(BaseDevPagesRsp resp:list){
                     Motor motor=devMapper.getMotorById(resp.getId());
@@ -117,7 +135,8 @@ public class DevServiceImpl implements DevService {
                 }
                 break;
         }
-        baseDevPagesRspPageInfo.setList(list);
-        return new ResultMessage<PageInfo<BaseDevPagesRsp>>("200","查询成功",baseDevPagesRspPageInfo);
     }
+
+
+
 }
