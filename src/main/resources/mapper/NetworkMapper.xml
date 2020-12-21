@@ -20,6 +20,15 @@
     <select id="getListByEntity" parameterType="com.lifuyi.dev_monitor.model.network.Network"
             resultType="com.lifuyi.dev_monitor.model.network.resp.NetworkResp">
         select * from network where 1=1
+        <if test="network_id!=null">
+            and network_id=#{network_id}
+        </if>
+        <if test="network_name!=null">
+            and network_name like concat('%',#{network_name},'%')
+        </if>
+        <if test="">
+            and
+        </if>
     </select>
 
 </mapper>
