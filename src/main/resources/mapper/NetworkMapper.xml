@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lifuyi.dev_monitor.dao.NetworkMapper">
+
+
+    <select id="getByIp" resultType="com.lifuyi.dev_monitor.model.network.Network">
+        select * from network where network_ip=#{network_ip}
+    </select>
+
+    <insert id="addOrUpdateNetWork" parameterType="com.lifuyi.dev_monitor.model.network.Network">
+        insert into network(network_id,network_type,network_code,network_name,network_ip,input_address,
+        output_agreement,enterprise_id) values ({network_id},#{network_type},#{network_code},#{network_name},
+        #{network_ip},#{input_address},#{output_agreement},#{enterprise_id})
+        ON DUPLICATE KEY UPDATE
+        network_type=#{network_type},network_code=#{network_code},network_name=#{network_name},
+        network_ip=#{network_ip},input_address=#{input_address},output_agreement=#{output_agreement},enterprise_id=#{enterprise_id}
+    </insert>
+
+
+    <select id="getListByEntity" parameterType="com.lifuyi.dev_monitor.model.network.Network"
+            resultType="com.lifuyi.dev_monitor.model.network.resp.NetworkResp">
+        select * from network where 1=1
+    </select>
+
+</mapper>
