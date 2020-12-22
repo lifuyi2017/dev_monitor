@@ -6,8 +6,12 @@ import com.lifuyi.dev_monitor.model.network.Network;
 import com.lifuyi.dev_monitor.model.network.req.NetworkReq;
 import com.lifuyi.dev_monitor.model.network.resp.NetworkResp;
 
+import java.util.List;
+
 public interface NetWorkService {
     ResultMessage<Boolean> addOrUpdateNetWork(Network network);
 
     ResultMessage<PageInfo<NetworkResp>> getNetWorkPages(NetworkReq req);
+
+    ResultMessage<List<NetworkResp>> getNetWorkList(Network network);
 }

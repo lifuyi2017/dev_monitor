@@ -19,15 +19,18 @@
 
     <select id="getListByEntity" parameterType="com.lifuyi.dev_monitor.model.network.Network"
             resultType="com.lifuyi.dev_monitor.model.network.resp.NetworkResp">
-        select * from network where 1=1
+        select network_id,network_type,network_code,network_name,network_ip,input_address,
+        output_agreement,
+        (select enterprise_name from enterprise_info where enterprise_id=third_enterprise_id) as enterprise_name
+        from network where 1=1
         <if test="network_id!=null">
             and network_id=#{network_id}
         </if>
         <if test="network_name!=null">
             and network_name like concat('%',#{network_name},'%')
         </if>
-        <if test="">
-            and
+        <if test="enterprise_id!=null">
+            and enterprise_id=#{enterprise_id}
         </if>
     </select>
 

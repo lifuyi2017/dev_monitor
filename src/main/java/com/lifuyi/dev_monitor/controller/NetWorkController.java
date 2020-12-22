@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/network")
 @Api(description = "仪器管理-网关管理")
@@ -33,6 +35,12 @@ public class NetWorkController {
     @ApiOperation(value = "获取网关分页列表",  notes = "")
     public ResultMessage<PageInfo<NetworkResp>> getNetWorkPages(@RequestBody NetworkReq req){
         return netWorkService.getNetWorkPages(req);
+    }
+
+    @PostMapping("/getNetWorkList")
+    @ApiOperation(value = "获取网关列表,不分页",  notes = "")
+    public ResultMessage<List<NetworkResp>> getNetWorkList(@RequestBody Network network){
+        return netWorkService.getNetWorkList(network);
     }
 
 

@@ -34,9 +34,16 @@ public class NetWorkServiceImpl implements NetWorkService {
     public ResultMessage<PageInfo<NetworkResp>> getNetWorkPages(NetworkReq req) {
         PageHelper.startPage(req.getPageNum(), req.getPageSize());
         List<NetworkResp> list=networkMapper.getListByEntity(req.getNetwork());
-
-
-
+        PageInfo<NetworkResp> networkRespPageInfo = new PageInfo<>(list);
+        return new ResultMessage<PageInfo<NetworkResp>>("200","操作成功",networkRespPageInfo);
     }
+
+    @Override
+    public ResultMessage<List<NetworkResp>> getNetWorkList(Network network) {
+        return new ResultMessage<List<NetworkResp>>("200","操作成功",networkMapper.getListByEntity(network));
+    }
+
+
+
 
 }
