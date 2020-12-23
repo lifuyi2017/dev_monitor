@@ -1,12 +1,13 @@
-package com.lifuyi.dev_monitor.model.physical;
+package com.lifuyi.dev_monitor.model.physical.resp;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@Api(value = "物理节点基本实体")
-public class Physical {
+@Api(value = "物理节点查询结果实体")
+public class PhysicalResp {
+
     @ApiModelProperty(value = "物理节点id" ,position = 1)
     private String id;
     @ApiModelProperty(value = "物理节点类型" ,position = 2)
@@ -16,22 +17,22 @@ public class Physical {
     @ApiModelProperty(value = "通道数" ,position = 4)
     private Integer num;
     @ApiModelProperty(value = "所属网关节点" ,position = 5)
-    private String network_id;
+    private String network_name;
     @ApiModelProperty(value = "名称" ,position = 6)
     private String name;
-    @ApiModelProperty(value = "所属企业id" ,position = 7)
-    private String enterprise_id;
+    @ApiModelProperty(value = "所属企业名称" ,position = 7)
+    private String enterprise_name;
 
-    public Physical(String id, String type, String code, Integer num, String network_id, String name, String enterprise_id) {
+    public PhysicalResp() {
+    }
+
+    public PhysicalResp(String id, String type, String code, Integer num, String network_name, String name, String enterprise_name) {
         this.id = id;
         this.type = type;
         this.code = code;
         this.num = num;
-        this.network_id = network_id;
+        this.network_name = network_name;
         this.name = name;
-        this.enterprise_id = enterprise_id;
-    }
-
-    public Physical() {
+        this.enterprise_name = enterprise_name;
     }
 }

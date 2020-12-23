@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lifuyi.dev_monitor.dao.PhysicalMapper">
+
+
+    <select id="getByCode" resultType="com.lifuyi.dev_monitor.model.physical.Physical">
+        select * from physical where code=#{code}
+    </select>
+
+    <insert id="addOrUpdatePhysical" parameterType="com.lifuyi.dev_monitor.model.physical.Physical">
+        insert into physical(id,`type`,code,num,network_id,`name`,enterprise_id) values
+        (#{id},#{type},#{code},#{num},#{network_id},#{name},#{enterprise_id})
+        ON DUPLICATE KEY UPDATE
+        `type`=#{type},code=#{code},num=#{code},network_id=#{network_id},`name`=#{name},enterprise_id=#{enterprise_id}
+    </insert>
+
+    <select id="getPageByEntity" parameterType="com.lifuyi.dev_monitor.model.physical.Physical" 
+     resultType="com.lifuyi.dev_monitor.model.physical.resp.PhysicalResp">
+        select id,`type`,code,num,
+        (select network_name from network where network_id=network_id) as network_name,`name`,
+        (select enterprise_name from enterprise_info where enterprise_id=third_enterprise_id) as enterprise_name
+         from physical where 1=1
+        <if test="id!=null">
+            and id=#{id}
+        </if>
+        <if test="enterprise_id!=null">
+            and enterprise_id=#{enterprise_id}
+        </if>
+        <if test="name!=null">
+            and `name` like concat('%',#{name},'%')
+        </if>
+    </select>
+
+</mapper>

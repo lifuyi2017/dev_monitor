@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.UUID;
 
 @Service("netWorkService")
 public class NetWorkServiceImpl implements NetWorkService {
@@ -21,13 +22,17 @@ public class NetWorkServiceImpl implements NetWorkService {
 
     @Override
     public ResultMessage<Boolean> addOrUpdateNetWork(Network network) {
+        String id= UUID.randomUUID().toString().replaceAll("-","");
         Network ip=networkMapper.getByIp(network.getNetwork_ip());
-        if((network.getNetwork_ip()==null && ip!=null) ||
-                (network.getNetwork_ip()!=null && ip!=null && !ip.getNetwork_id().equals(network.getNetwork_id()))){
+        if((network.getNetwork_id()==null && ip!=null) ||
+                (network.getNetwork_id()!=null && ip!=null && !ip.getNetwork_id().equals(network.getNetwork_id()))){
             return new ResultMessage<Boolean>("401","网关ip重复",false);
         }
+        if(network.getNetwork_id()==null){
+            network.setNetwork_id(id);
+        }
         networkMapper.addOrUpdateNetWork(network);
-        return new ResultMessage<Boolean>("200","操作成功",true);
+        return new ResultMessage<Boolean>("200",network.getNetwork_id(),true);
     }
 
     @Override
