@@ -31,6 +31,9 @@ public class PhysicalServiceImpl implements PhysicalService {
         }
         if(physical.getId()==null){
             physical.setId(id);
+        }else {
+            Physical query = new Physical();
+            query.setId(physical.getId());
         }
         physicalMapper.addOrUpdatePhysical(physical);
         return new ResultMessage<Boolean>("200",physical.getId(),true);
