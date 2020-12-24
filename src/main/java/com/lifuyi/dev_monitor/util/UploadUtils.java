@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.text.Format;
 import java.util.UUID;
 
 public class UploadUtils {
@@ -16,7 +18,7 @@ public class UploadUtils {
 //    public final static String url = "D:\\log";
     public final static String url = "/home/ubuntu/code/dev_test/pic";
 
-    public static ResultMessage<String> uploadPic(MultipartFile imgFile){
+    public static ResultMessage<String> uploadPic(MultipartFile imgFile) {
         if (imgFile.isEmpty()) {
             return new ResultMessage<String>("401", "不能为空", "失败");
         }
@@ -44,11 +46,11 @@ public class UploadUtils {
             in = new FileInputStream(file);
             byte[] bytes = new byte[(int) file.length()];
             in.read(bytes);
-            base64 = new String(Base64.encodeBase64(bytes),"UTF-8");
+            base64 = new String(Base64.encodeBase64(bytes), "UTF-8");
 //            System.out.println("将文件["+imgId+"]转base64字符串:"+base64);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultMessage<String>("501","失败:"+e.getMessage(),null);
+            return new ResultMessage<String>("501", "失败:" + e.getMessage(), null);
         } finally {
             if (in != null) {
                 try {
@@ -58,6 +60,17 @@ public class UploadUtils {
                 }
             }
         }
-        return new ResultMessage<String>("200","成功",base64);
+        return new ResultMessage<String>("200", "成功", base64);
     }
+
+    public static void main(String[] args) {
+        //定义long型count为1
+        Integer count1 = 52;
+        //实例化format，格式为“000”
+        Format f1 = new DecimalFormat("000");
+        //将1变为001
+        String count = f1.format(count1);
+        System.out.println(count);
+    }
+
 }

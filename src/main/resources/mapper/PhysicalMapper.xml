@@ -31,4 +31,14 @@
         </if>
     </select>
 
+    <insert id="insertOrUpdatePhysicalChannelBinding" parameterType="com.lifuyi.dev_monitor.model.physical.PhysicalChannelBinding">
+        insert into physical_channel_binding(id,physical_id,channel_code,channel_type_id,collect_id)
+        values (#{id},#{physical_id},#{channel_code},#{channel_type_id},#{collect_id})
+        ON DUPLICATE KEY UPDATE
+        channel_type_id=#{channel_type_id},collect_id=#{collect_id}
+    </insert>
+
+
+
+
 </mapper>

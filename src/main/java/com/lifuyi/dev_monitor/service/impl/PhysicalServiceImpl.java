@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.lifuyi.dev_monitor.dao.PhysicalMapper;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.physical.Physical;
+import com.lifuyi.dev_monitor.model.physical.PhysicalChannelBinding;
 import com.lifuyi.dev_monitor.model.physical.req.PhysicalReq;
 import com.lifuyi.dev_monitor.model.physical.resp.PhysicalResp;
 import com.lifuyi.dev_monitor.service.PhysicalService;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.DecimalFormat;
+import java.text.Format;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,9 +34,21 @@ public class PhysicalServiceImpl implements PhysicalService {
         }
         if(physical.getId()==null){
             physical.setId(id);
+            //新增通道
+            Format f1 = new DecimalFormat("00");
+            for(int i=0;i<physical.getNum();i++){
+                String format = f1.format(i);
+                PhysicalChannelBinding physicalChannel =
+                        new PhysicalChannelBinding(id + "=" + format, id, format, null, null);
+                physicalMapper.insertOrUpdatePhysicalChannelBinding(physicalChannel);
+            }
         }else {
             Physical query = new Physical();
             query.setId(physical.getId());
+            PhysicalResp physicalResp = physicalMapper.getPageByEntity(query).get(0);
+            if(physical.getNum()!=null && ((int)physicalResp.getNum())!=((int)physical.getNum())){
+                return new ResultMessage<Boolean>("401","通道数不可修改",false);
+            }
         }
         physicalMapper.addOrUpdatePhysical(physical);
         return new ResultMessage<Boolean>("200",physical.getId(),true);
