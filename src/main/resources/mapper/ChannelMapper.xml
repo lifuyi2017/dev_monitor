@@ -3,5 +3,9 @@
 <mapper namespace="com.lifuyi.dev_monitor.dao.ChannelMapper">
 
 
+    <select id="getChannelCodeByPhysicalId" resultType="java.lang.String">
+        select channel_code from physical_channel_binding where physical_id=#{physicalId}
+    </select>
+
 
 </mapper>

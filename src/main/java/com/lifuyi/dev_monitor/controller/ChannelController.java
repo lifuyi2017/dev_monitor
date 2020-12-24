@@ -1,6 +1,7 @@
 package com.lifuyi.dev_monitor.controller;
 
 import com.lifuyi.dev_monitor.model.ResultMessage;
+import com.lifuyi.dev_monitor.model.channel.req.ChannelSaveReq;
 import com.lifuyi.dev_monitor.service.ChannelService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,6 +26,11 @@ public class ChannelController {
         return new ResultMessage<List<String>>("200","查询成功",channelService.getChannelCode(physicalId));
     }
 
+    @PostMapping("/insertOrUpdateChannelParameter")
+    @ApiOperation(value = "插入或者更新通道参数", notes = "")
+    public ResultMessage<String> insertOrUpdateChannelParameter(@RequestBody ChannelSaveReq channelSaveReq){
+
+    }
 
 
 }
