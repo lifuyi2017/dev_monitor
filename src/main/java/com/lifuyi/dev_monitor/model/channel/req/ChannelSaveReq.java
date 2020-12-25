@@ -1,11 +1,13 @@
 package com.lifuyi.dev_monitor.model.channel.req;
 
 import com.lifuyi.dev_monitor.model.channel.ChannelParameter;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.List;
 @Data
+@Api(value = "通道添加实体")
 public class ChannelSaveReq {
     @ApiModelProperty(value = "参数" ,position = 1)
     private ChannelParameter channelParameter;
