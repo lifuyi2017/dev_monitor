@@ -20,9 +20,10 @@
     </update>
 
     <insert id="insertOrUpdateChannelParameter" parameterType="com.lifuyi.dev_monitor.model.channel.ChannelParameter">
-        insert into channel_parameter(id,`type`,frequency,duration,accuracy,`interval`,`name`)
-        values (#{id},#{type},#{frequency},#{duration},#{accuracy},#{interval},#{name})   ON DUPLICATE KEY UPDATE
-        `type`=#{type},frequency=#{frequency},duration=#{duration},accuracy=#{accuracy},`interval`=#{interval},`name`=#{name}
+        insert into channel_parameter(id,`type`,frequency,duration,accuracy,`interval`,`name`,enterprise_id)
+        values (#{id},#{type},#{frequency},#{duration},#{accuracy},#{interval},#{name},#{enterprise_id})   ON DUPLICATE KEY UPDATE
+        `type`=#{type},frequency=#{frequency},duration=#{duration},accuracy=#{accuracy},`interval`=#{interval},
+        `name`=#{name},enterprise_id=#{enterprise_id}
     </insert>
 
     <update id="BindingParameterAndChannel">
@@ -32,6 +33,23 @@
             #{item}
         </foreach>
     </update>
+
+    <select id="getChannelParameterPages" parameterType="com.lifuyi.dev_monitor.model.channel.ChannelParameter"
+            resultType="com.lifuyi.dev_monitor.model.channel.resp.ChannelResp">
+        select id,`type`,frequency,duration,accuracy,`interval`,`name`,
+        (select enterprise_name from enterprise_info where enterprise_id=enterprise_id) as enterprise_name
+          from channel_parameter where 1=1
+        <if test="id!=null">
+            and id=#{id} 
+        </if>
+        <if test="name!=null">
+            and `name` like concat('%',#{name},'%')
+        </if>
+        <if test="enterprise_id!=null">
+            and enterprise_id=#{enterprise_id}
+        </if>
+
+    </select>
 
 
 

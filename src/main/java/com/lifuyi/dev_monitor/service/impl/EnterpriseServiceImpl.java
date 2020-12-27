@@ -128,4 +128,9 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         return new ResultMessage<List<Enterprise>>("200","查询成功",enterpriseMapper.getListByEntity(enterprise));
     }
 
+    @Override
+    public ResultMessage<List<Enterprise>> getEnterpriseByTypeIds(List<String> ids) {
+        return new ResultMessage<List<Enterprise>>("200","查询成功",enterpriseMapper.getEnterpriseByTypeIds(ids));
+    }
+
 }

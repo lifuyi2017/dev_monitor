@@ -13,7 +13,7 @@
             and enterprise_id=#{enterprise_id}
         </if>
         <if test="enterprise_name!=null">
-            and enterprise_name like  concat('%',#{enterprise_name},'%')
+            and enterprise_name like concat('%',#{enterprise_name},'%')
         </if>
         <if test="enterprise_code!=null">
             and enterprise_code=#{enterprise_code}
@@ -55,6 +55,13 @@
 
     <select id="deleteBingingByNotServiceId">
         delete from enterprise_binding where not_service_id=#{id}
+    </select>
+
+    <select id="getEnterpriseByTypeIds" resultType="com.lifuyi.dev_monitor.model.enterprise.Enterprise">
+        select * from enterprise_info where enterprise_type_id in
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 
 </mapper>

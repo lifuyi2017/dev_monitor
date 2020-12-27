@@ -1,9 +1,13 @@
 package com.lifuyi.dev_monitor.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lifuyi.dev_monitor.dao.ChannelMapper;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.channel.ChannelParameter;
+import com.lifuyi.dev_monitor.model.channel.req.ChannelParameterReq;
 import com.lifuyi.dev_monitor.model.channel.req.ChannelSaveReq;
+import com.lifuyi.dev_monitor.model.channel.resp.ChannelResp;
 import com.lifuyi.dev_monitor.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -37,6 +41,19 @@ public class ChannelServiceImpl implements ChannelService {
         channelMapper.insertOrUpdateChannelParameter(channelParameter);
         channelMapper.BindingParameterAndChannel(channelParameter.getId(),channelSaveReq.getPhysical_id(),channelSaveReq.getCodes());
         return new ResultMessage<String>("200","操作成功",channelParameter.getId());
+    }
+
+    //查询分页列表
+    @Override
+    public ResultMessage<PageInfo<ChannelResp>> getChannelParameterPages(ChannelParameterReq req) {
+        PageHelper.startPage(req.getPageNum(), req.getPageSize());
+        List<ChannelResp> parameterList=channelMapper.getChannelParameterPages(req.getParameter());
+        PageInfo channelRespPageInfo = new PageInfo(parameterList);
+        for(ChannelResp channelResp:parameterList){
+            channelMapper.getPhysicalId();
+        }
+
+
     }
 
 }

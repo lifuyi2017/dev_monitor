@@ -1,6 +1,7 @@
 package com.lifuyi.dev_monitor.dao;
 
 import com.lifuyi.dev_monitor.model.channel.ChannelParameter;
+import com.lifuyi.dev_monitor.model.channel.resp.ChannelResp;
 
 import java.util.List;
 import java.lang.String;
@@ -16,4 +17,6 @@ public interface ChannelMapper {
     void insertOrUpdateChannelParameter(ChannelParameter channelParameter);
 
     void BindingParameterAndChannel(String id, String physical_id, List<String> codes);
+
+    List<ChannelResp > getChannelParameterPages(ChannelParameter parameter);
 }

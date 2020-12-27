@@ -2,7 +2,9 @@ package com.lifuyi.dev_monitor.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.lifuyi.dev_monitor.model.ResultMessage;
+import com.lifuyi.dev_monitor.model.channel.req.ChannelParameterReq;
 import com.lifuyi.dev_monitor.model.channel.req.ChannelSaveReq;
+import com.lifuyi.dev_monitor.model.channel.resp.ChannelResp;
 import com.lifuyi.dev_monitor.service.ChannelService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,8 +37,8 @@ public class ChannelController {
 
     @PostMapping("/getChannelParameterPages")
     @ApiOperation(value = "获取分页列表", notes = "")
-    public ResultMessage<PageInfo<ChannelSaveReq>> insertOrUpdateChannelParameter(@RequestBody ChannelSaveReq channelSaveReq){
-        return channelService.insertOrUpdateChannelParameter(channelSaveReq);
+    public ResultMessage<PageInfo<ChannelResp>> getChannelParameterPages(@RequestBody ChannelParameterReq  req){
+        return channelService.getChannelParameterPages(req);
     }
 
 
