@@ -7,5 +7,51 @@
         select channel_code from physical_channel_binding where physical_id=#{physicalId}
     </select>
 
+    <select id="getMaxChannelTypeId" resultType="java.lang.String">
+        select max(channel_type_id) from physical_channel_binding where physical_id=#{physical_id}
+        and channel_code in
+        <foreach item="item" index="index" collection="codes" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <update id="clearBindingByTypeId">
+        update physical_channel_binding set channel_type_id=null where channel_type_id=#{id}
+    </update>
+
+    <insert id="insertOrUpdateChannelParameter" parameterType="com.lifuyi.dev_monitor.model.channel.ChannelParameter">
+        insert into channel_parameter(id,`type`,frequency,duration,accuracy,`interval`,`name`,enterprise_id)
+        values (#{id},#{type},#{frequency},#{duration},#{accuracy},#{interval},#{name},#{enterprise_id})   ON DUPLICATE KEY UPDATE
+        `type`=#{type},frequency=#{frequency},duration=#{duration},accuracy=#{accuracy},`interval`=#{interval},
+        `name`=#{name},enterprise_id=#{enterprise_id}
+    </insert>
+
+    <update id="BindingParameterAndChannel">
+        update physical_channel_binding set channel_type_id=#{id} where physical_id=#{physical_id}
+        and channel_code in
+        <foreach item="item" index="index" collection="codes" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="getChannelParameterPages" parameterType="com.lifuyi.dev_monitor.model.channel.ChannelParameter"
+            resultType="com.lifuyi.dev_monitor.model.channel.resp.ChannelResp">
+        select id,`type`,frequency,duration,accuracy,`interval`,`name`,
+        (select enterprise_name from enterprise_info where enterprise_id=enterprise_id) as enterprise_name
+          from channel_parameter where 1=1
+        <if test="id!=null">
+            and id=#{id} 
+        </if>
+        <if test="name!=null">
+            and `name` like concat('%',#{name},'%')
+        </if>
+        <if test="enterprise_id!=null">
+            and enterprise_id=#{enterprise_id}
+        </if>
+
+    </select>
+
+
+
 
 </mapper>

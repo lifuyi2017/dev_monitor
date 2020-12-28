@@ -1,5 +1,6 @@
 package com.lifuyi.dev_monitor.dao;
 
+import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.enterprise.Enterprise;
 import com.lifuyi.dev_monitor.model.enterprise.EnterpriseBinging;
 import com.lifuyi.dev_monitor.model.enterprise.Resp.EnterpriseTypeResp;
@@ -24,4 +25,6 @@ public interface EnterpriseMapper {
     Integer verificationCode(String id, String code);
 
     void deleteBingingByNotServiceId(String id);
+
+    List<Enterprise> getEnterpriseByTypeIds(List<String> ids);
 }

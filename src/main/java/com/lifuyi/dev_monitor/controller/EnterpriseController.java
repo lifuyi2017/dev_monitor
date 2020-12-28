@@ -64,5 +64,11 @@ public class EnterpriseController {
         return enterpriseService.getEnterprise(enterprise);
     }
 
+    @ResponseBody
+    @PostMapping("/getEnterpriseByTypeIds")
+//    @UserLoginToken
+    public ResultMessage<List<Enterprise>> getEnterpriseByTypeIds(@RequestBody List<String> ids) {
+        return enterpriseService.getEnterpriseByTypeIds(ids);
+    }
 
 }
