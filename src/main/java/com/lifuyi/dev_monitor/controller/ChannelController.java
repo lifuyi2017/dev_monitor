@@ -36,10 +36,12 @@ public class ChannelController {
     }
 
     @PostMapping("/getChannelParameterPages")
-    @ApiOperation(value = "获取分页列表", notes = "")
+    @ApiOperation(value = "获取通道参数类型分页列表", notes = "")
     public ResultMessage<PageInfo<ChannelResp>> getChannelParameterPages(@RequestBody ChannelParameterReq  req){
         return channelService.getChannelParameterPages(req);
     }
+
+
 
 
 }

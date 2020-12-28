@@ -2,6 +2,7 @@ package com.lifuyi.dev_monitor.dao;
 
 import com.lifuyi.dev_monitor.model.channel.ChannelParameter;
 import com.lifuyi.dev_monitor.model.channel.resp.ChannelResp;
+import com.lifuyi.dev_monitor.model.channel.resp.PhysicalChannelResp;
 
 import java.util.List;
 import java.lang.String;
@@ -19,4 +20,6 @@ public interface ChannelMapper {
     void BindingParameterAndChannel(String id, String physical_id, List<String> codes);
 
     List<ChannelResp > getChannelParameterPages(ChannelParameter parameter);
+
+    PhysicalChannelResp getPhysicalChannelResp(String id);
 }

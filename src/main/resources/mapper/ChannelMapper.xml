@@ -51,6 +51,11 @@
 
     </select>
 
+    <select id="getPhysicalChannelResp" resultType="com.lifuyi.dev_monitor.model.channel.resp.PhysicalChannelResp">
+        select (select `name` from physical where id=physical_id) as physical_name,
+            group_concat(channel_code) as codes from physical_channel_binding
+        where channel_type_id=#{id} GROUP BY physical_id
+    </select>
 
 
 

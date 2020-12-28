@@ -8,12 +8,15 @@ import com.lifuyi.dev_monitor.model.channel.ChannelParameter;
 import com.lifuyi.dev_monitor.model.channel.req.ChannelParameterReq;
 import com.lifuyi.dev_monitor.model.channel.req.ChannelSaveReq;
 import com.lifuyi.dev_monitor.model.channel.resp.ChannelResp;
+import com.lifuyi.dev_monitor.model.channel.resp.PhysicalChannelResp;
 import com.lifuyi.dev_monitor.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-
+@Service("channelService")
 public class ChannelServiceImpl implements ChannelService {
 
     @Autowired
@@ -48,12 +51,16 @@ public class ChannelServiceImpl implements ChannelService {
     public ResultMessage<PageInfo<ChannelResp>> getChannelParameterPages(ChannelParameterReq req) {
         PageHelper.startPage(req.getPageNum(), req.getPageSize());
         List<ChannelResp> parameterList=channelMapper.getChannelParameterPages(req.getParameter());
-        PageInfo channelRespPageInfo = new PageInfo(parameterList);
+        PageInfo<ChannelResp> channelRespPageInfo = new PageInfo(parameterList);
         for(ChannelResp channelResp:parameterList){
-            channelMapper.getPhysicalId();
+            PhysicalChannelResp resp=channelMapper.getPhysicalChannelResp(req.getParameter().getId());
+            channelResp.setPhysical_name(resp.getPhysical_name());
+            if(resp.getCodes()!=null){
+                channelResp.setCodes(Arrays.asList(resp.getCodes().split(",")));
+            }
         }
-
-
+        channelRespPageInfo.setList(parameterList);
+        return new ResultMessage<PageInfo<ChannelResp>>("200","查询成功",channelRespPageInfo);
     }
 
 }
