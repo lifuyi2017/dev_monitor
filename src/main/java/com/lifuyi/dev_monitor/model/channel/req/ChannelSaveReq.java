@@ -1,6 +1,5 @@
 package com.lifuyi.dev_monitor.model.channel.req;
 
-import com.lifuyi.dev_monitor.model.channel.ChannelParameter;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
