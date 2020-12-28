@@ -15,7 +15,7 @@ public class LogicRelation implements Serializable {
     @ApiModelProperty(value = "物理节点id" ,position =2)
     private String physical_id;
     @ApiModelProperty(value = "通道编号" ,position = 3)
-    private List<String> channel_code;
+    private List<String> codes;
 
     public LogicRelation() {
     }
@@ -23,7 +23,7 @@ public class LogicRelation implements Serializable {
     public LogicRelation(String logic_id, String physical_id, List<String> channel_code) {
         this.logic_id = logic_id;
         this.physical_id = physical_id;
-        this.channel_code = channel_code;
+        this.codes = channel_code;
     }
 
 
@@ -43,11 +43,11 @@ public class LogicRelation implements Serializable {
         this.physical_id = physical_id;
     }
 
-    public List<String> getChannel_code() {
-        return channel_code;
+    public List<String> getCodes() {
+        return codes;
     }
 
     public void setChannel_code(List<String> channel_code) {
-        this.channel_code = channel_code;
+        this.codes = channel_code;
     }
 }
