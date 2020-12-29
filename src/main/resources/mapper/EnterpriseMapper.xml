@@ -59,7 +59,7 @@
 
     <select id="getEnterpriseByTypeIds" resultType="com.lifuyi.dev_monitor.model.enterprise.Enterprise">
         select * from enterprise_info where enterprise_type_id in
-        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
             #{item}
         </foreach>
     </select>

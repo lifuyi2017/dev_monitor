@@ -37,8 +37,8 @@
     <select id="getChannelParameterPages" parameterType="com.lifuyi.dev_monitor.model.channel.ChannelParameter"
             resultType="com.lifuyi.dev_monitor.model.channel.resp.ChannelResp">
         select id,`type`,frequency,duration,accuracy,`interval`,`name`,
-        (select enterprise_name from enterprise_info where enterprise_id=enterprise_id) as enterprise_name
-          from channel_parameter where 1=1
+        (select enterprise_name from enterprise_info where enterprise_id=m.enterprise_id) as enterprise_name
+          from channel_parameter m where 1=1
         <if test="id!=null">
             and id=#{id} 
         </if>

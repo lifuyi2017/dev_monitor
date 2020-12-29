@@ -103,45 +103,41 @@ public class DevServiceImpl implements DevService {
      * @param baseDevEntity
      */
     private void setDevObject(List<BaseDevPagesRsp> list, BaseDevEntity baseDevEntity) {
-        switch (baseDevEntity.getDev_type_id()) {
-            case 1:
-                for (BaseDevPagesRsp resp : list) {
-                    Motor motor = devMapper.getMotorById(resp.getId());
-                    resp.setObject(motor);
+        System.out.println(baseDevEntity);
+        if(baseDevEntity.getDev_type_id()==null){
+            for (BaseDevPagesRsp resp : list) {
+                switch (resp.getDev_type_name()) {
+                    case "电机":
+                        Motor motor = devMapper.getMotorById(resp.getId());
+                        resp.setObject(motor);
+                        break;
+                    case "水泵":
+                        WaterPump waterPump = devMapper.getWaterPumpById(resp.getId());
+                        resp.setObject(waterPump);
+                        break;
+                    case "风机":
+                        Fan fan = devMapper.getFanById(resp.getId());
+                        resp.setObject(fan);
+                        break;
+                    default:
+                        break;
                 }
-                break;
-            case 2:
-                for (BaseDevPagesRsp resp : list) {
-                    WaterPump waterPump = devMapper.getWaterPumpById(resp.getId());
-                    resp.setObject(waterPump);
-                }
-                break;
-            case 3:
-                for (BaseDevPagesRsp resp : list) {
-                    Fan fan = devMapper.getFanById(resp.getId());
-                    resp.setObject(fan);
-                }
-                break;
-            default:
-                for (BaseDevPagesRsp resp : list) {
-                    switch (resp.getDev_type_name()) {
-                        case "电机":
-                            Motor motor = devMapper.getMotorById(resp.getId());
-                            resp.setObject(motor);
-                            break;
-                        case "水泵":
-                            WaterPump waterPump = devMapper.getWaterPumpById(resp.getId());
-                            resp.setObject(waterPump);
-                            break;
-                        case "风机":
-                            Fan fan = devMapper.getFanById(resp.getId());
-                            resp.setObject(fan);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                break;
+            }
+        } else if(baseDevEntity.getDev_type_id()==1){
+            for (BaseDevPagesRsp resp : list) {
+                Motor motor = devMapper.getMotorById(resp.getId());
+                resp.setObject(motor);
+            }
+        }else if(baseDevEntity.getDev_type_id()==2){
+            for (BaseDevPagesRsp resp : list) {
+                WaterPump waterPump = devMapper.getWaterPumpById(resp.getId());
+                resp.setObject(waterPump);
+            }
+        }else if(baseDevEntity.getDev_type_id()==3){
+            for (BaseDevPagesRsp resp : list) {
+                Fan fan = devMapper.getFanById(resp.getId());
+                resp.setObject(fan);
+            }
         }
     }
 

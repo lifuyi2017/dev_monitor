@@ -7,6 +7,7 @@ import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.enterprise.Enterprise;
 import com.lifuyi.dev_monitor.model.enterprise.Req.EnterprisePageReq;
 import com.lifuyi.dev_monitor.model.enterprise.Req.EnterpriseReq;
+import com.lifuyi.dev_monitor.model.enterprise.Req.TypeIds;
 import com.lifuyi.dev_monitor.model.enterprise.Resp.EnterpriseResp;
 import com.lifuyi.dev_monitor.model.enterprise.Resp.EnterpriseTypeResp;
 import com.lifuyi.dev_monitor.service.EnterpriseService;
@@ -67,8 +68,8 @@ public class EnterpriseController {
     @ResponseBody
     @PostMapping("/getEnterpriseByTypeIds")
 //    @UserLoginToken
-    public ResultMessage<List<Enterprise>> getEnterpriseByTypeIds(@RequestBody List<String> ids) {
-        return enterpriseService.getEnterpriseByTypeIds(ids);
+    public ResultMessage<List<Enterprise>> getEnterpriseByTypeIds(@RequestBody TypeIds ids) {
+        return enterpriseService.getEnterpriseByTypeIds(ids.getIds());
     }
 
 }

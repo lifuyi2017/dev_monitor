@@ -57,8 +57,8 @@
         (select enterprise_name from enterprise_info where enterprise_id=produce_enterprise_id) as produce_enterprise_name,
         (select enterprise_name from enterprise_info where enterprise_id=third_enterprise_id) as third_enterprise_name,
         install_instructions,pic_url,
-        (select enterprise_name from enterprise_info where enterprise_id=enterprise_id) as enterprise_name
-         from dev_base_info where 1=1 
+        (select enterprise_name from enterprise_info where enterprise_id=m.enterprise_id) as enterprise_name
+         from dev_base_info m where 1=1
          <if test="id!=null">
              and id=#{id} 
          </if>

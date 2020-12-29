@@ -23,10 +23,10 @@
     <select id="getUserByEntity" parameterType="com.lifuyi.dev_monitor.model.user.User"
      resultType="com.lifuyi.dev_monitor.model.user.Resp.UserResp">
         select id,user_name,user_password,user_real_name,user_phone,user_status,
-        (select enterprise_name from enterprise_info where enterprise_id=enterprise_id) enterprise_name,
+        (select enterprise_name from enterprise_info where enterprise_id=u.enterprise_id) enterprise_name,
         register_time,update_time,
         (select role_name from role where id=role_id) as role_name
-          from user where 1=1
+          from `user` u where 1=1
         <if test="id!=null">
             and id=#{id}
         </if>

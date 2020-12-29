@@ -17,9 +17,9 @@
     <select id="getPageByEntity" parameterType="com.lifuyi.dev_monitor.model.physical.Physical" 
      resultType="com.lifuyi.dev_monitor.model.physical.resp.PhysicalResp">
         select id,`type`,code,num,
-        (select network_name from network where network_id=network_id) as network_name,`name`,
+        (select network_name from network where network_id=ph.network_id) as network_name,`name`,
         (select enterprise_name from enterprise_info where enterprise_id=third_enterprise_id) as enterprise_name
-         from physical where 1=1
+         from physical ph where 1=1
         <if test="id!=null">
             and id=#{id}
         </if>
