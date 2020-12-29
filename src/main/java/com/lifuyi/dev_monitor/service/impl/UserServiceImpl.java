@@ -8,6 +8,7 @@ import com.lifuyi.dev_monitor.model.user.Req.UserReq;
 import com.lifuyi.dev_monitor.model.user.Resp.UserResp;
 import com.lifuyi.dev_monitor.model.user.User;
 import com.lifuyi.dev_monitor.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,16 +26,16 @@ public class UserServiceImpl implements UserService {
     public ResultMessage<Boolean> insertOrUpdateUser(User user) {
         String id = UUID.randomUUID().toString().replaceAll("-", "");
         User name = userMapper.getByUserName(user.getUser_name());
-        if ((user.getId() == null && name != null) ||
-                (user.getId() != null && name != null && !user.getId().equals(name.getId()))) {
+        if ((StringUtils.isBlank(user.getId()) && name != null) ||
+                (!StringUtils.isBlank(user.getId()) && name != null && !user.getId().equals(name.getId()))) {
             return new ResultMessage<Boolean>("401", "账号名重复", false);
         }
         User phone = userMapper.getByUserPhone(user.getUser_name());
-        if ((user.getId() == null && phone != null) ||
-                (user.getId() != null && phone != null && !user.getId().equals(phone.getId()))) {
+        if ((StringUtils.isBlank(user.getId()) && phone != null) ||
+                (!StringUtils.isBlank(user.getId()) && phone != null && !user.getId().equals(phone.getId()))) {
             return new ResultMessage<Boolean>("401", "电话号码重复", false);
         }
-        if (user.getId() == null) {
+        if (StringUtils.isBlank(user.getId())) {
             user.setId(id);
         }
         user.setRegister_time(new Date());

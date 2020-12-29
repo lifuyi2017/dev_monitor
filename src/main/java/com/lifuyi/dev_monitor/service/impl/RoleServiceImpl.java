@@ -5,6 +5,7 @@ import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.role.Resp.RoleResp;
 import com.lifuyi.dev_monitor.model.role.Role;
 import com.lifuyi.dev_monitor.service.RoleService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,11 +23,11 @@ public class RoleServiceImpl implements RoleService {
     public ResultMessage<Boolean> insertOrUpdateRole(Role role) {
         String id= UUID.randomUUID().toString().replaceAll("-","");
         Role nameRole=roleMapper.getRoleByName(role.getRole_name(),role.getEnterprise_id());
-        if((role.getId()==null && nameRole!=null) ||
-                (role.getId()!=null && nameRole!=null && !role.getId().equals(nameRole.getId()))) {
+        if((StringUtils.isBlank(role.getId()) && nameRole!=null) ||
+                (!StringUtils.isBlank(role.getId()) && nameRole!=null && !role.getId().equals(nameRole.getId()))) {
             return new ResultMessage<Boolean>("401", "角色名称重复", false);
         }
-        if(role.getId()==null){
+        if(StringUtils.isBlank(role.getId())){
             role.setId(id);
         }
         role.setCreate_time(new Date());role.setUpdate_time(new Date());

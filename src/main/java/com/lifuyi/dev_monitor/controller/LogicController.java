@@ -2,6 +2,7 @@ package com.lifuyi.dev_monitor.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.lifuyi.dev_monitor.model.ResultMessage;
+import com.lifuyi.dev_monitor.model.logic.LogicNode;
 import com.lifuyi.dev_monitor.model.logic.req.LogicQueryReq;
 import com.lifuyi.dev_monitor.model.logic.req.LogicSaveReq;
 import com.lifuyi.dev_monitor.model.logic.resp.LogicResp;
@@ -11,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/logic")
@@ -36,7 +38,11 @@ public class LogicController {
     }
 
 
-
+    @PostMapping("/getLogicList")
+    @ApiOperation(value = "获取逻辑节点，不带分页", notes = "")
+    public ResultMessage<List<LogicResp>> getLogicList(@RequestBody LogicNode node){
+        return logicService.getLogicList(node);
+    }
 
 
 }

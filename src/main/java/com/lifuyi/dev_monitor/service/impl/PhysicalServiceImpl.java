@@ -9,6 +9,7 @@ import com.lifuyi.dev_monitor.model.physical.PhysicalChannelBinding;
 import com.lifuyi.dev_monitor.model.physical.req.PhysicalReq;
 import com.lifuyi.dev_monitor.model.physical.resp.PhysicalResp;
 import com.lifuyi.dev_monitor.service.PhysicalService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +29,11 @@ public class PhysicalServiceImpl implements PhysicalService {
     public ResultMessage<Boolean> addOrUpdatePhysical(Physical physical) {
         String id= UUID.randomUUID().toString().replaceAll("-","");
         Physical codeP=physicalMapper.getByCode(physical.getCode());
-        if((physical.getId()==null && codeP!=null) ||
-                (physical.getId()!=null && codeP!=null && !codeP.getId().equals(physical.getId()))){
+        if((StringUtils.isBlank(physical.getId()) && codeP!=null) ||
+                (!StringUtils.isBlank(physical.getId()) && codeP!=null && !codeP.getId().equals(physical.getId()))){
             return new ResultMessage<Boolean>("401","物理节点编码重复",false);
         }
-        if(physical.getId()==null){
+        if(StringUtils.isBlank(physical.getId())){
             physical.setId(id);
             //新增通道
             Format f1 = new DecimalFormat("00");

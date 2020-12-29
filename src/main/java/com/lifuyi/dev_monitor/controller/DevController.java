@@ -59,7 +59,7 @@ public class DevController {
      */
     @GetMapping(value = "/previewPic")
     @ApiOperation(value = "预览图片", notes = "输入id,返回base64")
-    public ResultMessage<String> previewPic(@RequestParam("imgId") String imgId) {
+    public String previewPic(@RequestParam("imgId") String imgId) {
        return  UploadUtils.previewPic(imgId);
     }
 

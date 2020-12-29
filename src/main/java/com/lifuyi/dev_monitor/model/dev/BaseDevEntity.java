@@ -4,6 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Map;
+
 @Data
 @Api(value = "设备基本实体")
 public class BaseDevEntity {
@@ -31,9 +33,9 @@ public class BaseDevEntity {
     private String enterprise_id;
 
     @ApiModelProperty(value = "根据类型变动的字段组，这版本只有电机，风机，水泵，如果有新增，规划到下个版本" ,position = 12)
-    private Object object;
+    private Map object;
 
-    public BaseDevEntity(String id, String dev_code, Integer dev_type_id, String dev_name, String manager, String service_enterprise_id, String produce_enterprise_id, String third_enterprise_id, String install_instructions, String pic_url, String enterprise_id, Object object) {
+    public BaseDevEntity(String id, String dev_code, Integer dev_type_id, String dev_name, String manager, String service_enterprise_id, String produce_enterprise_id, String third_enterprise_id, String install_instructions, String pic_url, String enterprise_id, Map object) {
         this.id = id;
         this.dev_code = dev_code;
         this.dev_type_id = dev_type_id;

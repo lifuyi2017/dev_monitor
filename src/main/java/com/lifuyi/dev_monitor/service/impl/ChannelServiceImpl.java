@@ -10,16 +10,18 @@ import com.lifuyi.dev_monitor.model.channel.req.ChannelSaveReq;
 import com.lifuyi.dev_monitor.model.channel.resp.ChannelResp;
 import com.lifuyi.dev_monitor.model.channel.resp.PhysicalChannelResp;
 import com.lifuyi.dev_monitor.service.ChannelService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 @Service("channelService")
 public class ChannelServiceImpl implements ChannelService {
 
-    @Autowired
+    @Resource
     private ChannelMapper channelMapper;
 
     @Override
@@ -30,12 +32,12 @@ public class ChannelServiceImpl implements ChannelService {
     @Override
     public ResultMessage<String> insertOrUpdateChannelParameter(ChannelSaveReq channelSaveReq) {
         String channel_type_id=channelMapper.getMaxChannelTypeId(channelSaveReq.getPhysical_id(),channelSaveReq.getCodes());
-        if(channel_type_id!=null){
+        if(!StringUtils.isBlank(channel_type_id)){
             return new ResultMessage<String>("401","通道已经被设置为其他参数",channel_type_id);
         }
         String id= UUID.randomUUID().toString().replaceAll("-","");
         ChannelParameter channelParameter = channelSaveReq.getChannelParameter();
-        if(channelParameter.getId()!=null){
+        if(!StringUtils.isBlank(channelParameter.getId())){
             //需要先删除此参数配置绑定的通道
             channelMapper.clearBindingByTypeId(channelParameter.getId());
         }else {
@@ -55,7 +57,7 @@ public class ChannelServiceImpl implements ChannelService {
         for(ChannelResp channelResp:parameterList){
             PhysicalChannelResp resp=channelMapper.getPhysicalChannelResp(req.getParameter().getId());
             channelResp.setPhysical_name(resp.getPhysical_name());
-            if(resp.getCodes()!=null){
+            if(!StringUtils.isBlank(resp.getCodes())){
                 channelResp.setCodes(Arrays.asList(resp.getCodes().split(",")));
             }
         }

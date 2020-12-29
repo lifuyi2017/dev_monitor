@@ -1,7 +1,9 @@
 package com.lifuyi.dev_monitor.util;
 
 import com.lifuyi.dev_monitor.model.ResultMessage;
+import com.lifuyi.dev_monitor.model.dev.Motor;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -10,6 +12,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.Format;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class UploadUtils {
@@ -38,7 +42,8 @@ public class UploadUtils {
         }
     }
 
-    public static ResultMessage<String> previewPic(String imgId) {
+    public static String previewPic(String imgId) {
+        String prefix = "data:image/"+imgId.substring(imgId.lastIndexOf(".") + 1)+";base64,";
         String base64 = null;
         InputStream in = null;
         try {
@@ -50,7 +55,7 @@ public class UploadUtils {
 //            System.out.println("将文件["+imgId+"]转base64字符串:"+base64);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultMessage<String>("501", "失败:" + e.getMessage(), null);
+            return null;
         } finally {
             if (in != null) {
                 try {
@@ -60,17 +65,16 @@ public class UploadUtils {
                 }
             }
         }
-        return new ResultMessage<String>("200", "成功", base64);
+        return  prefix+base64;
     }
 
     public static void main(String[] args) {
-        //定义long型count为1
-        Integer count1 = 52;
-        //实例化format，格式为“000”
-        Format f1 = new DecimalFormat("000");
-        //将1变为001
-        String count = f1.format(count1);
-        System.out.println(count);
+        String imgId="dasd.dsagcsa.png";
+        String prefix = imgId.substring(imgId.lastIndexOf(".") + 1);
+        System.out.println(prefix);
+//        Motor motor= (Motor) map;
+//        System.out.println(motor.getBearing());
+
     }
 
 }

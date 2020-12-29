@@ -12,6 +12,7 @@ import com.lifuyi.dev_monitor.model.logic.resp.LogicResp;
 import com.lifuyi.dev_monitor.model.logic.resp.RelationResp;
 import com.lifuyi.dev_monitor.model.logic.resp.RelationTableResult;
 import com.lifuyi.dev_monitor.service.LogicService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,7 +32,7 @@ public class LogicServiceImpl implements LogicService {
         String id= UUID.randomUUID().toString().replaceAll("-","");
         LogicNode logicNode = logicSaveReq.getLogicNode();
         List<LogicRelation> relationList = logicSaveReq.getRelationList();
-        if(logicNode.getLogic_id()==null){
+        if(StringUtils.isBlank(logicNode.getLogic_id())){
             logicNode.setLogic_id(id);
         }
         logicMapper.clearByLogicId(logicNode.getLogic_id());
@@ -60,6 +61,12 @@ public class LogicServiceImpl implements LogicService {
         }
         logicRespPageInfo.setList(nodeRespList);
         return new ResultMessage<PageInfo<LogicResp>>("200","查询成功",logicRespPageInfo);
+    }
+
+    @Override
+    public ResultMessage<List<LogicResp>> getLogicList(LogicNode node) {
+        List<LogicResp> nodeRespList=logicMapper.getLogicNodePages(node);
+        return new ResultMessage<List<LogicResp>>("200","查询成功",nodeRespList);
     }
 
 }

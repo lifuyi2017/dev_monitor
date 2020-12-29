@@ -8,6 +8,7 @@ import com.lifuyi.dev_monitor.model.network.Network;
 import com.lifuyi.dev_monitor.model.network.req.NetworkReq;
 import com.lifuyi.dev_monitor.model.network.resp.NetworkResp;
 import com.lifuyi.dev_monitor.service.NetWorkService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,11 +25,11 @@ public class NetWorkServiceImpl implements NetWorkService {
     public ResultMessage<Boolean> addOrUpdateNetWork(Network network) {
         String id= UUID.randomUUID().toString().replaceAll("-","");
         Network ip=networkMapper.getByIp(network.getNetwork_ip());
-        if((network.getNetwork_id()==null && ip!=null) ||
-                (network.getNetwork_id()!=null && ip!=null && !ip.getNetwork_id().equals(network.getNetwork_id()))){
+        if((StringUtils.isBlank(network.getNetwork_id()) && ip!=null) ||
+                (!StringUtils.isBlank(network.getNetwork_id()) && ip!=null && !ip.getNetwork_id().equals(network.getNetwork_id()))){
             return new ResultMessage<Boolean>("401","网关ip重复",false);
         }
-        if(network.getNetwork_id()==null){
+        if(StringUtils.isBlank(network.getNetwork_id())){
             network.setNetwork_id(id);
         }
         networkMapper.addOrUpdateNetWork(network);
