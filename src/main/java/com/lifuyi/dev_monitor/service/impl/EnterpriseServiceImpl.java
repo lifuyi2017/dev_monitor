@@ -30,7 +30,6 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     @Override
     public ResultMessage<Boolean> addOrUpdate(EnterpriseReq enterpriseReq) {
         Enterprise queryEnter = new Enterprise();
-
         try {
             //更新info
             Enterprise enterprise = new Enterprise();

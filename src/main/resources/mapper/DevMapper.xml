@@ -51,7 +51,7 @@
     </insert>
 
     <select id="getBaseListByEntity" parameterType="com.lifuyi.dev_monitor.model.dev.BaseDevEntity" resultType="com.lifuyi.dev_monitor.model.dev.Resp.BaseDevPagesRsp">
-        select id,dev_code,
+        select id,dev_code,dev_type_id,
         (select type_name from dev_type where id=dev_type_id) as dev_type_name,dev_name,manager,
         (select enterprise_name from enterprise_info where enterprise_id=service_enterprise_id) as service_enterprise_name,
         (select enterprise_name from enterprise_info where enterprise_id=produce_enterprise_id) as produce_enterprise_name,
