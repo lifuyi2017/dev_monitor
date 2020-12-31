@@ -16,7 +16,7 @@ public interface EnterpriseMapper {
 
     void insertOrUpdateBinging(EnterpriseBinging enterpriseBinging);
 
-    List<String> getServiceNames(String enterprise_id);
+    List<Enterprise> getServiceNames(String enterprise_id);
 
     EnterpriseTypeResp getTypeById(Integer enterprise_type_id);
 

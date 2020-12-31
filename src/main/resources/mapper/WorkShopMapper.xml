@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lifuyi.dev_monitor.dao.WorkShopMapper">
+
+    <select id="getWorkShopByName" resultType="com.lifuyi.dev_monitor.model.collect.WorkShop">
+        select * from workshop where enterprise_id=#{enterprise_id} and `name`=#{name}
+        and parent_id=#{parent_id}
+    </select>
+
+    <insert id="insertOrUpdateWorkShop" parameterType="com.lifuyi.dev_monitor.model.collect.WorkShop">
+        insert into workshop(id,enterprise_id,`type`,`name`,parent_id) values
+        (#{id},#{enterprise_id},#{type},#{name},#{parent_id}) ON DUPLICATE KEY UPDATE
+        enterprise_id=#{enterprise_id},`type`=#{type},`name`=#{name},parent_id=#{parent_id}
+    </insert>
+
+    <select id="getWorkShopList" resultType="com.lifuyi.dev_monitor.model.collect.WorkShop"
+            parameterType="com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq">
+        select * from workshop where enterprise_id=#{enterprise_id} and parent_id=#{parent_id} and `type`=#{type}
+    </select>
+
+</mapper>

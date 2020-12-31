@@ -10,13 +10,13 @@ public class WorkShop {
 
     @ApiModelProperty(value = "id" ,position = 1)
     private String id;
-    @ApiModelProperty(value = "企业id" ,position = 2)
+    @ApiModelProperty(value = "企业id" ,position = 2,required = true)
     private String enterprise_id;
-    @ApiModelProperty(value = "类型，1是厂房，2是车间" ,position = 3)
+    @ApiModelProperty(value = "类型，1是厂房，2是车间" ,position = 3,required = true)
     private String type;
-    @ApiModelProperty(value = "名称" ,position = 4)
+    @ApiModelProperty(value = "名称" ,position = 4,required = true)
     private String name;
-    @ApiModelProperty(value = "父id，厂房的父id是企业，车间的父id是厂房" ,position = 5)
+    @ApiModelProperty(value = "父id，厂房的父id是企业，车间的父id是厂房" ,position = 5,required = true)
     private String parent_id;
 
     public WorkShop() {

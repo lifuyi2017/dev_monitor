@@ -55,7 +55,8 @@ public class LogicServiceImpl implements LogicService {
             List<RelationTableResult> resultList=logicMapper.getRelationByLogicId(logicResp.getLogic_id());
             for(RelationTableResult relationTableResult:resultList){
                 list.add(new RelationResp(relationTableResult.getPhysical_name(),
-                        Arrays.asList(relationTableResult.getCodes().split(","))));
+                        Arrays.asList(relationTableResult.getCodes().split(",")),
+                        relationTableResult.getPhysical_id()));
             }
             logicResp.setRelationResp(list);
         }

@@ -23,11 +23,13 @@ public class NetworkResp {
     private String output_agreement;
     @ApiModelProperty(value = "所属企业" ,position = 7)
     private String enterprise_name;
+    @ApiModelProperty(value = "所属企业编号" ,position = 8)
+    private String enterprise_id;
 
     public NetworkResp() {
     }
 
-    public NetworkResp(String network_id, String network_type, String network_code, String network_name, String network_ip, String input_address, String output_agreement, String enterprise_name) {
+    public NetworkResp(String network_id, String network_type, String network_code, String network_name, String network_ip, String input_address, String output_agreement, String enterprise_name, String enterprise_id) {
         this.network_id = network_id;
         this.network_type = network_type;
         this.network_code = network_code;
@@ -36,5 +38,6 @@ public class NetworkResp {
         this.input_address = input_address;
         this.output_agreement = output_agreement;
         this.enterprise_name = enterprise_name;
+        this.enterprise_id = enterprise_id;
     }
 }

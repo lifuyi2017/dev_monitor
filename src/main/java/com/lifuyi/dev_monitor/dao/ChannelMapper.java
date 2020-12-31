@@ -19,7 +19,7 @@ public interface ChannelMapper {
 
     void BindingParameterAndChannel(String id, String physical_id, List<String> codes);
 
-    List<ChannelResp > getChannelParameterPages(ChannelParameter parameter);
+    List<ChannelResp> getChannelParameterPages(ChannelParameter parameter);
 
     PhysicalChannelResp getPhysicalChannelResp(String id);
 }

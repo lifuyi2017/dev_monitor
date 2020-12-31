@@ -15,7 +15,7 @@
 
     <select id="getRoleList" parameterType="com.lifuyi.dev_monitor.model.role.Role"
             resultType="com.lifuyi.dev_monitor.model.role.Resp.RoleResp">
-         select id,role_name,status,create_time,update_time,
+         select id,role_name,status,create_time,update_time,r.enterprise_id,
          (select enterprise_name from enterprise_info where enterprise_id=r.enterprise_id) enterprise_name
           from role r where 1=1
           <if test="id!=null">

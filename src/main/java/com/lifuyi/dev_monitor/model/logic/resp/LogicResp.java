@@ -14,6 +14,8 @@ public class LogicResp {
     private String logic_code;
     @ApiModelProperty(value = "名称" ,position =3)
     private String logic_name;
+    @ApiModelProperty(value = "企业id" ,position = 5)
+    private String enterprise_id;
     @ApiModelProperty(value = "企业名称" ,position = 4)
     private String enterprise_name;
     @ApiModelProperty(value = "逻辑关联信息" ,position = 4)
@@ -22,12 +24,21 @@ public class LogicResp {
     public LogicResp() {
     }
 
-    public LogicResp(String logic_id, String logic_code, String logic_name, String enterprise_name, List<RelationResp> relationResp) {
+    public LogicResp(String logic_id, String logic_code, String logic_name, String enterprise_id, String enterprise_name, List<RelationResp> relationResp) {
         this.logic_id = logic_id;
         this.logic_code = logic_code;
         this.logic_name = logic_name;
+        this.enterprise_id = enterprise_id;
         this.enterprise_name = enterprise_name;
         this.relationResp = relationResp;
+    }
+
+    public String getEnterprise_id() {
+        return enterprise_id;
+    }
+
+    public void setEnterprise_id(String enterprise_id) {
+        this.enterprise_id = enterprise_id;
     }
 
     public String getLogic_id() {

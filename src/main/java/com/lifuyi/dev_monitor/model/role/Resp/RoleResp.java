@@ -22,16 +22,19 @@ public class RoleResp {
     private Date update_time;
     @ApiModelProperty(value = "企业id" ,position = 6)
     private String  enterprise_name;
+    @ApiModelProperty(value = "企业id" ,position = 7)
+    private String  enterprise_id;
 
     public RoleResp() {
     }
 
-    public RoleResp(String id, String role_name, String status, Date create_time, Date update_time, String enterprise_name) {
+    public RoleResp(String id, String role_name, String status, Date create_time, Date update_time, String enterprise_name, String enterprise_id) {
         this.id = id;
         this.role_name = role_name;
         this.status = status;
         this.create_time = create_time;
         this.update_time = update_time;
         this.enterprise_name = enterprise_name;
+        this.enterprise_id = enterprise_id;
     }
 }

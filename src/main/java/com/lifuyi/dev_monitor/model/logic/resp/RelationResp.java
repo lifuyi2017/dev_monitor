@@ -11,10 +11,13 @@ public class RelationResp {
     private String physical_name;
     @ApiModelProperty(value = "通道编号" ,position = 2)
     private List<String> channel_code;
+    @ApiModelProperty(value = "物理节点id" ,position =3)
+    private String physical_id;
 
-    public RelationResp(String physical_name, List<String> channel_code) {
+    public RelationResp(String physical_name, List<String> channel_code, String physical_id) {
         this.physical_name = physical_name;
         this.channel_code = channel_code;
+        this.physical_id = physical_id;
     }
 
     public RelationResp() {

@@ -4,7 +4,8 @@
 
 
     <select id="getChannelCodeByPhysicalId" resultType="java.lang.String">
-        select channel_code from physical_channel_binding where physical_id=#{physicalId}
+        select channel_code from physical_channel_binding where physical_id=#{physicalId} and channel_type_id is null
+         and collect_id is null
     </select>
 
     <select id="getMaxChannelTypeId" resultType="java.lang.String">
@@ -36,7 +37,7 @@
 
     <select id="getChannelParameterPages" parameterType="com.lifuyi.dev_monitor.model.channel.ChannelParameter"
             resultType="com.lifuyi.dev_monitor.model.channel.resp.ChannelResp">
-        select id,`type`,frequency,duration,accuracy,`interval`,`name`,
+        select id,`type`,frequency,duration,accuracy,`interval`,`name`,m.enterprise_id,
         (select enterprise_name from enterprise_info where enterprise_id=m.enterprise_id) as enterprise_name
           from channel_parameter m where 1=1
         <if test="id!=null">
@@ -53,7 +54,7 @@
 
     <select id="getPhysicalChannelResp" resultType="com.lifuyi.dev_monitor.model.channel.resp.PhysicalChannelResp">
         select (select `name` from physical where id=physical_id) as physical_name,
-            group_concat(channel_code) as codes from physical_channel_binding
+            group_concat(channel_code) as codes,physical_id from physical_channel_binding
         where channel_type_id=#{id} GROUP BY physical_id
     </select>
 

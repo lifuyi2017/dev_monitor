@@ -24,10 +24,14 @@ public class ChannelResp {
     private String interval;
     @ApiModelProperty(value = "采集名称" ,position = 7)
     private String name;
+    @ApiModelProperty(value = "企业id" ,position = 11)
+    private String enterprise_id;
     @ApiModelProperty(value = "企业名称" ,position = 8)
     private String enterprise_name;
     @ApiModelProperty(value = "物理节点名称" ,position = 9)
     private String physical_name;
+    @ApiModelProperty(value = "物理节点id" ,position = 12)
+    private String physical_id;
     @ApiModelProperty(value = "通道名称" ,position = 10)
     private List<String> codes;
 

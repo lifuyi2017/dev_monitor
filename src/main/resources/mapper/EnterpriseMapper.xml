@@ -35,8 +35,8 @@
         ON DUPLICATE KEY UPDATE not_service_id=#{not_service_id},service_id=#{service_id}
     </insert>
 
-    <select id="getServiceNames" resultType="java.lang.String">
-        select a.enterprise_name  from
+    <select id="getServiceNames" resultType="com.lifuyi.dev_monitor.model.enterprise.Enterprise">
+        select a.*  from
         (select * from enterprise_binding where not_service_id=#{enterprise_id}) b left join enterprise_info a
         on b.service_id=a.enterprise_id
     </select>

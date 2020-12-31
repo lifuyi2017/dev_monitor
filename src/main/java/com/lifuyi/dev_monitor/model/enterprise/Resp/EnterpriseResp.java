@@ -1,5 +1,6 @@
 package com.lifuyi.dev_monitor.model.enterprise.Resp;
 
+import com.lifuyi.dev_monitor.model.enterprise.Enterprise;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,5 +23,5 @@ public class EnterpriseResp {
     @ApiModelProperty(value = "更新时间" ,position = 5)
     private Date update_time;
     @ApiModelProperty(value = "banding的企业" ,position = 5)
-    private Map<String,String> service_names;
+    private List<Enterprise> enterpriseList;
 }

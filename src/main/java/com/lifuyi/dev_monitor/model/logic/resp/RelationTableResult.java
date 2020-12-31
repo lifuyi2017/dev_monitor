@@ -3,10 +3,24 @@ package com.lifuyi.dev_monitor.model.logic.resp;
 public class RelationTableResult {
     private String physical_name;
     private String codes;
+    private String physical_id;
 
-    public RelationTableResult(String physical_name, String channel_code) {
+    public RelationTableResult(String physical_name, String codes, String physical_id) {
         this.physical_name = physical_name;
-        this.codes = channel_code;
+        this.codes = codes;
+        this.physical_id = physical_id;
+    }
+
+    public void setCodes(String codes) {
+        this.codes = codes;
+    }
+
+    public String getPhysical_id() {
+        return physical_id;
+    }
+
+    public void setPhysical_id(String physical_id) {
+        this.physical_id = physical_id;
     }
 
     public RelationTableResult() {
@@ -24,7 +38,5 @@ public class RelationTableResult {
         return codes;
     }
 
-    public void setChannel_code(String channel_code) {
-        this.codes = channel_code;
-    }
+
 }

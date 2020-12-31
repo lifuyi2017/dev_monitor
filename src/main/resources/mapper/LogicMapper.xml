@@ -20,7 +20,7 @@
 
     <select id="getLogicNodePages" resultType="com.lifuyi.dev_monitor.model.logic.resp.LogicResp"
             parameterType="com.lifuyi.dev_monitor.model.logic.LogicNode">
-        select logic_id,logic_code,logic_name,
+        select logic_id,logic_code,logic_name,m.enterprise_id,
         (select enterprise_name from enterprise_info where enterprise_id=m.enterprise_id) as enterprise_name
          from logic_node m where 1=1
         <if test="logic_id!=null">
@@ -40,7 +40,7 @@
 
 
     <select id="getRelationByLogicId" resultType="com.lifuyi.dev_monitor.model.logic.resp.RelationTableResult">
-        select (select `name` from physical where id=physical_id) as physical_name,
+        select (select `name` from physical where id=physical_id) as physical_name,physical_id,
         group_concat(channel_code) as codes from logic_relation where logic_id=#{logic_id} group by physical_id
     </select>
 

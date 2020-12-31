@@ -103,16 +103,16 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         List<Enterprise> list = enterpriseMapper.getListByEntity(enterprise);
         PageInfo pageInfo = new PageInfo(list);
         List<EnterpriseResp> respList = new ArrayList<>();
-        List<String> names;
+        List<Enterprise> serviceEnterprise;
         for (Enterprise enter : list) {
             EnterpriseResp enterpriseResp = new EnterpriseResp();
             if (enter.getEnterprise_type_id() == 2) {
-                names = new ArrayList<>();
-                names.add(enter.getEnterprise_name());
-                enterpriseResp.setService_names(names);
+                serviceEnterprise=new ArrayList<>();
+                serviceEnterprise.add(enter);
+                enterpriseResp.setEnterpriseList(serviceEnterprise);
             } else {
-                names = enterpriseMapper.getServiceNames(enter.getEnterprise_id());
-                enterpriseResp.setService_names(names);
+                serviceEnterprise = enterpriseMapper.getServiceNames(enter.getEnterprise_id());
+                enterpriseResp.setEnterpriseList(serviceEnterprise);
             }
             enterpriseResp.setEnterpriseTypeResp(enterpriseMapper.getTypeById(enter.getEnterprise_type_id()));
             BeanUtils.copyProperties(enter, enterpriseResp);

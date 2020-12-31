@@ -24,13 +24,13 @@ public class ChannelController {
     private ChannelService channelService;
 
     @PostMapping("/getChannelCode")
-    @ApiOperation(value = "根据物理节点id获取通道编号", notes = "")
+    @ApiOperation(value = "根据物理节点id获取未被分组、且未被绑定采集配置的通道编号", notes = "")
     public ResultMessage<List<String>> getChannelCode(@RequestParam("physicalId") String physicalId){
         return new ResultMessage<List<String>>("200","查询成功",channelService.getChannelCode(physicalId));
     }
 
     @PostMapping("/insertOrUpdateChannelParameter")
-    @ApiOperation(value = "插入或者更新通道参数", notes = "")
+    @ApiOperation(value = "插入或者更新通道组参数,更新时不能更新codes字段", notes = "")
     public ResultMessage<String> insertOrUpdateChannelParameter(@RequestBody ChannelSaveReq channelSaveReq){
         return channelService.insertOrUpdateChannelParameter(channelSaveReq);
     }
@@ -40,6 +40,8 @@ public class ChannelController {
     public ResultMessage<PageInfo<ChannelResp>> getChannelParameterPages(@RequestBody ChannelParameterReq  req){
         return channelService.getChannelParameterPages(req);
     }
+
+
 
 
 

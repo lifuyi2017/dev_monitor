@@ -12,9 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.Format;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class UploadUtils {
 
@@ -68,13 +66,24 @@ public class UploadUtils {
         return  prefix+base64;
     }
 
-    public static void main(String[] args) {
-        String imgId="dasd.dsagcsa.png";
-        String prefix = imgId.substring(imgId.lastIndexOf(".") + 1);
-        System.out.println(prefix);
-//        Motor motor= (Motor) map;
-//        System.out.println(motor.getBearing());
+    /**
+     * 使用list自带的sort方法先进性排序，然后转成toString去判断两个集合是否相等
+     * 方法6
+     */
+    private static boolean checkDiffrent5(List<String> list, List<String> list1) {
+        long st = System.nanoTime();
+        System.out.println("消耗时间为： " + (System.nanoTime() - st));
+        list.sort(Comparator.comparing(String::hashCode));
+        list1.sort(Comparator.comparing(String::hashCode));
+        return list.toString().equals(list1.toString());
+    }
 
+    public static void main(String[] args) {
+        String[] a={"s","a","c"};
+        List<String> str1=Arrays.asList(a);
+        String[] b={"c","a","s"};
+        List<String> str2=Arrays.asList(a);
+        System.out.println(checkDiffrent5(str1,str2));
     }
 
 }
