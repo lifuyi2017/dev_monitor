@@ -63,8 +63,12 @@ public class CollectController {
     @ApiOperation(value = "获取车间下面的设备组", notes = "")
     public ResultMessage<List<ShopDevGroup>> getWorkShopDevGroupList(@RequestParam("workshopId")
                                                                          @ApiParam(value = "车间id",required = true) String workshopId){
-
+        return workShopService.getWorkShopDevGroupList(workshopId);
     }
+
+
+
+
 
 
 }

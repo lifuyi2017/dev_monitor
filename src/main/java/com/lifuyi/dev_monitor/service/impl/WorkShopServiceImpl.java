@@ -5,6 +5,7 @@ import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.collect.WorkShop;
 import com.lifuyi.dev_monitor.model.collect.WorkShopDev;
 import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
+import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
 import com.lifuyi.dev_monitor.service.WorkShopService;
 import org.apache.commons.lang3.StringUtils;
@@ -77,6 +78,16 @@ public class WorkShopServiceImpl implements WorkShopService {
     public ResultMessage<List<WorkShopDev>> getWorkShopDevList(String workshopId) {
         List<WorkShopDev> devList=workShopMapper.getWorkShopDevList(workshopId);
         return new ResultMessage<List<WorkShopDev>>("200","查询成功",devList);
+    }
+
+    @Override
+    public ResultMessage<List<ShopDevGroup>> getWorkShopDevGroupList(String workshopId) {
+        List<ShopDevGroup> shopDevGroupList=workShopMapper.getWorkShopDevGroupList(workshopId);
+        for(ShopDevGroup shopDevGroup:shopDevGroupList){
+            List<WorkShopDev> devList=workShopMapper.getSonDevList(shopDevGroup.getId());
+            shopDevGroup.setWorkShopDevList(devList);
+        }
+        return new ResultMessage<List<ShopDevGroup>>("200","查询成功",shopDevGroupList);
     }
 
 

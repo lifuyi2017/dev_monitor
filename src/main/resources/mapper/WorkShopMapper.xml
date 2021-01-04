@@ -45,4 +45,12 @@
         select * from workshop_dev where  `type`='1' and shop_id=#{workshopId}
     </select>
 
+    <select id="getWorkShopDevGroupList" resultType="com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup">
+        select id,`name`,shop_id from workshop_dev where `type`='2' and shop_id=#{workshopId}
+    </select>
+
+    <select id="getSonDevList" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
+        select * from workshop_dev where  parent_id=#{id}
+    </select>
+
 </mapper>

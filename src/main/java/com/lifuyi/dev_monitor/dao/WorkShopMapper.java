@@ -3,6 +3,7 @@ package com.lifuyi.dev_monitor.dao;
 import com.lifuyi.dev_monitor.model.collect.WorkShop;
 import com.lifuyi.dev_monitor.model.collect.WorkShopDev;
 import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
+import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
 
 import java.util.List;
@@ -23,4 +24,8 @@ public interface WorkShopMapper {
     List<BaseDevEntity> getNotBingingDevByEnterpriseId(String enterpriseId);
 
     List<WorkShopDev> getWorkShopDevList(String workshopId);
+
+    List<ShopDevGroup> getWorkShopDevGroupList(String workshopId);
+
+    List<WorkShopDev> getSonDevList(String id);
 }
