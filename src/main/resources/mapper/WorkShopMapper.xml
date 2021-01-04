@@ -18,4 +18,31 @@
         select * from workshop where enterprise_id=#{enterprise_id} and parent_id=#{parent_id} and `type`=#{type}
     </select>
 
+
+    <select id="getWorkShopDevByName" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
+        select * from workshop_dev where shop_id=#{shop_id} and `type`=#{type}
+        and `name`=#{name} and parent_id=#{parent_id}
+    </select>
+
+    <select id="getWorkShopDevByDevId" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
+        select * from workshop_dev where dev_id=#{dev_id}
+    </select>
+
+    <insert id="insertOrUpdateWorkShopDev" parameterType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
+        insert into workshop_dev(id,name,shop_id,parent_id,type,dev_id,enterprise_id) values
+        (#{id},#{name},#{shop_id},#{parent_id},#{type},#{dev_id},#{enterprise_id})
+         ON DUPLICATE KEY UPDATE
+         `name`=#{name},shop_id=#{shop_id},parent_id=#{parent_id},
+         `type`=#{type},dev_id=#{dev_id},enterprise_id=#{enterprise_id}
+    </insert>
+
+    <select id="getNotBingingDevByEnterpriseId" resultType="com.lifuyi.dev_monitor.model.dev.BaseDevEntity">
+        select * from dev_base_info where enterprise_id=#{enterpriseId} and id not in
+        (select distinct dev_id from workshop_dev where enterprise_id=#{enterpriseId});
+    </select>
+
+    <select id="getWorkShopDevList" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
+        select * from workshop_dev where  `type`='1' and shop_id=#{workshopId}
+    </select>
+
 </mapper>
