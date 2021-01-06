@@ -66,6 +66,14 @@ public class CollectController {
         return workShopService.getWorkShopDevGroupList(workshopId);
     }
 
+    @PostMapping(value = "/getUnBindingCollectChannelCode")
+    @ApiOperation(value = "获取指定通道种类下面的未绑定采集配置的通道", notes = "新增采集时用")
+    public ResultMessage<List<String>> getUnBindingCollectChannelCode(@RequestParam("typeId")
+                                                                          @ApiParam(value = "通道类型id",required = true) String typeId,
+                                                                      @RequestParam("physicalId")
+                                                                      @ApiParam(value = "物理节点id",required = true) String physicalId){
+        return collectService.getUnBindingCollectChannelCode(typeId,physicalId);
+    }
 
 
 

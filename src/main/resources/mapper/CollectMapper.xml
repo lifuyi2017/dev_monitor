@@ -3,5 +3,9 @@
 <mapper namespace="com.lifuyi.dev_monitor.dao.CollectMapper">
 
 
+    <select id="getUnBindingCollectChannelCode" resultType="java.lang.String">
+        select channel_code from physical_channel_binding where physical_id=#{physicalId}
+        and channel_type_id=#{typeId} and collect_id is null
+    </select>
 
 </mapper>

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.UUID;
 
 @Service("collectService")
@@ -18,5 +19,8 @@ public class CollectServiceImpl implements CollectService {
     private CollectMapper collectMapper;
 
 
-
+    @Override
+    public ResultMessage<List<String>> getUnBindingCollectChannelCode(String typeId, String physicalId) {
+        return new ResultMessage<List<String>>("200","查询成功",collectMapper.getUnBindingCollectChannelCode(typeId,physicalId));
+    }
 }

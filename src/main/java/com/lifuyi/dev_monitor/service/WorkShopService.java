@@ -21,4 +21,6 @@ public interface WorkShopService {
     ResultMessage<List<WorkShopDev>> getWorkShopDevList(String workshopId);
 
     ResultMessage<List<ShopDevGroup>> getWorkShopDevGroupList(String workshopId);
+
+
 }
