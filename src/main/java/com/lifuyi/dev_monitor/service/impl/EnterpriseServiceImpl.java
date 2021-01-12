@@ -123,8 +123,25 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     }
 
     @Override
-    public ResultMessage<List<Enterprise>> getEnterprise(Enterprise enterprise) {
-        return new ResultMessage<List<Enterprise>>("200","查询成功",enterpriseMapper.getListByEntity(enterprise));
+    public ResultMessage<List<EnterpriseResp>> getEnterprise(Enterprise enterprise) {
+        List<Enterprise> list = enterpriseMapper.getListByEntity(enterprise);
+        List<EnterpriseResp> respList = new ArrayList<>();
+        List<Enterprise> serviceEnterprise;
+        for (Enterprise enter : list) {
+            EnterpriseResp enterpriseResp = new EnterpriseResp();
+            if (enter.getEnterprise_type_id() == 2) {
+                serviceEnterprise=new ArrayList<>();
+                serviceEnterprise.add(enter);
+                enterpriseResp.setEnterpriseList(serviceEnterprise);
+            } else {
+                serviceEnterprise = enterpriseMapper.getServiceNames(enter.getEnterprise_id());
+                enterpriseResp.setEnterpriseList(serviceEnterprise);
+            }
+            enterpriseResp.setEnterpriseTypeResp(enterpriseMapper.getTypeById(enter.getEnterprise_type_id()));
+            BeanUtils.copyProperties(enter, enterpriseResp);
+            respList.add(enterpriseResp);
+        }
+        return new ResultMessage<List<EnterpriseResp>>("200","查询成功",respList);
     }
 
     @Override

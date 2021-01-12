@@ -28,4 +28,6 @@ public interface WorkShopMapper {
     List<ShopDevGroup> getWorkShopDevGroupList(String workshopId);
 
     List<WorkShopDev> getSonDevList(String id);
+
+    String getParentIdById(String farm_id);
 }

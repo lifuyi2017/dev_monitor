@@ -1,9 +1,13 @@
 package com.lifuyi.dev_monitor.controller;
 
 import com.lifuyi.dev_monitor.model.ResultMessage;
+import com.lifuyi.dev_monitor.model.collect.CollectDevConfig;
 import com.lifuyi.dev_monitor.model.collect.WorkShop;
 import com.lifuyi.dev_monitor.model.collect.WorkShopDev;
+import com.lifuyi.dev_monitor.model.collect.req.CollectConfigQueryReq;
+import com.lifuyi.dev_monitor.model.collect.req.StartOrStopCollect;
 import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
+import com.lifuyi.dev_monitor.model.collect.resp.CollectConfigResp;
 import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
 import com.lifuyi.dev_monitor.service.CollectService;
@@ -76,6 +80,25 @@ public class CollectController {
     }
 
 
+    @PostMapping(value = "/insertOrUpdateCollectConfig")
+    @ApiOperation(value = "新增采集节点设置", notes = "新增采集时用")
+    public ResultMessage<Boolean> insertOrUpdateCollectConfig(@RequestBody CollectDevConfig config){
+        return collectService.insertOrUpdateCollectConfig(config);
+    }
+
+
+    @PostMapping(value = "/getCollectConfigByDevGroup")
+    @ApiOperation(value = "通过设备或者设备组获取采集节点设置", notes = "")
+    public ResultMessage<List<CollectConfigResp>>  getCollectConfigByDevGroup(@RequestBody CollectConfigQueryReq req){
+        return collectService.getCollectConfigByDevGroup(req);
+    }
+
+
+    @PostMapping(value = "/startOrStopCollect")
+    @ApiOperation(value = "开始或者结束采集", notes = "")
+    public ResultMessage<Boolean> startOrStopCollect(@RequestBody StartOrStopCollect startOrStopCollect){
+        return collectService.startOrStopCollect(startOrStopCollect);
+    }
 
 
 

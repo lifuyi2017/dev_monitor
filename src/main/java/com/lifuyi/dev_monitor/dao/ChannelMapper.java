@@ -22,4 +22,8 @@ public interface ChannelMapper {
     List<ChannelResp> getChannelParameterPages(ChannelParameter parameter);
 
     PhysicalChannelResp getPhysicalChannelResp(String id);
+
+    void BindingCollectAndChannel(String physical_id, List<String> codes, String collect_id);
+
+    ChannelParameter getParameterById(String channel_type_id);
 }

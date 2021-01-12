@@ -14,7 +14,7 @@ public interface EnterpriseService {
 
     ResultMessage<PageInfo<EnterpriseResp>> getEnterprisePage(EnterprisePageReq pageReq);
 
-    ResultMessage<List<Enterprise>> getEnterprise(Enterprise enterprise);
+    ResultMessage<List<EnterpriseResp>> getEnterprise(Enterprise enterprise);
 
     ResultMessage<List<Enterprise>> getEnterpriseByTypeIds(List<String> ids);
 }

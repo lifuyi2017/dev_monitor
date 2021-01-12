@@ -35,6 +35,15 @@
         </foreach>
     </update>
 
+    <update id="BindingCollectAndChannel">
+        update physical_channel_binding set collect_id=#{collect_id} where  physical_id=#{physical_id}
+        and channel_code in
+        <foreach item="item" index="index" collection="codes" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+
     <select id="getChannelParameterPages" parameterType="com.lifuyi.dev_monitor.model.channel.ChannelParameter"
             resultType="com.lifuyi.dev_monitor.model.channel.resp.ChannelResp">
         select id,`type`,frequency,duration,accuracy,`interval`,`name`,m.enterprise_id,
@@ -56,6 +65,10 @@
         select (select `name` from physical where id=physical_id) as physical_name,
             group_concat(channel_code) as codes,physical_id from physical_channel_binding
         where channel_type_id=#{id} GROUP BY physical_id
+    </select>
+
+    <select id="getParameterById" resultType="com.lifuyi.dev_monitor.model.channel.ChannelParameter">
+        select * from channel_parameter where id=#{channel_type_id}
     </select>
 
 

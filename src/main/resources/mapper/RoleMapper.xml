@@ -32,5 +32,14 @@
           </if>
     </select>
 
+    <delete id="deleteAuthorityByRoleId">
+        delete from role_authority where role_id=#{role_id}
+    </delete>
+
+    <insert id="insertOrUpdateRoleAuthority" parameterType="com.lifuyi.dev_monitor.model.role.RoleAuthority">
+        insert into role_authority(id,role_id,farm_id,shop_id,enterprise_id) values (#{id},#{role_id},#{farm_id},#{shop_id},#{enterprise_id})
+        ON DUPLICATE KEY UPDATE
+        role_id=#{role_id},farm_id=#{farm_id},shop_id=#{shop_id},enterprise_id=#{enterprise_id}
+    </insert>
 
 </mapper>

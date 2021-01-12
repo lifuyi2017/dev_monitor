@@ -3,6 +3,7 @@ package com.lifuyi.dev_monitor.controller;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.role.Resp.RoleResp;
 import com.lifuyi.dev_monitor.model.role.Role;
+import com.lifuyi.dev_monitor.model.role.RoleAuthority;
 import com.lifuyi.dev_monitor.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,10 +35,12 @@ public class RoleController {
     }
 
 
-    /**
-     * 权限设置
-     */
 
+    @PostMapping("/saveRoleAuthority")
+    @ApiOperation(value = "权限设置",  notes = "")
+    public ResultMessage<Boolean> saveRoleAuthority(@RequestBody List<RoleAuthority> roleAuthorityList){
+        return roleService.saveRoleAuthority(roleAuthorityList);
+    }
 
 
 

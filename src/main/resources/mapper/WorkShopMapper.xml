@@ -53,4 +53,8 @@
         select * from workshop_dev where  parent_id=#{id}
     </select>
 
+    <select id="getParentIdById" resultType="string">
+
+    </select>
+
 </mapper>

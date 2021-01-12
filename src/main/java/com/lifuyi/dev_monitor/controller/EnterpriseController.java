@@ -60,8 +60,9 @@ public class EnterpriseController {
 
     @ResponseBody
     @PostMapping("/getEnterprise")
+    @ApiOperation(value = "获取企业信息，不分页", notes = "权限那儿获取关联企业可以用这儿")
 //    @UserLoginToken
-    public ResultMessage<List<Enterprise>> getEnterprise(@RequestBody Enterprise enterprise) {
+    public ResultMessage<List<EnterpriseResp>> getEnterprise(@RequestBody Enterprise enterprise) {
         return enterpriseService.getEnterprise(enterprise);
     }
 
@@ -71,5 +72,8 @@ public class EnterpriseController {
     public ResultMessage<List<Enterprise>> getEnterpriseByTypeIds(@RequestBody TypeIds ids) {
         return enterpriseService.getEnterpriseByTypeIds(ids.getIds());
     }
+
+
+
 
 }
