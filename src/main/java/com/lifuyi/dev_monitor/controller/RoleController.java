@@ -1,16 +1,19 @@
 package com.lifuyi.dev_monitor.controller;
 
 import com.lifuyi.dev_monitor.model.ResultMessage;
+import com.lifuyi.dev_monitor.model.role.Resp.EnterPriseAuthor;
 import com.lifuyi.dev_monitor.model.role.Resp.RoleResp;
 import com.lifuyi.dev_monitor.model.role.Role;
 import com.lifuyi.dev_monitor.model.role.RoleAuthority;
 import com.lifuyi.dev_monitor.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/role")
@@ -43,7 +46,11 @@ public class RoleController {
     }
 
 
-
-
+    @PostMapping("/getRoleAuthority")
+    @ApiOperation(value = "获取角色权限",  notes = "后台系统展示用")
+    public ResultMessage<Map<EnterPriseAuthor,String>> getRoleAuthority(@RequestParam("roleId")
+                                                                            @ApiParam(value = "角色id",required = true) String roleId){
+        return roleService.getRoleAuthority(roleId);
+    }
 
 }

@@ -3,6 +3,7 @@ package com.lifuyi.dev_monitor.service.impl;
 import com.lifuyi.dev_monitor.dao.RoleMapper;
 import com.lifuyi.dev_monitor.dao.WorkShopMapper;
 import com.lifuyi.dev_monitor.model.ResultMessage;
+import com.lifuyi.dev_monitor.model.role.Resp.EnterPriseAuthor;
 import com.lifuyi.dev_monitor.model.role.Resp.RoleResp;
 import com.lifuyi.dev_monitor.model.role.Role;
 import com.lifuyi.dev_monitor.model.role.RoleAuthority;
@@ -11,9 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service("roleService")
 public class RoleServiceImpl implements RoleService {
@@ -64,6 +63,15 @@ public class RoleServiceImpl implements RoleService {
             roleMapper.insertOrUpdateRoleAuthority(roleAuthority);
         }
         return new ResultMessage<Boolean>("200","success",true);
+    }
+
+    @Override
+    public ResultMessage<Map<EnterPriseAuthor, String>> getRoleAuthority(String roleId) {
+        Map<EnterPriseAuthor, String> enterPriseAuthorStringHashMap = new HashMap<>();
+        Role roleQuery = new Role();
+        roleQuery.setId(roleId);
+        List<RoleResp> roleList = roleMapper.getRoleList(roleQuery);
+
     }
 
 }
