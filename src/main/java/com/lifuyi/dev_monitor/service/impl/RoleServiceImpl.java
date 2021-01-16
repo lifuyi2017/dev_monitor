@@ -65,13 +65,13 @@ public class RoleServiceImpl implements RoleService {
         return new ResultMessage<Boolean>("200","success",true);
     }
 
-    @Override
-    public ResultMessage<Map<EnterPriseAuthor, String>> getRoleAuthority(String roleId) {
-        Map<EnterPriseAuthor, String> enterPriseAuthorStringHashMap = new HashMap<>();
-        Role roleQuery = new Role();
-        roleQuery.setId(roleId);
-        List<RoleResp> roleList = roleMapper.getRoleList(roleQuery);
-
-    }
+//    @Override
+//    public ResultMessage<Map<EnterPriseAuthor, String>> getRoleAuthority(String roleId) {
+//        Map<EnterPriseAuthor, String> enterPriseAuthorStringHashMap = new HashMap<>();
+//        Role roleQuery = new Role();
+//        roleQuery.setId(roleId);
+//        List<RoleResp> roleList = roleMapper.getRoleList(roleQuery);
+//
+//    }
 
 }

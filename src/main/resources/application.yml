@@ -3,6 +3,9 @@ server:
 
 
 spring:
+  data:
+    mongodb:
+      uri: mongodb://106.55.249.130:27017/local
   datasource:
     name: mysql_test
     type: com.alibaba.druid.pool.DruidDataSource
@@ -33,6 +36,7 @@ spring:
       pool-prepared-statements: false
       max-pool-prepared-statement-per-connection-size: 20
 
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.lifuyi.dev_monitor.model
@@ -48,4 +52,5 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
   returnPageInfo: check
+
 
