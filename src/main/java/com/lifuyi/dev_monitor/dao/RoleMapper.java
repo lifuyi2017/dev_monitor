@@ -17,4 +17,6 @@ public interface RoleMapper {
     void deleteAuthorityByRoleId(String role_id);
 
     void insertOrUpdateRoleAuthority(RoleAuthority workShopMapper);
+
+    List<String> getShopIdsByRoleId(String roleId);
 }

@@ -13,4 +13,5 @@ public interface UserMapper {
     void insertOrUpdateUser(User user);
 
     List<UserResp> getUserByEntity(User user);
+
 }

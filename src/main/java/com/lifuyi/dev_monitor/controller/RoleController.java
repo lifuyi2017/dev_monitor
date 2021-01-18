@@ -46,11 +46,13 @@ public class RoleController {
     }
 
 
-//    @PostMapping("/getRoleAuthority")
-//    @ApiOperation(value = "获取角色权限",  notes = "后台系统展示用")
-//    public ResultMessage<Map<EnterPriseAuthor,String>> getRoleAuthority(@RequestParam("roleId")
-//                                                                            @ApiParam(value = "角色id",required = true) String roleId){
-//        return roleService.getRoleAuthority(roleId);
-//    }
+    @PostMapping("/getRoleAuthority")
+    @ApiOperation(value = "获取角色权限",  notes = "后台系统展示用")
+    public ResultMessage<Map<EnterPriseAuthor,String>> getRoleAuthority(@RequestParam("roleId")
+                                                                            @ApiParam(value = "角色id",required = true) String roleId){
+        return roleService.getRoleAuthority(roleId);
+    }
+
+
 
 }

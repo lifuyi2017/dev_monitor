@@ -42,4 +42,8 @@
         role_id=#{role_id},farm_id=#{farm_id},shop_id=#{shop_id},enterprise_id=#{enterprise_id}
     </insert>
 
+    <select id="getShopIdsByRoleId" resultType="string">
+        select shop_id from role_authority where role_id=#{roleId}
+    </select>
+
 </mapper>

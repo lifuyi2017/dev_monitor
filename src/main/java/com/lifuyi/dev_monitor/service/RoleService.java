@@ -16,5 +16,5 @@ public interface RoleService {
 
     ResultMessage<Boolean> saveRoleAuthority(List<RoleAuthority> roleAuthorityList);
 
-//    ResultMessage<Map<EnterPriseAuthor, String>> getRoleAuthority(String roleId);
+    ResultMessage<Map<EnterPriseAuthor, String>> getRoleAuthority(String roleId);
 }
