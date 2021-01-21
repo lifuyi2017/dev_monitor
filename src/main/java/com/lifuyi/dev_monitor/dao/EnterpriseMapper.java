@@ -27,4 +27,8 @@ public interface EnterpriseMapper {
     void deleteBingingByNotServiceId(String id);
 
     List<Enterprise> getEnterpriseByTypeIds(List<String> ids);
+
+    void deleteById(String id);
+
+    void deleteBingById(String id);
 }

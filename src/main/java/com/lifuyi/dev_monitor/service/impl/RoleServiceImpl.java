@@ -44,7 +44,7 @@ public class RoleServiceImpl implements RoleService {
         role.setCreate_time(new Date());
         role.setUpdate_time(new Date());
         roleMapper.insertOrUpdateRole(role);
-        return new ResultMessage<Boolean>("401", role.getId(), true);
+        return new ResultMessage<Boolean>("200", role.getId(), true);
     }
 
     @Override

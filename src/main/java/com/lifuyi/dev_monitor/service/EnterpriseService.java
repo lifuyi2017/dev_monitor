@@ -17,4 +17,6 @@ public interface EnterpriseService {
     ResultMessage<List<EnterpriseResp>> getEnterprise(Enterprise enterprise);
 
     ResultMessage<List<Enterprise>> getEnterpriseByTypeIds(List<String> ids);
+
+    ResultMessage<Boolean> deleteEnterprise(String id);
 }

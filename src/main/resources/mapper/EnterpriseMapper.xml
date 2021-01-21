@@ -64,4 +64,12 @@
         </foreach>
     </select>
 
+    <delete id="deleteById">
+        delete from enterprise_info where enterprise_id=#{id}
+    </delete>
+
+    <delete id="deleteBingById">
+        delete from enterprise_binding where not_service_id=#{id} or service_id=#{id}
+    </delete>
+
 </mapper>

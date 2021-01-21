@@ -2,17 +2,32 @@ package com.lifuyi.dev_monitor.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.lifuyi.dev_monitor.dao.EnterpriseMapper;
+import com.lifuyi.dev_monitor.dao.*;
 import com.lifuyi.dev_monitor.model.ResultMessage;
+import com.lifuyi.dev_monitor.model.collect.WorkShop;
+import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
+import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
+import com.lifuyi.dev_monitor.model.dev.Req.BaseDevEntityReq;
+import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevPagesRsp;
 import com.lifuyi.dev_monitor.model.enterprise.Enterprise;
 import com.lifuyi.dev_monitor.model.enterprise.EnterpriseBinging;
 import com.lifuyi.dev_monitor.model.enterprise.Req.EnterprisePageReq;
 import com.lifuyi.dev_monitor.model.enterprise.Req.EnterpriseReq;
 import com.lifuyi.dev_monitor.model.enterprise.Resp.EnterpriseResp;
-import com.lifuyi.dev_monitor.service.EnterpriseService;
+import com.lifuyi.dev_monitor.model.logic.LogicNode;
+import com.lifuyi.dev_monitor.model.logic.resp.LogicResp;
+import com.lifuyi.dev_monitor.model.network.Network;
+import com.lifuyi.dev_monitor.model.network.resp.NetworkResp;
+import com.lifuyi.dev_monitor.model.physical.Physical;
+import com.lifuyi.dev_monitor.model.physical.resp.PhysicalResp;
+import com.lifuyi.dev_monitor.model.role.Resp.RoleResp;
+import com.lifuyi.dev_monitor.model.role.Role;
+import com.lifuyi.dev_monitor.service.*;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -25,6 +40,31 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
     @Resource
     private EnterpriseMapper enterpriseMapper;
+    @Resource
+    private UserMapper userMapper;
+    @Resource
+    private RoleService roleService;
+    @Resource
+    private DevService devService;
+    @Resource
+    private DevMapper devMapper;
+    @Resource
+    private NetWorkService netWorkService;
+    @Resource
+    private NetworkMapper networkMapper;
+    @Resource
+    private PhysicalService physicalService;
+    @Resource
+    private PhysicalMapper physicalMapper;
+    @Resource
+    private LogicMapper logicMapper;
+    @Resource
+    private LogicService logicService;
+    @Resource
+    private WorkShopMapper workShopMapper;
+    @Resource
+    private WorkShopService workShopService;
+
 
     @Transactional
     @Override
@@ -147,6 +187,59 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     @Override
     public ResultMessage<List<Enterprise>> getEnterpriseByTypeIds(List<String> ids) {
         return new ResultMessage<List<Enterprise>>("200","查询成功",enterpriseMapper.getEnterpriseByTypeIds(ids));
+    }
+
+    //企业删除
+    @Override
+    public ResultMessage<Boolean> deleteEnterprise(String id) {
+        //删用户：user
+        userMapper.deleteByEnterpriseId(id);
+        //删角色：role、role_authority
+        Role role = new Role();
+        role.setEnterprise_id(id);
+        List<RoleResp> valueRole = roleService.getRoleList(role).getValue();
+        for(RoleResp roleResp:valueRole){
+            roleService.deleteById(roleResp.getId());
+        }
+        //删设备:dev_base_info、fan、motor、water_pump、workshop_dev、collect_dev_config
+        BaseDevEntity baseDevEntity = new BaseDevEntity();
+        baseDevEntity.setEnterprise_id(id);
+        List<BaseDevPagesRsp> baseListByEntity = devMapper.getBaseListByEntity(baseDevEntity);
+        for(BaseDevPagesRsp baseDevPagesRsp:baseListByEntity){
+            devService.deleteById(baseDevPagesRsp.getId());
+        }
+        //删网关：
+        Network network = new Network();
+        network.setEnterprise_id(id);
+        List<NetworkResp> listByEntity = networkMapper.getListByEntity(network);
+        for(NetworkResp resp:listByEntity){
+            netWorkService.deleteById(resp.getNetwork_id());
+        }
+        //删物理节点
+        Physical physical = new Physical();
+        physical.setEnterprise_id(id);
+        List<PhysicalResp> pageByEntity = physicalMapper.getPageByEntity(physical);
+        for(PhysicalResp resp:pageByEntity){
+            physicalService.deleteById(resp.getId());
+        }
+        //删逻辑节点
+        LogicNode logicNode = new LogicNode();
+        logicNode.setEnterprise_id(id);
+        List<LogicResp> logicNodePages = logicMapper.getLogicNodePages(logicNode);
+        for(LogicResp resp:logicNodePages){
+            logicService.deleteById(resp.getLogic_id());
+        }
+        //删厂房车间
+        WorkShopQueryReq workShopQueryReq = new WorkShopQueryReq();
+        workShopQueryReq.setEnterprise_id(id);
+        workShopQueryReq.setType("1");
+        List<WorkShop> workShopList = workShopMapper.getWorkShopList(workShopQueryReq);
+        for(WorkShop workShop:workShopList){
+            workShopService.deleteById(workShop.getId());
+        }
+        //删除企业
+        enterpriseMapper.deleteById(id);
+        enterpriseMapper.deleteBingById(id);
     }
 
 }

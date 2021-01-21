@@ -23,7 +23,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/enterprise")
 @Api(description = "企业管理")
 @CrossOrigin
@@ -35,7 +35,7 @@ public class EnterpriseController {
     private EnterpriseService enterpriseService;
 
 
-    @ResponseBody
+
     @PostMapping("/getType")
     @ApiOperation(value = "获取企业类型", notes = "获取企业类型")
 //    @UserLoginToken
@@ -43,7 +43,7 @@ public class EnterpriseController {
         return new ResultMessage<List<EnterpriseTypeResp>>("200","成功",enterpriseMapper.getType());
     }
 
-    @ResponseBody
+
     @PostMapping("/addOrUpdate")
 //    @UserLoginToken
     public ResultMessage<Boolean> addOrUpdate(@RequestBody EnterpriseReq enterpriseReq) {
@@ -51,14 +51,14 @@ public class EnterpriseController {
     }
 
 
-    @ResponseBody
+
     @PostMapping("/getEnterprisePage")
 //    @UserLoginToken
     public ResultMessage<PageInfo<EnterpriseResp>> getEnterprisePage(@RequestBody EnterprisePageReq pageReq) {
         return enterpriseService.getEnterprisePage(pageReq);
     }
 
-    @ResponseBody
+
     @PostMapping("/getEnterprise")
     @ApiOperation(value = "获取企业信息，不分页", notes = "权限那儿获取关联企业可以用这儿")
 //    @UserLoginToken
@@ -66,13 +66,18 @@ public class EnterpriseController {
         return enterpriseService.getEnterprise(enterprise);
     }
 
-    @ResponseBody
+
     @PostMapping("/getEnterpriseByTypeIds")
 //    @UserLoginToken
     public ResultMessage<List<Enterprise>> getEnterpriseByTypeIds(@RequestBody TypeIds ids) {
         return enterpriseService.getEnterpriseByTypeIds(ids.getIds());
     }
 
+    @PostMapping("/deleteEnterprise")
+    @ApiOperation(value = "通过企业id删除企业", notes = "")
+    public ResultMessage<Boolean> deleteEnterprise(@RequestParam("id") String id){
+        return enterpriseService.deleteEnterprise(id);
+    }
 
 
 
