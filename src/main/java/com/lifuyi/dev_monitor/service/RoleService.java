@@ -17,4 +17,7 @@ public interface RoleService {
     ResultMessage<Boolean> saveRoleAuthority(List<RoleAuthority> roleAuthorityList);
 
     ResultMessage<Map<EnterPriseAuthor, String>> getRoleAuthority(String roleId);
+
+    void deleteById(String id);
+
 }

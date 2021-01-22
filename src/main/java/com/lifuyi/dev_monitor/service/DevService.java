@@ -17,4 +17,6 @@ public interface DevService {
     ResultMessage<PageInfo<BaseDevPagesRsp>> getDevByPages(BaseDevEntityReq req);
 
     ResultMessage<List<BaseDevPagesRsp>> getDevList(BaseDevEntity baseDevEntity);
+
+    void deleteById(String id);
 }

@@ -96,6 +96,20 @@ public class DevServiceImpl implements DevService {
         return new ResultMessage<List<BaseDevPagesRsp>>("200", "查询成功", list);
     }
 
+    @Override
+    public void deleteById(String id) {
+        BaseDevEntity baseDevEntity = new BaseDevEntity();
+        baseDevEntity.setId(id);
+        BaseDevPagesRsp baseDevPagesRsp = devMapper.getBaseListByEntity(baseDevEntity).get(0);
+        if("1".equals(baseDevPagesRsp.getDev_type_id())){
+
+        }else if("2".equals(baseDevPagesRsp.getDev_type_id())){
+
+        }else {
+
+        }
+    }
+
     /**
      * 设置object
      *

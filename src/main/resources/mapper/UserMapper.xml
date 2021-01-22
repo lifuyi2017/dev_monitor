@@ -41,5 +41,8 @@
         </if>
     </select>
 
+    <delete id="deleteByEnterpriseId">
+        delete from `user` where enterprise_id=#{enterprise_id}
+    </delete>
 
 </mapper>

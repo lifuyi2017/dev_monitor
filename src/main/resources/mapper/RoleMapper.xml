@@ -46,4 +46,12 @@
         select shop_id from role_authority where role_id=#{roleId}
     </select>
 
+    <delete id="deleteRoleAuthorByRoleId">
+        delete from role_authority where role_id=#{id}
+    </delete>
+
+    <delete id="deleteRoleById">
+        delete from role where id=#{id}
+    </delete>
+
 </mapper>

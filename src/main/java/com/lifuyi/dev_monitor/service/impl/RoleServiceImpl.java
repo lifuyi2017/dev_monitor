@@ -116,4 +116,10 @@ public class RoleServiceImpl implements RoleService {
         return new ResultMessage<Map<EnterPriseAuthor, String>>("200","success",enterPriseAuthorStringHashMap);
     }
 
+    @Override
+    public void deleteById(String id) {
+        roleMapper.deleteRoleAuthorByRoleId(id);
+        roleMapper.deleteRoleById(id);
+    }
+
 }

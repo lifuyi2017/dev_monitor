@@ -14,4 +14,5 @@ public interface UserMapper {
 
     List<UserResp> getUserByEntity(User user);
 
+    void deleteByEnterpriseId(String id);
 }
