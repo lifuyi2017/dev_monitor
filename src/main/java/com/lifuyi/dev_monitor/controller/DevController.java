@@ -31,27 +31,21 @@ public class DevController {
     @Autowired
     private DevService devService;
 
-    /**
-     * 查询类型
-     */
+
     @PostMapping("/getType")
     @ApiOperation(value = "获取设备类型", notes = "获取设备类型")
     public ResultMessage<List<DevType>> getType() {
         return new ResultMessage<List<DevType>>("200", "查询成功", devService.getType());
     }
 
-    /**
-     * 上传图片
-     */
+
     @PostMapping("/uploadPic")
     @ApiResponses({@ApiResponse(code = 200, message = "图片id"), @ApiResponse(code = 401, message = "上传失败")})
     public ResultMessage<String> uploadPic(@RequestParam("imgFile") MultipartFile imgFile) {
         return UploadUtils.uploadPic(imgFile);
     }
 
-    /**
-     * 下载图片
-     */
+
     @GetMapping(value = "/previewPic")
     @ApiOperation(value = "预览图片", notes = "输入id,返回base64")
     public String previewPic(@RequestParam("imgId") String imgId) {
@@ -59,9 +53,7 @@ public class DevController {
     }
 
 
-    /**
-     * 下载图片
-     */
+
     @GetMapping(value = "/getPic")
     @ApiOperation(value = "预览图片", notes = "输入id,返回base64")
     public void getPic(@RequestParam("imgId") String imgId, HttpServletResponse response) {
@@ -82,29 +74,21 @@ public class DevController {
         }
     }
 
-    /**
-     * 插入或者更新设备
-     */
+
     @PostMapping(value = "/insertOrUpdateDev")
     @ApiOperation(value = "插入或者更新设备，不传id字段是插入，传是更新,object是根据设备类型的其他字段", notes = "返回的mesg是id")
     public ResultMessage<Boolean> insertOrUpdateDev(@RequestBody BaseDevEntity baseDevEntity) {
         return devService.insertOrUpdateDev(baseDevEntity);
     }
 
-    /**
-     * 分页查找
-     *
-     * @return
-     */
+
     @PostMapping(value = "/getDevByPages")
     @ApiOperation(value = "带分页的查找设备", notes = "")
     public ResultMessage<PageInfo<BaseDevPagesRsp>> getDevByPages(@RequestBody BaseDevEntityReq baseDevEntityReq) {
         return devService.getDevByPages(baseDevEntityReq);
     }
 
-    /**
-     * 不带分页查找
-     */
+
     @PostMapping(value = "/getDevList")
     @ApiOperation(value = "不带分页的查找设备", notes = "")
     public ResultMessage<List<BaseDevPagesRsp>> getDevList(@RequestBody BaseDevEntity baseDevEntity) {

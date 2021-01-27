@@ -42,11 +42,11 @@
     </select>
 
     <select id="getWorkShopDevList" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
-        select * from workshop_dev where  `type`='1' and shop_id=#{workshopId}
+        select * from workshop_dev where  `type`='3' and shop_id=#{workshopId}
     </select>
 
     <select id="getWorkShopDevGroupList" resultType="com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup">
-        select id,`name`,shop_id from workshop_dev where `type`='2' and shop_id=#{workshopId}
+        select id,`name`,shop_id from workshop_dev where `type`='4' and shop_id=#{workshopId}
     </select>
 
     <select id="getSonDevList" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
@@ -54,7 +54,19 @@
     </select>
 
     <select id="getParentIdById" resultType="string">
-
+        select parent_id from workshop_dev where id=#{farm_id}
     </select>
+
+    <select id="getDevGroupIdByDevId" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
+        select * from workshop_dev where dev_id=#{id}
+    </select>
+
+    <delete id="deleteDevById">
+        delete from workshop_dev where id=#{id}
+    </delete>
+
+    <delete id="deleteShopById">
+        delete from workshop where id=#{id}
+    </delete>
 
 </mapper>

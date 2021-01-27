@@ -2,6 +2,7 @@ package com.lifuyi.dev_monitor.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.lifuyi.dev_monitor.dao.CollectMapper;
 import com.lifuyi.dev_monitor.dao.LogicMapper;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.logic.LogicNode;
@@ -26,6 +27,8 @@ public class LogicServiceImpl implements LogicService {
 
     @Resource
     private LogicMapper logicMapper;
+    @Resource
+    private CollectMapper collectMapper;
 
     @Override
     public ResultMessage<String> addOrUpdateLogic(LogicSaveReq logicSaveReq) {
@@ -68,6 +71,13 @@ public class LogicServiceImpl implements LogicService {
     public ResultMessage<List<LogicResp>> getLogicList(LogicNode node) {
         List<LogicResp> nodeRespList=logicMapper.getLogicNodePages(node);
         return new ResultMessage<List<LogicResp>>("200","查询成功",nodeRespList);
+    }
+
+    @Override
+    public void deleteById(String logic_id) {
+        logicMapper.deleteNodeById(logic_id);
+        logicMapper.deleteRelationById(logic_id);
+        collectMapper.removeLogicId(logic_id);
     }
 
 }

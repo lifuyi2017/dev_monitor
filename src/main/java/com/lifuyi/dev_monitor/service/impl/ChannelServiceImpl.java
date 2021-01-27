@@ -3,13 +3,17 @@ package com.lifuyi.dev_monitor.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lifuyi.dev_monitor.dao.ChannelMapper;
+import com.lifuyi.dev_monitor.dao.CollectMapper;
+import com.lifuyi.dev_monitor.dao.PhysicalMapper;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.channel.ChannelParameter;
 import com.lifuyi.dev_monitor.model.channel.req.ChannelParameterReq;
 import com.lifuyi.dev_monitor.model.channel.req.ChannelSaveReq;
 import com.lifuyi.dev_monitor.model.channel.resp.ChannelResp;
 import com.lifuyi.dev_monitor.model.channel.resp.PhysicalChannelResp;
+import com.lifuyi.dev_monitor.model.collect.CollectDevConfig;
 import com.lifuyi.dev_monitor.service.ChannelService;
+import com.lifuyi.dev_monitor.service.CollectService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +28,10 @@ public class ChannelServiceImpl implements ChannelService {
 
     @Resource
     private ChannelMapper channelMapper;
+    @Resource
+    private CollectMapper collectMapper;
+    @Resource
+    private CollectService collectService;
 
     @Override
     public List<String> getChannelCode(String physicalId) {
@@ -32,23 +40,25 @@ public class ChannelServiceImpl implements ChannelService {
 
     @Override
     @Transactional
-    public ResultMessage<String> insertOrUpdateChannelParameter(ChannelSaveReq channelSaveReq) {
-        String channel_type_id=channelMapper.getMaxChannelTypeId(channelSaveReq.getPhysical_id(),channelSaveReq.getCodes());
-        if(!StringUtils.isBlank(channel_type_id)){
-            return new ResultMessage<String>("401","通道已经被设置为其他参数",channel_type_id);
-        }
-        String id= UUID.randomUUID().toString().replaceAll("-","");
-        ChannelParameter channelParameter = channelSaveReq.getChannelParameter();
-        if(!StringUtils.isBlank(channelParameter.getId())){
-            //修改时不能修改绑定关系
+    public ResultMessage<String> insertOrUpdateChannelParameter(List<ChannelSaveReq> reqs) {
+        for(ChannelSaveReq channelSaveReq:reqs){
+            String channel_type_id=channelMapper.getMaxChannelTypeId(channelSaveReq.getPhysical_id(),channelSaveReq.getCodes());
+            if(!StringUtils.isBlank(channel_type_id)){
+                return new ResultMessage<String>("401","通道已经被设置为其他参数",channel_type_id);
+            }
+            String id= UUID.randomUUID().toString().replaceAll("-","");
+            ChannelParameter channelParameter = channelSaveReq.getChannelParameter();
+            if(!StringUtils.isBlank(channelParameter.getId())){
+                //修改时不能修改绑定关系
 //            channelMapper.clearBindingByTypeId(channelParameter.getId());
 //            PhysicalChannelResp resp=channelMapper.getPhysicalChannelResp(channelSaveReq.getChannelParameter().getId());
-        }else {
-            channelParameter.setId(id);
-            channelMapper.BindingParameterAndChannel(channelParameter.getId(),channelSaveReq.getPhysical_id(),channelSaveReq.getCodes());
+            }else {
+                channelParameter.setId(id);
+                channelMapper.BindingParameterAndChannel(channelParameter.getId(),channelSaveReq.getPhysical_id(),channelSaveReq.getCodes());
+            }
+            channelMapper.insertOrUpdateChannelParameter(channelParameter);
         }
-        channelMapper.insertOrUpdateChannelParameter(channelParameter);
-        return new ResultMessage<String>("200","操作成功",channelParameter.getId());
+        return new ResultMessage<String>("200","操作成功","success");
     }
 
     //查询分页列表
@@ -67,6 +77,23 @@ public class ChannelServiceImpl implements ChannelService {
         }
         channelRespPageInfo.setList(parameterList);
         return new ResultMessage<PageInfo<ChannelResp>>("200","查询成功",channelRespPageInfo);
+    }
+
+    @Override
+    public void deleteById(String id) {
+        try {
+            channelMapper.clearBindingByTypeId(id);
+            List<CollectDevConfig> configList=collectMapper.getConfigByChannelTypeId(id);
+            if(configList!=null && configList.size()>0){
+                for(CollectDevConfig config:configList){
+                    collectService.deleteById(config.getId());
+                }
+            }
+            channelMapper.deleteById(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 }

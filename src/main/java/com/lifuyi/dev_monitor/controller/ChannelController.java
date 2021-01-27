@@ -31,8 +31,8 @@ public class ChannelController {
 
     @PostMapping("/insertOrUpdateChannelParameter")
     @ApiOperation(value = "插入或者更新通道组参数,更新时不能更新codes字段", notes = "")
-    public ResultMessage<String> insertOrUpdateChannelParameter(@RequestBody ChannelSaveReq channelSaveReq){
-        return channelService.insertOrUpdateChannelParameter(channelSaveReq);
+    public ResultMessage<String> insertOrUpdateChannelParameter(@RequestBody List<ChannelSaveReq> reqs){
+        return channelService.insertOrUpdateChannelParameter(reqs);
     }
 
     @PostMapping("/getChannelParameterPages")

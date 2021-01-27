@@ -25,4 +25,10 @@ public interface DevMapper {
     WaterPump getWaterPumpById(String id);
 
     Fan getFanById(String id);
+
+    void deleteMotorById(String id);
+
+    void deleteWaterById(String id);
+
+    void deleteFanById(String id);
 }

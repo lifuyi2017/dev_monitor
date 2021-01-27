@@ -14,4 +14,6 @@ public interface NetWorkService {
     ResultMessage<PageInfo<NetworkResp>> getNetWorkPages(NetworkReq req);
 
     ResultMessage<List<NetworkResp>> getNetWorkList(Network network);
+
+    void deleteById(String network_id);
 }

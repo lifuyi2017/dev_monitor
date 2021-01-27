@@ -30,4 +30,10 @@ public interface WorkShopMapper {
     List<WorkShopDev> getSonDevList(String id);
 
     String getParentIdById(String farm_id);
+
+    WorkShopDev getDevGroupIdByDevId(String id);
+
+    void deleteDevById(String id);
+
+    void deleteShopById(String id);
 }

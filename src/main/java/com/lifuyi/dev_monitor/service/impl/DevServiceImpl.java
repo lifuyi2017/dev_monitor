@@ -2,11 +2,15 @@ package com.lifuyi.dev_monitor.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.lifuyi.dev_monitor.dao.CollectMapper;
 import com.lifuyi.dev_monitor.dao.DevMapper;
+import com.lifuyi.dev_monitor.dao.WorkShopMapper;
 import com.lifuyi.dev_monitor.model.ResultMessage;
+import com.lifuyi.dev_monitor.model.collect.WorkShopDev;
 import com.lifuyi.dev_monitor.model.dev.*;
 import com.lifuyi.dev_monitor.model.dev.Req.BaseDevEntityReq;
 import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevPagesRsp;
+import com.lifuyi.dev_monitor.service.CollectService;
 import com.lifuyi.dev_monitor.service.DevService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,10 @@ public class DevServiceImpl implements DevService {
 
     @Resource
     private DevMapper devMapper;
+    @Resource
+    private WorkShopMapper workShopMapper;
+    @Resource
+    private CollectService collectService;
 
     @Override
     public List<DevType> getType() {
@@ -102,12 +110,22 @@ public class DevServiceImpl implements DevService {
         baseDevEntity.setId(id);
         BaseDevPagesRsp baseDevPagesRsp = devMapper.getBaseListByEntity(baseDevEntity).get(0);
         if("1".equals(baseDevPagesRsp.getDev_type_id())){
-
+            devMapper.deleteMotorById(id);
         }else if("2".equals(baseDevPagesRsp.getDev_type_id())){
-
+            devMapper.deleteWaterById(id);
         }else {
-
+            devMapper.deleteFanById(id);
         }
+        //通过设备id获取其所绑定的设备或者设备组
+        WorkShopDev workShopDev=workShopMapper.getDevGroupIdByDevId(id);
+        if("3".equals(workShopDev.getType())){
+            //绑定的是设备
+            collectService.deleteByDevId(workShopDev.getId());
+        }else if("5".equals(workShopDev.getType())){
+            //设备组下面的设备
+            collectService.deleteByDevId(workShopDev.getParent_id());
+        }
+        workShopMapper.deleteDevById(workShopDev.getId());
     }
 
     /**

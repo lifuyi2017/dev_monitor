@@ -14,4 +14,14 @@ public interface PhysicalMapper {
     List<PhysicalResp> getPageByEntity(Physical physical);
 
     void insertOrUpdatePhysicalChannelBinding(PhysicalChannelBinding physicalChannel);
+
+    void setNetworkIdNullByNetworkId(String network_id);
+
+    void removeBingdingCollectId(String id);
+
+    List<String> getChannelTypeByPhysicalId(String id);
+
+    void deletePhysicalBingdingByPhysicalId(String id);
+
+    void deleteById(String id);
 }

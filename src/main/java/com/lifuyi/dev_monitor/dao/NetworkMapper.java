@@ -11,4 +11,6 @@ public interface NetworkMapper {
     void addOrUpdateNetWork(Network network);
 
     List<NetworkResp> getListByEntity(Network network);
+
+    void deleteByNetWorkId(String network_id);
 }

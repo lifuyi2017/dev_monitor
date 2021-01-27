@@ -21,4 +21,12 @@ public interface CollectMapper {
     CollectConfig getConfigById(String id);
 
     CollectDevConfig getCollectConfigById(String id);
+
+    void deleteById(String id);
+
+    List<CollectDevConfig> getCollectConfigByPhysicalId(String id);
+
+    List<CollectDevConfig> getConfigByChannelTypeId(String id);
+
+    void removeLogicId(String logic_id);
 }

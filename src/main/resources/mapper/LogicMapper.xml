@@ -44,5 +44,16 @@
         group_concat(channel_code) as codes from logic_relation where logic_id=#{logic_id} group by physical_id
     </select>
 
+    <delete id="deleteRelationByPhysicalId">
+        delete from logic_relation where physical_id=#{id}
+    </delete>
+
+    <delete id="deleteNodeById">
+        delete from logic_node where logic_id=#{logic_id}
+    </delete>
+
+    <delete id="deleteRelationById">
+        delete from logic_relation where logic_id=#{logic_id}
+    </delete>
 
 </mapper>

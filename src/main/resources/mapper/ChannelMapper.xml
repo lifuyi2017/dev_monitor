@@ -71,6 +71,10 @@
         select * from channel_parameter where id=#{channel_type_id}
     </select>
 
+    <delete id="deleteById">
+        delete from channel_parameter where id=#{id}
+    </delete>
+
 
 
 </mapper>

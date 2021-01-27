@@ -38,7 +38,24 @@
         channel_type_id=#{channel_type_id},collect_id=#{collect_id}
     </insert>
 
+    <update id="setNetworkIdNullByNetworkId">
+        update physical set network_id=null where network_id=#{network_id}
+    </update>
 
+    <update id="removeBingdingCollectId">
+        update physical_channel_binding set collect_id=null where collect_id=#{id}
+    </update>
 
+    <select id="getChannelTypeByPhysicalId" resultType="string">
+        select channel_type_id from physical_channel_binding where physical_id=#{id}
+    </select>
+
+    <delete id="deletePhysicalBingdingByPhysicalId">
+        delete from physical_channel_binding where physical_id=#{id}
+    </delete>
+
+    <delete id="deleteById">
+        delete from physical where id=#{id}
+    </delete>
 
 </mapper>

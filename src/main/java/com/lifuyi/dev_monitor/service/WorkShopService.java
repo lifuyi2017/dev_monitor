@@ -23,4 +23,5 @@ public interface WorkShopService {
     ResultMessage<List<ShopDevGroup>> getWorkShopDevGroupList(String workshopId);
 
 
+    void deleteById(String id);
 }

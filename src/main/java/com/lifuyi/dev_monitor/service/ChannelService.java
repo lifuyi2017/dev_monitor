@@ -11,7 +11,9 @@ import java.util.List;
 public interface ChannelService {
     List<String> getChannelCode(String physicalId);
 
-    ResultMessage<String> insertOrUpdateChannelParameter(ChannelSaveReq channelSaveReq);
+    ResultMessage<String> insertOrUpdateChannelParameter(List<ChannelSaveReq> channelSaveReq);
 
     ResultMessage<PageInfo<ChannelResp>> getChannelParameterPages(ChannelParameterReq req);
+
+    void deleteById(String str);
 }

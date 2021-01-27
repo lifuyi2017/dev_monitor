@@ -14,4 +14,6 @@ public interface PhysicalService {
     ResultMessage<PageInfo<PhysicalResp>> getPhysicalPages(PhysicalReq req);
 
     ResultMessage<List<PhysicalResp>> getPhysicalList(Physical physical);
+
+    void deleteById(String id);
 }

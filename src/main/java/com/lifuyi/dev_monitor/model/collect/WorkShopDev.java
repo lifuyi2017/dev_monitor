@@ -15,7 +15,7 @@ public class WorkShopDev {
     private String shop_id;
     @ApiModelProperty(value = "父id,车间id或者设备组id" ,position = 4,required = true)
     private String parent_id;
-    @ApiModelProperty(value = "类型，1是车间下面的设备，2是车间下面的设备组，3是设备组下面的设备" ,position = 5,required = true)
+    @ApiModelProperty(value = "类型，3是车间下面的设备，4是车间下面的设备组，5是设备组下面的设备" ,position = 5,required = true)
     private String type;
     @ApiModelProperty(value = "绑定的dev的id，如果是设备组，可不填" ,position = 6)
     private String dev_id;

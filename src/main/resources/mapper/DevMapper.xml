@@ -88,5 +88,18 @@
     <select id="getFanById" resultType="com.lifuyi.dev_monitor.model.dev.Fan">
         select * from fan where id=#{id}
     </select>
-    
+
+    <delete id="deleteMotorById">
+        delete from motor where id=#{id}
+    </delete>
+
+    <delete id="deleteWaterById">
+        delete from water_pump where id=#{id}
+    </delete>
+
+    <delete id="deleteFanById">
+        delete from fan where id=#{id}
+    </delete>
+
+
 </mapper>

@@ -2,6 +2,7 @@ package com.lifuyi.dev_monitor.service.impl;
 
 import com.lifuyi.dev_monitor.dao.ChannelMapper;
 import com.lifuyi.dev_monitor.dao.CollectMapper;
+import com.lifuyi.dev_monitor.dao.PhysicalMapper;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.channel.ChannelParameter;
 import com.lifuyi.dev_monitor.model.collect.CollectDevConfig;
@@ -27,11 +28,13 @@ public class CollectServiceImpl implements CollectService {
     private CollectMapper collectMapper;
     @Resource
     private ChannelMapper channelMapper;
+    @Resource
+    private PhysicalMapper physicalMapper;
 
 
     @Override
     public ResultMessage<List<String>> getUnBindingCollectChannelCode(String typeId, String physicalId) {
-        return new ResultMessage<List<String>>("200","查询成功",collectMapper.getUnBindingCollectChannelCode(typeId,physicalId));
+        return new ResultMessage<List<String>>("200", "查询成功", collectMapper.getUnBindingCollectChannelCode(typeId, physicalId));
     }
 
     @Override
@@ -40,61 +43,82 @@ public class CollectServiceImpl implements CollectService {
             String id = UUID.randomUUID().toString().replaceAll("-", "");
             //判断通道是否被占用
             String channel_code = config.getChannel_code();
-            List<String> codes=null;
-            if(!StringUtils.isBlank(channel_code)){
-                codes= Arrays.asList(channel_code.split(","));
-                Integer num=collectMapper.countNumCollectChannel(config.getPhysical_id(),codes);
-                if(num>0){
-                    return new ResultMessage<Boolean>("401","所选择通道已被占用",false);
+            List<String> codes = null;
+            if (!StringUtils.isBlank(channel_code)) {
+                codes = Arrays.asList(channel_code.split(","));
+                Integer num = collectMapper.countNumCollectChannel(config.getPhysical_id(), codes);
+                if (num > 0) {
+                    return new ResultMessage<Boolean>("401", "所选择通道已被占用", false);
                 }
             }
-            if(StringUtils.isBlank(config.getId())){
+            if (StringUtils.isBlank(config.getId())) {
                 config.setId(id);
                 config.setState("0");
-            }else {
+            } else {
                 //停止原有采集
-                CollectConfig con=collectMapper.getConfigById(config.getId());
+                CollectConfig con = collectMapper.getConfigById(config.getId());
                 con.setState("0");
                 MqttUtil.putToMqtt(con);
             }
             //更新采集参数配置表
             collectMapper.insertOrUpdateCollectConfig(config);
             //更新通道绑定表
-            if(codes!=null){
-                channelMapper.BindingCollectAndChannel(config.getPhysical_id(),codes,config.getId());
+            if (codes != null) {
+                channelMapper.BindingCollectAndChannel(config.getPhysical_id(), codes, config.getId());
             }
-            return new ResultMessage<Boolean>("200","success",true);
-        }catch (Exception e){
+            return new ResultMessage<Boolean>("200", "success", true);
+        } catch (Exception e) {
             e.printStackTrace();
-            return new ResultMessage<Boolean>("501","error:"+e.getMessage(),false);
+            return new ResultMessage<Boolean>("501", "error:" + e.getMessage(), false);
         }
     }
 
     @Override
     public ResultMessage<List<CollectConfigResp>> getCollectConfigByDevGroup(CollectConfigQueryReq req) {
-        List<CollectConfigResp> configList=collectMapper.getCollectConfigByDevGroup(req);
-        for(CollectConfigResp config:configList){
-            ChannelParameter parameter=channelMapper.getParameterById(config.getChannel_type_id());
+        List<CollectConfigResp> configList = collectMapper.getCollectConfigByDevGroup(req);
+        for (CollectConfigResp config : configList) {
+            ChannelParameter parameter = channelMapper.getParameterById(config.getChannel_type_id());
             config.setChannelParameter(parameter);
         }
-        return new ResultMessage<List<CollectConfigResp>>("200","查询成功",configList);
+        return new ResultMessage<List<CollectConfigResp>>("200", "查询成功", configList);
     }
 
     @Override
     public ResultMessage<Boolean> startOrStopCollect(StartOrStopCollect startOrStopCollect) {
         try {
-            CollectConfig con=collectMapper.getConfigById(startOrStopCollect.getId());
+            CollectConfig con = collectMapper.getConfigById(startOrStopCollect.getId());
             con.setState(startOrStopCollect.getState());
             MqttUtil.putToMqtt(con);
-            CollectDevConfig collectDevConfig=collectMapper.getCollectConfigById(startOrStopCollect.getId());
+            CollectDevConfig collectDevConfig = collectMapper.getCollectConfigById(startOrStopCollect.getId());
             collectDevConfig.setState(startOrStopCollect.getState());
             collectMapper.insertOrUpdateCollectConfig(collectDevConfig);
-            return new ResultMessage<Boolean>("200","操作成功",true);
-        }catch (Exception e){
+            return new ResultMessage<Boolean>("200", "操作成功", true);
+        } catch (Exception e) {
             e.printStackTrace();
-            return new ResultMessage<Boolean>("501","error:"+e.getMessage(),true);
+            return new ResultMessage<Boolean>("501", "error:" + e.getMessage(), true);
+        }
+    }
+
+    @Override
+    public void deleteByDevId(String id) {
+        try {
+            CollectConfigQueryReq collectConfigQueryReq = new CollectConfigQueryReq(id);
+            List<CollectConfigResp> collectConfigByDevGroup = collectMapper.getCollectConfigByDevGroup(collectConfigQueryReq);
+            for (CollectConfigResp resp : collectConfigByDevGroup) {
+                deleteById(resp.getId());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
+    }
 
+    @Override
+    public void deleteById(String id) throws Exception {
+        CollectConfig con = collectMapper.getConfigById(id);
+        con.setState("0");
+        MqttUtil.putToMqtt(con);
+        physicalMapper.removeBingdingCollectId(id);
+        collectMapper.deleteById(id);
     }
 }

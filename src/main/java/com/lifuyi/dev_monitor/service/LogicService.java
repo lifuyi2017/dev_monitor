@@ -15,4 +15,6 @@ public interface LogicService {
     ResultMessage<PageInfo<LogicResp>> getLogicPages(LogicQueryReq logicQueryReq);
 
     ResultMessage<List<LogicResp>> getLogicList(LogicNode node);
+
+    void deleteById(String logic_id);
 }

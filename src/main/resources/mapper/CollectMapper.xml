@@ -47,4 +47,20 @@
         select * from collect_dev_config where id=#{id}
     </select>
 
+    <delete id="deleteById">
+        delete from collect_dev_config where id=#{id}
+    </delete>
+
+    <select id="getCollectConfigByPhysicalId" resultType="com.lifuyi.dev_monitor.model.collect.CollectDevConfig">
+        select * from collect_dev_config where physical_id=#{id}
+    </select>
+
+    <select id="getConfigByChannelTypeId" resultType="com.lifuyi.dev_monitor.model.collect.CollectDevConfig">
+        select * from collect_dev_config where channel_type_id=#{id}
+    </select>
+
+    <update id="removeLogicId">
+        update collect_dev_config set logic_id=null where logic_id=#{logic_id}
+    </update>
+
 </mapper>

@@ -26,4 +26,6 @@ public interface ChannelMapper {
     void BindingCollectAndChannel(String physical_id, List<String> codes, String collect_id);
 
     ChannelParameter getParameterById(String channel_type_id);
+
+    void deleteById(String id);
 }

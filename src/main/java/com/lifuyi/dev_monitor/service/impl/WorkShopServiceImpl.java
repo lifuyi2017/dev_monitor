@@ -1,12 +1,16 @@
 package com.lifuyi.dev_monitor.service.impl;
 
+import com.lifuyi.dev_monitor.dao.CollectMapper;
 import com.lifuyi.dev_monitor.dao.WorkShopMapper;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.collect.WorkShop;
 import com.lifuyi.dev_monitor.model.collect.WorkShopDev;
+import com.lifuyi.dev_monitor.model.collect.req.CollectConfigQueryReq;
 import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
+import com.lifuyi.dev_monitor.model.collect.resp.CollectConfigResp;
 import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
+import com.lifuyi.dev_monitor.service.CollectService;
 import com.lifuyi.dev_monitor.service.WorkShopService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,10 @@ import java.util.UUID;
 public class WorkShopServiceImpl implements WorkShopService {
     @Resource
     private WorkShopMapper workShopMapper;
+    @Resource
+    private CollectMapper collectMapper;
+    @Resource
+    private CollectService collectService;
 
 
     @Override
@@ -60,6 +68,10 @@ public class WorkShopServiceImpl implements WorkShopService {
                 return new ResultMessage<Boolean>("401","该设备已经被绑定",false);
             }
         }
+        if(("3".equals(workShopDev.getType()) && workShopDev.getDev_id()==null) ||
+                ("5".equals(workShopDev.getType()) && workShopDev.getDev_id()==null)){
+            return new ResultMessage<Boolean>("401","添加设备时必须绑定设备",false);
+        }
         if(StringUtils.isBlank(workShopDev.getId())){
             workShopDev.setId(id);
         }
@@ -90,7 +102,37 @@ public class WorkShopServiceImpl implements WorkShopService {
         return new ResultMessage<List<ShopDevGroup>>("200","查询成功",shopDevGroupList);
     }
 
-
+    @Override
+    public void deleteById(String id) {
+        try {
+            WorkShopQueryReq req = new WorkShopQueryReq();
+            req.setType("2");
+            req.setParent_id(id);
+            List<WorkShop> workShopList = workShopMapper.getWorkShopList(req);
+            for(WorkShop workShop:workShopList){
+                List<WorkShopDev> workShopDevList = workShopMapper.getWorkShopDevList(workShop.getId());
+                for(WorkShopDev dev:workShopDevList){
+                    List<CollectConfigResp> collectConfigByDevGroup = collectMapper.getCollectConfigByDevGroup(new CollectConfigQueryReq(dev.getId()));
+                    for(CollectConfigResp resp:collectConfigByDevGroup){
+                        collectService.deleteById(resp.getId());
+                    }
+                    workShopMapper.deleteDevById(dev.getId());
+                }
+                List<ShopDevGroup> workShopDevGroupList = workShopMapper.getWorkShopDevGroupList(workShop.getId());
+                for(ShopDevGroup dev:workShopDevGroupList){
+                    List<CollectConfigResp> collectConfigByDevGroup = collectMapper.getCollectConfigByDevGroup(new CollectConfigQueryReq(dev.getId()));
+                    for(CollectConfigResp resp:collectConfigByDevGroup){
+                        collectService.deleteById(resp.getId());
+                    }
+                    workShopMapper.deleteDevById(dev.getId());
+                }
+                workShopMapper.deleteShopById(workShop.getId());
+            }
+            workShopMapper.deleteShopById(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 }

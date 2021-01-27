@@ -16,4 +16,10 @@ public interface LogicMapper {
     List<LogicResp> getLogicNodePages(LogicNode logicNode);
 
     List<RelationTableResult> getRelationByLogicId(String logic_id);
+
+    void deleteRelationByPhysicalId(String id);
+
+    void deleteNodeById(String logic_id);
+
+    void deleteRelationById(String logic_id);
 }
