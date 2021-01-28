@@ -31,4 +31,6 @@ public interface DevMapper {
     void deleteWaterById(String id);
 
     void deleteFanById(String id);
+
+    void deleteById(String id);
 }

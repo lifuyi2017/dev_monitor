@@ -13,4 +13,5 @@ public interface UserService {
 
     ResultMessage<PageInfo<UserResp>> getUserByPage(UserReq req);
 
+    ResultMessage<Boolean> deleteById(String id);
 }

@@ -2,6 +2,7 @@ package com.lifuyi.dev_monitor.service.impl;
 
 import com.lifuyi.dev_monitor.dao.EnterpriseMapper;
 import com.lifuyi.dev_monitor.dao.RoleMapper;
+import com.lifuyi.dev_monitor.dao.UserMapper;
 import com.lifuyi.dev_monitor.dao.WorkShopMapper;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.collect.WorkShop;
@@ -13,7 +14,10 @@ import com.lifuyi.dev_monitor.model.role.Resp.RoleResp;
 import com.lifuyi.dev_monitor.model.role.Resp.ShopAuthor;
 import com.lifuyi.dev_monitor.model.role.Role;
 import com.lifuyi.dev_monitor.model.role.RoleAuthority;
+import com.lifuyi.dev_monitor.model.user.Resp.UserResp;
+import com.lifuyi.dev_monitor.model.user.User;
 import com.lifuyi.dev_monitor.service.RoleService;
+import com.lifuyi.dev_monitor.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +33,10 @@ public class RoleServiceImpl implements RoleService {
     private WorkShopMapper workShopMapper;
     @Resource
     private EnterpriseMapper enterpriseMapper;
+    @Resource
+    private UserService userService;
+    @Resource
+    private UserMapper userMapper;
 
     @Override
     public ResultMessage<Boolean> insertOrUpdateRole(Role role) {
@@ -120,6 +128,12 @@ public class RoleServiceImpl implements RoleService {
     public void deleteById(String id) {
         roleMapper.deleteRoleAuthorByRoleId(id);
         roleMapper.deleteRoleById(id);
+        User user = new User();
+        user.setRole_id(id);
+        List<UserResp> userByEntity = userMapper.getUserByEntity(user);
+        for(UserResp resp:userByEntity){
+            userService.deleteById(resp.getId());
+        }
     }
 
 }

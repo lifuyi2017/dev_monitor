@@ -9,6 +9,7 @@ import com.lifuyi.dev_monitor.model.logic.resp.LogicResp;
 import com.lifuyi.dev_monitor.service.LogicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -44,5 +45,17 @@ public class LogicController {
         return logicService.getLogicList(node);
     }
 
+    @PostMapping(value = "/deleteById")
+    @ApiOperation(value = "根据id删除逻辑", notes = "")
+    public ResultMessage<Boolean> deleteById(@RequestParam("id")
+                                             @ApiParam(value = "设备id",required = true) String id) {
+        try {
+            logicService.deleteById(id);
+            return new ResultMessage<Boolean>("200","success",true);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResultMessage<Boolean>("500",e.getMessage(),false);
+        }
+    }
 
 }

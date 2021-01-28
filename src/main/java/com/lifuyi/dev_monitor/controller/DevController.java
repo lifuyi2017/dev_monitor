@@ -9,10 +9,7 @@ import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevPagesRsp;
 import com.lifuyi.dev_monitor.model.enterprise.Resp.EnterpriseTypeResp;
 import com.lifuyi.dev_monitor.service.DevService;
 import com.lifuyi.dev_monitor.util.UploadUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -95,5 +92,17 @@ public class DevController {
         return devService.getDevList(baseDevEntity);
     }
 
+    @PostMapping(value = "/deleteById")
+    @ApiOperation(value = "根据id删除设备", notes = "")
+    public ResultMessage<Boolean> deleteById(@RequestParam("id")
+                                                 @ApiParam(value = "设备id",required = true) String id) {
+        try {
+            devService.deleteById(id);
+            return new ResultMessage<Boolean>("200","success",true);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResultMessage<Boolean>("500",e.getMessage(),false);
+        }
+    }
 
 }

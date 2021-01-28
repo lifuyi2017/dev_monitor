@@ -8,6 +8,7 @@ import com.lifuyi.dev_monitor.model.physical.resp.PhysicalResp;
 import com.lifuyi.dev_monitor.service.PhysicalService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,19 @@ public class PhysicalController {
     @ApiOperation(value = "获取列表",  notes = "")
     public ResultMessage<List<PhysicalResp>> getPhysicalList(@RequestBody Physical physical) {
         return physicalService.getPhysicalList(physical);
+    }
+
+    @PostMapping("/deleteById")
+    @ApiOperation(value = "根据id删除物理节点",  notes = "")
+    public ResultMessage<Boolean> deleteById(@RequestParam("id")
+                                                 @ApiParam(value = "id",required = true) String id) {
+        try {
+            physicalService.deleteById(id);
+            return new ResultMessage<Boolean>("200","success",true);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResultMessage<Boolean>("500",e.getMessage(),false);
+        }
     }
 
 }

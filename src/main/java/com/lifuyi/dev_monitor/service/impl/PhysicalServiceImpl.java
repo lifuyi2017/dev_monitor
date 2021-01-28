@@ -15,6 +15,7 @@ import com.lifuyi.dev_monitor.model.physical.resp.PhysicalResp;
 import com.lifuyi.dev_monitor.service.ChannelService;
 import com.lifuyi.dev_monitor.service.CollectService;
 import com.lifuyi.dev_monitor.service.PhysicalService;
+import com.lifuyi.dev_monitor.service.WorkShopService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,7 @@ public class PhysicalServiceImpl implements PhysicalService {
     private LogicMapper logicMapper;
     @Resource
     private ChannelService channelService;
+
 
     @Override
     public ResultMessage<Boolean> addOrUpdatePhysical(Physical physical) {

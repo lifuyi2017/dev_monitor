@@ -240,7 +240,6 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         //删除企业
         enterpriseMapper.deleteById(id);
         enterpriseMapper.deleteBingById(id);
-
         return new ResultMessage<Boolean>("200","success",true);
     }
 

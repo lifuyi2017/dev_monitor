@@ -8,6 +8,7 @@ import com.lifuyi.dev_monitor.model.channel.resp.ChannelResp;
 import com.lifuyi.dev_monitor.service.ChannelService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -39,6 +40,19 @@ public class ChannelController {
     @ApiOperation(value = "获取通道参数类型分页列表", notes = "")
     public ResultMessage<PageInfo<ChannelResp>> getChannelParameterPages(@RequestBody ChannelParameterReq  req){
         return channelService.getChannelParameterPages(req);
+    }
+
+    @PostMapping("/deleteById")
+    @ApiOperation(value = "根据id删除通道组", notes = "")
+    public ResultMessage<Boolean> getChannelParameterPages(@RequestParam("id")
+                                                               @ApiParam(value = "id",required = true) String id){
+        try {
+            channelService.deleteById(id);
+            return new ResultMessage<Boolean>("200","success",true);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResultMessage<Boolean>("500",e.getMessage(),false);
+        }
     }
 
 

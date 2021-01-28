@@ -53,6 +53,18 @@ public class RoleController {
         return roleService.getRoleAuthority(roleId);
     }
 
+    @PostMapping("/deleteById")
+    @ApiOperation(value = "根据id删除角色",  notes = "")
+    public ResultMessage<Boolean> deleteById(@RequestParam("roleId")
+                                                 @ApiParam(value = "id",required = true) String roleId){
+        try {
+            roleService.deleteById(roleId);
+            return new ResultMessage<Boolean>("200","success",true);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResultMessage<Boolean>("500",e.getMessage(),false);
+        }
 
+    }
 
 }

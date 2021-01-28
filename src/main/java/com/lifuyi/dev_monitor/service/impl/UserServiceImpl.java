@@ -52,4 +52,10 @@ public class UserServiceImpl implements UserService {
         return new ResultMessage<PageInfo<UserResp>>("200","查询成功",userRespPageInfo);
     }
 
+    @Override
+    public ResultMessage<Boolean> deleteById(String id) {
+        userMapper.deleteById(id);
+        return new ResultMessage<Boolean>("200","删除成功",true);
+    }
+
 }

@@ -33,4 +33,11 @@ public class UserController {
         return userService.getUserByPage(req);
     }
 
+    @PostMapping(value = "/deleteUserById")
+    @ApiOperation(value = "通过id删除用户", notes = "")
+    public ResultMessage<Boolean> deleteUserById(@RequestParam("id") String id){
+        return userService.deleteById(id);
+    }
+
+
 }

@@ -100,6 +100,17 @@ public class CollectController {
         return collectService.startOrStopCollect(startOrStopCollect);
     }
 
-
+    @PostMapping(value = "/deleteById")
+    @ApiOperation(value = "根据id删除采集配置", notes = "")
+    public ResultMessage<Boolean> deleteById(@RequestParam("id")
+                                             @ApiParam(value = "id",required = true) String id) {
+        try {
+            collectService.deleteById(id);
+            return new ResultMessage<Boolean>("200","success",true);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResultMessage<Boolean>("500",e.getMessage(),false);
+        }
+    }
 
 }

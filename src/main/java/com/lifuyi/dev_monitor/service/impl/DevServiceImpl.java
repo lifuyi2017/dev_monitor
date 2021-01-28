@@ -116,6 +116,7 @@ public class DevServiceImpl implements DevService {
         }else {
             devMapper.deleteFanById(id);
         }
+        devMapper.deleteById(id);
         //通过设备id获取其所绑定的设备或者设备组
         WorkShopDev workShopDev=workShopMapper.getDevGroupIdByDevId(id);
         if("3".equals(workShopDev.getType())){

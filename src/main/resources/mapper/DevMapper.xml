@@ -101,5 +101,9 @@
         delete from fan where id=#{id}
     </delete>
 
+    <delete id="deleteById">
+        delete from dev_base_info where id=#{id}
+    </delete>
+
 
 </mapper>

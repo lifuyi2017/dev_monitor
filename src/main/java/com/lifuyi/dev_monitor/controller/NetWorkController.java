@@ -8,6 +8,7 @@ import com.lifuyi.dev_monitor.model.network.resp.NetworkResp;
 import com.lifuyi.dev_monitor.service.NetWorkService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +44,17 @@ public class NetWorkController {
         return netWorkService.getNetWorkList(network);
     }
 
+    @PostMapping("/deleteById")
+    @ApiOperation(value = "根据id删除网关",  notes = "")
+    public ResultMessage<Boolean> deleteById(@RequestParam("id")
+                                                 @ApiParam(value = "id",required = true) String id){
+        try {
+            netWorkService.deleteById(id);
+            return new ResultMessage<Boolean>("200","success",true);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResultMessage<Boolean>("500",e.getMessage(),false);
+        }
+    }
 
 }
