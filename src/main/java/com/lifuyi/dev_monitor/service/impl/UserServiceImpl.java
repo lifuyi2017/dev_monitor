@@ -58,4 +58,9 @@ public class UserServiceImpl implements UserService {
         return new ResultMessage<Boolean>("200","删除成功",true);
     }
 
+    @Override
+    public List<User> getUsersByUser(User user) {
+        return userMapper.getUsersByUser(user);
+    }
+
 }

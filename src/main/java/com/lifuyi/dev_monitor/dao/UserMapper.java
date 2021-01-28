@@ -17,4 +17,6 @@ public interface UserMapper {
     void deleteByEnterpriseId(String id);
 
     void deleteById(String id);
+
+    List<User> getUsersByUser(User user);
 }

@@ -41,6 +41,26 @@
         </if>
     </select>
 
+    <select id="getUsersByUser" parameterType="com.lifuyi.dev_monitor.model.user.User"
+            resultType="com.lifuyi.dev_monitor.model.user.User">
+        select * from `user` where 1=1
+        <if test="id!=null">
+            and id=#{id}
+        </if>
+        <if test="user_name!=null">
+            and user_name=#{user_name}
+        </if>
+        <if test="enterprise_id!=null">
+            and enterprise_id=#{enterprise_id}
+        </if>
+        <if test="role_id!=null">
+            and role_id=#{role_id}
+        </if>
+        <if test="user_password!=null">
+            and user_password=#{user_password}
+        </if>
+    </select>
+
     <delete id="deleteByEnterpriseId">
         delete from `user` where enterprise_id=#{enterprise_id}
     </delete>

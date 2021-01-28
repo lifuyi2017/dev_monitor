@@ -8,12 +8,12 @@ import java.util.concurrent.TimeUnit;
 public class TokenCache {
 
 
-    public  static Cache<Integer,String>  backendCache= CacheBuilder.newBuilder()
+    public  static Cache<String,String>  backendCache= CacheBuilder.newBuilder()
                     .expireAfterWrite(86400000, TimeUnit.MILLISECONDS)
                     .maximumSize(200)
                     .build();
 
-    public  static Cache<Integer,String>  frontCache= CacheBuilder.newBuilder()
+    public  static Cache<String,String>  frontCache= CacheBuilder.newBuilder()
             .expireAfterWrite(86400000, TimeUnit.MILLISECONDS)
             .maximumSize(200)
             .build();
