@@ -28,4 +28,6 @@ public interface ChannelMapper {
     ChannelParameter getParameterById(String channel_type_id);
 
     void deleteById(String id);
+
+    List<ChannelParameter> getUnBingdingChannelParameterByPhyId(String id);
 }

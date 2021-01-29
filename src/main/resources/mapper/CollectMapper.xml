@@ -26,7 +26,7 @@
 
     <select id="getCollectConfigByDevGroup" resultType="com.lifuyi.dev_monitor.model.collect.resp.CollectConfigResp"
             parameterType="com.lifuyi.dev_monitor.model.collect.req.CollectConfigQueryReq">
-        select id,signal,phase,physical_id,channel_type_id,channel_code,logic_id,collect_dev_id,
+        select id,`signal`,phase,physical_id,channel_type_id,channel_code,logic_id,collect_dev_id,
         (select `name` from physical where id=physical_id) as physical_name,
         (select logic_name from logic_node where logic_id=con.logic_id)  as logic_name,state
          from collect_dev_config con where collect_dev_id=#{id}

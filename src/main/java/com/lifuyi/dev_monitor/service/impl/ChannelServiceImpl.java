@@ -68,7 +68,7 @@ public class ChannelServiceImpl implements ChannelService {
         List<ChannelResp> parameterList=channelMapper.getChannelParameterPages(req.getParameter());
         PageInfo<ChannelResp> channelRespPageInfo = new PageInfo(parameterList);
         for(ChannelResp channelResp:parameterList){
-            PhysicalChannelResp resp=channelMapper.getPhysicalChannelResp(req.getParameter().getId());
+            PhysicalChannelResp resp=channelMapper.getPhysicalChannelResp(channelResp.getId());
             channelResp.setPhysical_id(resp.getPhysical_id());
             channelResp.setPhysical_name(resp.getPhysical_name());
             if(!StringUtils.isBlank(resp.getCodes())){
@@ -94,6 +94,12 @@ public class ChannelServiceImpl implements ChannelService {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public ResultMessage<List<ChannelParameter>> getChannelParameter(String id) {
+        List<ChannelParameter> parameterList=channelMapper.getUnBingdingChannelParameterByPhyId(id);
+        return new ResultMessage<List<ChannelParameter>>("200","success",parameterList);
     }
 
 }
