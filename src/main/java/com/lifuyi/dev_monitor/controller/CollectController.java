@@ -70,6 +70,14 @@ public class CollectController {
         return workShopService.getWorkShopDevGroupList(workshopId);
     }
 
+    @PostMapping(value = "/getDevByDevGroupId")
+    @ApiOperation(value = "获取设备组下的设备", notes = "")
+    public ResultMessage<List<WorkShopDev>> getDevByDevGroupId(@RequestParam("id")
+                                                               @ApiParam(value = "设备组",required = true) String id){
+        return workShopService.getDevByDevGroupId(id);
+    }
+
+
     @PostMapping(value = "/getUnBindingCollectChannelCode")
     @ApiOperation(value = "获取指定通道种类下面的未绑定采集配置的通道", notes = "新增采集时用")
     public ResultMessage<List<String>> getUnBindingCollectChannelCode(@RequestParam("typeId")
@@ -90,13 +98,33 @@ public class CollectController {
     @PostMapping(value = "/getCollectConfigByDevGroup")
     @ApiOperation(value = "通过设备或者设备组获取采集节点设置", notes = "")
     public ResultMessage<List<CollectConfigResp>>  getCollectConfigByDevGroup(@RequestBody CollectConfigQueryReq req){
-        return collectService.getCollectConfigByDevGroup(req);
+        if("1".equals(req.getType())){
+            return collectService.getCollectConfigByFactoryId(req.getId(),req.getEnterprise_id());
+        }else if("2".equals(req.getType())){
+            return collectService.getCollectConfigByWorkShopId(req.getId());
+        }else {
+            return collectService.getCollectConfigByDevGroup(req);
+        }
     }
+
+
+/*    @PostMapping(value = "/getCollectConfigByWorkShopId")
+    @ApiOperation(value = "通过车间id获取采集节点设置", notes = "")
+    public ResultMessage<List<CollectConfigResp>>  getCollectConfigByWorkShopId(@RequestParam("id") String id){
+        return collectService.getCollectConfigByWorkShopId(id);
+    }
+
+    @PostMapping(value = "/getCollectConfigByFactoryId")
+    @ApiOperation(value = "通过厂房id获取采集节点设置", notes = "")
+    public ResultMessage<List<CollectConfigResp>>  getCollectConfigByFactoryId(@RequestParam("id") String id,
+                                                                               @RequestParam("enterpriseId") String enterpriseId){
+        return collectService.getCollectConfigByFactoryId(id,enterpriseId);
+    }*/
 
 
     @PostMapping(value = "/startOrStopCollect")
     @ApiOperation(value = "开始或者结束采集", notes = "")
-    public ResultMessage<Boolean> startOrStopCollect(@RequestBody StartOrStopCollect startOrStopCollect){
+    public ResultMessage<Boolean> startOrStopCollect(@RequestBody List<StartOrStopCollect> startOrStopCollect){
         return collectService.startOrStopCollect(startOrStopCollect);
     }
 

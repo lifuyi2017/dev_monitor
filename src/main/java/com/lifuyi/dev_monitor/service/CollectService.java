@@ -16,9 +16,13 @@ public interface CollectService {
 
     ResultMessage<List<CollectConfigResp>> getCollectConfigByDevGroup(CollectConfigQueryReq req);
 
-    ResultMessage<Boolean> startOrStopCollect(StartOrStopCollect startOrStopCollect);
+    ResultMessage<Boolean> startOrStopCollect(List<StartOrStopCollect> startOrStopCollect);
 
     void deleteByDevId(String parent_id);
 
     void deleteById(String id) throws Exception;
+
+    ResultMessage<List<CollectConfigResp>> getCollectConfigByWorkShopId(String id);
+
+    ResultMessage<List<CollectConfigResp>> getCollectConfigByFactoryId(String id,String enterpriseId);
 }

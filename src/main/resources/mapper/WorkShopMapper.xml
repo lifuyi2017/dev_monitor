@@ -37,8 +37,8 @@
     </insert>
 
     <select id="getNotBingingDevByEnterpriseId" resultType="com.lifuyi.dev_monitor.model.dev.BaseDevEntity">
-        select * from dev_base_info where enterprise_id=#{enterpriseId} and id not in
-        (select distinct dev_id from workshop_dev where enterprise_id=#{enterpriseId});
+        select a.* from (select * from dev_base_info where enterprise_id=#{enterpriseId})
+        a left join workshop_dev b on a.id=b.dev_id where b.dev_id is null
     </select>
 
     <select id="getWorkShopDevList" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
@@ -46,7 +46,7 @@
     </select>
 
     <select id="getWorkShopDevGroupList" resultType="com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup">
-        select id,`name`,shop_id from workshop_dev where `type`='4' and shop_id=#{workshopId}
+        select id,`name`,shop_id,parent_id,type,enterprise_id from workshop_dev where `type`='4' and shop_id=#{workshopId}
     </select>
 
     <select id="getSonDevList" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
@@ -68,5 +68,9 @@
     <delete id="deleteShopById">
         delete from workshop where id=#{id}
     </delete>
+
+    <select id="getDevByDevGroupId" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
+        select * from workshop_dev where parent_id=#{id} and `type`='5'
+    </select>
 
 </mapper>

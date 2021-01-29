@@ -3,12 +3,17 @@ package com.lifuyi.dev_monitor.service.impl;
 import com.lifuyi.dev_monitor.dao.ChannelMapper;
 import com.lifuyi.dev_monitor.dao.CollectMapper;
 import com.lifuyi.dev_monitor.dao.PhysicalMapper;
+import com.lifuyi.dev_monitor.dao.WorkShopMapper;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.channel.ChannelParameter;
 import com.lifuyi.dev_monitor.model.collect.CollectDevConfig;
+import com.lifuyi.dev_monitor.model.collect.WorkShop;
+import com.lifuyi.dev_monitor.model.collect.WorkShopDev;
 import com.lifuyi.dev_monitor.model.collect.req.CollectConfigQueryReq;
 import com.lifuyi.dev_monitor.model.collect.req.StartOrStopCollect;
+import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
 import com.lifuyi.dev_monitor.model.collect.resp.CollectConfigResp;
+import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
 import com.lifuyi.dev_monitor.model.mqtt.CollectConfig;
 import com.lifuyi.dev_monitor.service.CollectService;
 import com.lifuyi.dev_monitor.util.MqttUtil;
@@ -26,6 +31,8 @@ public class CollectServiceImpl implements CollectService {
 
     @Resource
     private CollectMapper collectMapper;
+    @Resource
+    private WorkShopMapper workShopMapper;
     @Resource
     private ChannelMapper channelMapper;
     @Resource
@@ -84,14 +91,16 @@ public class CollectServiceImpl implements CollectService {
     }
 
     @Override
-    public ResultMessage<Boolean> startOrStopCollect(StartOrStopCollect startOrStopCollect) {
+    public ResultMessage<Boolean> startOrStopCollect(List<StartOrStopCollect> reqs) {
         try {
-            CollectConfig con = collectMapper.getConfigById(startOrStopCollect.getId());
-            con.setState(startOrStopCollect.getState());
-            MqttUtil.putToMqtt(con);
-            CollectDevConfig collectDevConfig = collectMapper.getCollectConfigById(startOrStopCollect.getId());
-            collectDevConfig.setState(startOrStopCollect.getState());
-            collectMapper.insertOrUpdateCollectConfig(collectDevConfig);
+            for(StartOrStopCollect startOrStopCollect:reqs){
+                CollectConfig con = collectMapper.getConfigById(startOrStopCollect.getId());
+                con.setState(startOrStopCollect.getState());
+                MqttUtil.putToMqtt(con);
+                CollectDevConfig collectDevConfig = collectMapper.getCollectConfigById(startOrStopCollect.getId());
+                collectDevConfig.setState(startOrStopCollect.getState());
+                collectMapper.insertOrUpdateCollectConfig(collectDevConfig);
+            }
             return new ResultMessage<Boolean>("200", "操作成功", true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,7 +111,8 @@ public class CollectServiceImpl implements CollectService {
     @Override
     public void deleteByDevId(String id) {
         try {
-            CollectConfigQueryReq collectConfigQueryReq = new CollectConfigQueryReq(id);
+            CollectConfigQueryReq collectConfigQueryReq = new CollectConfigQueryReq();
+            collectConfigQueryReq.setId(id);
             List<CollectConfigResp> collectConfigByDevGroup = collectMapper.getCollectConfigByDevGroup(collectConfigQueryReq);
             for (CollectConfigResp resp : collectConfigByDevGroup) {
                 deleteById(resp.getId());
@@ -121,4 +131,35 @@ public class CollectServiceImpl implements CollectService {
         physicalMapper.removeBingdingCollectId(id);
         collectMapper.deleteById(id);
     }
+
+    @Override
+    public ResultMessage<List<CollectConfigResp>> getCollectConfigByWorkShopId(String id) {
+        List<CollectConfigResp> configResps = new ArrayList<CollectConfigResp>();
+        List<WorkShopDev> workShopDevList = workShopMapper.getWorkShopDevList(id);
+        for(WorkShopDev dev:workShopDevList){
+            CollectConfigQueryReq collectConfigQueryReq = new CollectConfigQueryReq();
+            collectConfigQueryReq.setId(id);
+            configResps.addAll(getCollectConfigByDevGroup(collectConfigQueryReq).getValue());
+        }
+        List<ShopDevGroup> workShopDevGroupList = workShopMapper.getWorkShopDevGroupList(id);
+        for(ShopDevGroup shopDevGroup:workShopDevGroupList){
+            CollectConfigQueryReq collectConfigQueryReq = new CollectConfigQueryReq();
+            collectConfigQueryReq.setId(id);
+            configResps.addAll(getCollectConfigByDevGroup(collectConfigQueryReq).getValue());
+        }
+        return new ResultMessage<List<CollectConfigResp>>("200","success",configResps);
+    }
+
+    @Override
+    public ResultMessage<List<CollectConfigResp>> getCollectConfigByFactoryId(String id,String enterpriseId) {
+        List<CollectConfigResp> configResps = new ArrayList<CollectConfigResp>();
+        WorkShopQueryReq req = new WorkShopQueryReq(enterpriseId, id, "2");
+        List<WorkShop> workShopList = workShopMapper.getWorkShopList(req);
+        for(WorkShop workShop:workShopList){
+            configResps.addAll(getCollectConfigByWorkShopId(workShop.getId()).getValue());
+        }
+        return new ResultMessage<List<CollectConfigResp>>("200","success",configResps);
+    }
+
+
 }

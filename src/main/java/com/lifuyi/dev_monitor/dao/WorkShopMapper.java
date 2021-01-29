@@ -36,4 +36,6 @@ public interface WorkShopMapper {
     void deleteDevById(String id);
 
     void deleteShopById(String id);
+
+    List<WorkShopDev> getDevByDevGroupId(String id);
 }

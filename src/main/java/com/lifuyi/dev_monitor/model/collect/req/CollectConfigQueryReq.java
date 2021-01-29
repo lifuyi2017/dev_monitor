@@ -10,13 +10,18 @@ public class CollectConfigQueryReq {
 
     @ApiModelProperty(value = "id" ,position = 1)
     private String id;
-//    @ApiModelProperty(value = "类型，1是厂房，2是车间" ,position = 2,required = true)
-//    private String type;
+    @ApiModelProperty(value = "类型，1是厂房，2是车间,4是设备组" ,position = 2,required = true)
+    private String type;
+    @ApiModelProperty(value = "企业id" ,position = 3,required = true)
+    private String enterprise_id;
+
 
     public CollectConfigQueryReq() {
     }
 
-    public CollectConfigQueryReq(String id) {
+    public CollectConfigQueryReq(String id, String type, String enterprise_id) {
         this.id = id;
+        this.type = type;
+        this.enterprise_id = enterprise_id;
     }
 }

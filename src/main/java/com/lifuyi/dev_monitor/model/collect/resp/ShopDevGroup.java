@@ -17,6 +17,13 @@ public class ShopDevGroup {
     private String name;
     @ApiModelProperty(value = "车间id" ,position = 3,required = true)
     private String shop_id;
+    @ApiModelProperty(value = "父节点" ,position = 5,required = true)
+    private String parent_id;
+    @ApiModelProperty(value = "类型" ,position = 6,required = true)
+    private String type;
+    @ApiModelProperty(value = "企业id" ,position = 7,required = true)
+    private String enterprise_id;
+
     @ApiModelProperty(value = "设备组下面的设备" ,position = 4,required = true)
     private List<WorkShopDev> workShopDevList;
 

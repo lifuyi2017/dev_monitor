@@ -112,7 +112,9 @@ public class WorkShopServiceImpl implements WorkShopService {
             for(WorkShop workShop:workShopList){
                 List<WorkShopDev> workShopDevList = workShopMapper.getWorkShopDevList(workShop.getId());
                 for(WorkShopDev dev:workShopDevList){
-                    List<CollectConfigResp> collectConfigByDevGroup = collectMapper.getCollectConfigByDevGroup(new CollectConfigQueryReq(dev.getId()));
+                    CollectConfigQueryReq collectConfigQueryReq = new CollectConfigQueryReq();
+                    collectConfigQueryReq.setId(dev.getId());
+                    List<CollectConfigResp> collectConfigByDevGroup = collectMapper.getCollectConfigByDevGroup(collectConfigQueryReq);
                     for(CollectConfigResp resp:collectConfigByDevGroup){
                         collectService.deleteById(resp.getId());
                     }
@@ -120,7 +122,9 @@ public class WorkShopServiceImpl implements WorkShopService {
                 }
                 List<ShopDevGroup> workShopDevGroupList = workShopMapper.getWorkShopDevGroupList(workShop.getId());
                 for(ShopDevGroup dev:workShopDevGroupList){
-                    List<CollectConfigResp> collectConfigByDevGroup = collectMapper.getCollectConfigByDevGroup(new CollectConfigQueryReq(dev.getId()));
+                    CollectConfigQueryReq collectConfigQueryReq = new CollectConfigQueryReq();
+                    collectConfigQueryReq.setId(dev.getId());
+                    List<CollectConfigResp> collectConfigByDevGroup = collectMapper.getCollectConfigByDevGroup(collectConfigQueryReq);
                     for(CollectConfigResp resp:collectConfigByDevGroup){
                         collectService.deleteById(resp.getId());
                     }
@@ -132,6 +136,11 @@ public class WorkShopServiceImpl implements WorkShopService {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public ResultMessage<List<WorkShopDev>> getDevByDevGroupId(String id) {
+        return new ResultMessage<List<WorkShopDev>>("200","查询成功",workShopMapper.getDevByDevGroupId(id));
     }
 
 
