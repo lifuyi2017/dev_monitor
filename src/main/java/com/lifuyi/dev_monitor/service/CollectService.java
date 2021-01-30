@@ -25,4 +25,6 @@ public interface CollectService {
     ResultMessage<List<CollectConfigResp>> getCollectConfigByWorkShopId(String id);
 
     ResultMessage<List<CollectConfigResp>> getCollectConfigByFactoryId(String id,String enterpriseId);
+
+
 }

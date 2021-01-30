@@ -47,10 +47,11 @@ public class LogicController {
 
     @PostMapping(value = "/deleteById")
     @ApiOperation(value = "根据id删除逻辑", notes = "")
-    public ResultMessage<Boolean> deleteById(@RequestParam("id")
-                                             @ApiParam(value = "设备id",required = true) String id) {
+    public ResultMessage<Boolean> deleteById(@RequestParam("id") List<String> id) {
         try {
-            logicService.deleteById(id);
+            for(String s:id){
+                logicService.deleteById(s);
+            }
             return new ResultMessage<Boolean>("200","success",true);
         }catch (Exception e){
             e.printStackTrace();

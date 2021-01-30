@@ -130,10 +130,24 @@ public class CollectController {
 
     @PostMapping(value = "/deleteById")
     @ApiOperation(value = "根据id删除采集配置", notes = "")
-    public ResultMessage<Boolean> deleteById(@RequestParam("id")
-                                             @ApiParam(value = "id",required = true) String id) {
+    public ResultMessage<Boolean> deleteById(@RequestParam("id") List<String> id) {
         try {
-            collectService.deleteById(id);
+            for(String s:id){
+                collectService.deleteById(s);
+            }
+            return new ResultMessage<Boolean>("200","success",true);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResultMessage<Boolean>("500",e.getMessage(),false);
+        }
+    }
+
+
+    @PostMapping(value = "/deleteWorkShopById")
+    @ApiOperation(value = "根据id删除厂房车间", notes = "")
+    public ResultMessage<Boolean> deleteWorkShopById(@RequestParam("id") String id,@RequestParam("type") String type) {
+        try {
+            workShopService.deleteWorkShopById(id,type);
             return new ResultMessage<Boolean>("200","success",true);
         }catch (Exception e){
             e.printStackTrace();

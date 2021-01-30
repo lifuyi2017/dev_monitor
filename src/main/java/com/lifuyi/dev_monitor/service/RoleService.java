@@ -7,7 +7,6 @@ import com.lifuyi.dev_monitor.model.role.Role;
 import com.lifuyi.dev_monitor.model.role.RoleAuthority;
 
 import java.util.List;
-import java.util.Map;
 
 public interface RoleService {
     ResultMessage<Boolean> insertOrUpdateRole(Role role);
@@ -16,7 +15,7 @@ public interface RoleService {
 
     ResultMessage<Boolean> saveRoleAuthority(List<RoleAuthority> roleAuthorityList);
 
-    ResultMessage<Map<EnterPriseAuthor, String>> getRoleAuthority(String roleId);
+    ResultMessage<List<EnterPriseAuthor>> getRoleAuthority(String roleId);
 
     void deleteById(String id);
 

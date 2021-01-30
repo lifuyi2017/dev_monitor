@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/user")
 @CrossOrigin
@@ -35,8 +37,16 @@ public class UserController {
 
     @PostMapping(value = "/deleteUserById")
     @ApiOperation(value = "通过id删除用户", notes = "")
-    public ResultMessage<Boolean> deleteUserById(@RequestParam("id") String id){
-        return userService.deleteById(id);
+    public ResultMessage<Boolean> deleteUserById(@RequestParam("id") List<String> id){
+        try {
+            for(String s:id){
+                userService.deleteById(s);
+            }
+            return new ResultMessage<Boolean>("200","success",true);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResultMessage<Boolean>("500",e.getMessage(),false);
+        }
     }
 
 

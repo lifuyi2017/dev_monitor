@@ -75,8 +75,16 @@ public class EnterpriseController {
 
     @PostMapping("/deleteEnterprise")
     @ApiOperation(value = "通过企业id删除企业", notes = "")
-    public ResultMessage<Boolean> deleteEnterprise(@RequestParam("id") String id){
-        return enterpriseService.deleteEnterprise(id);
+    public ResultMessage<Boolean> deleteEnterprise(@RequestParam("id") List<String> id){
+        try {
+            for(String s:id){
+                enterpriseService.deleteEnterprise(s);
+            }
+            return new ResultMessage<Boolean>("200","success",true);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResultMessage<Boolean>("500",e.getMessage(),false);
+        }
     }
 
 

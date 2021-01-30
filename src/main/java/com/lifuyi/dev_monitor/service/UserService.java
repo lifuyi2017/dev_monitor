@@ -13,7 +13,7 @@ public interface UserService {
 
     ResultMessage<PageInfo<UserResp>> getUserByPage(UserReq req);
 
-    ResultMessage<Boolean> deleteById(String id);
+    ResultMessage<Boolean> deleteById(String ids);
 
     List<User> getUsersByUser(User user);
 }

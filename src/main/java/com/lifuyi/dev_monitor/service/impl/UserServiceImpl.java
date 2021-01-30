@@ -49,13 +49,13 @@ public class UserServiceImpl implements UserService {
         PageHelper.startPage(req.getPageNum(), req.getPageSize());
         List<UserResp> list = userMapper.getUserByEntity(req.getUser());
         PageInfo<UserResp> userRespPageInfo = new PageInfo<>(list);
-        return new ResultMessage<PageInfo<UserResp>>("200","查询成功",userRespPageInfo);
+        return new ResultMessage<PageInfo<UserResp>>("200", "查询成功", userRespPageInfo);
     }
 
     @Override
     public ResultMessage<Boolean> deleteById(String id) {
         userMapper.deleteById(id);
-        return new ResultMessage<Boolean>("200","删除成功",true);
+        return new ResultMessage<Boolean>("200", "删除成功", true);
     }
 
     @Override

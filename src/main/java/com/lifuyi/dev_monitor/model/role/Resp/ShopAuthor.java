@@ -9,10 +9,12 @@ public class ShopAuthor {
 
     private String shop_id;
     private String shop_name;
+    private String flag;
 
-    public ShopAuthor(String shop_id, String shop_name) {
+    public ShopAuthor(String shop_id, String shop_name, String flag) {
         this.shop_id = shop_id;
         this.shop_name = shop_name;
+        this.flag = flag;
     }
 
     public ShopAuthor() {

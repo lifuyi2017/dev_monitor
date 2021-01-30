@@ -17,10 +17,10 @@
     </select>
 
     <insert id="insertOrUpdateCollectConfig" parameterType="com.lifuyi.dev_monitor.model.collect.CollectDevConfig">
-        insert into collect_dev_config(id,signal,phase,physical_id,channel_type_id,channel_code,logic_id,collect_dev_id,state)
+        insert into collect_dev_config(id,`signal`,phase,physical_id,channel_type_id,channel_code,logic_id,collect_dev_id,state)
         values (#{id},#{signal},#{phase},#{physical_id},#{channel_type_id},#{channel_code},#{logic_id},#{collect_dev_id},#{state})
         ON DUPLICATE KEY UPDATE
-        signal=#{signal},phase=#{phase},physical_id=#{physical_id},channel_type_id=#{channel_type_id},
+        `signal`=#{signal},phase=#{phase},physical_id=#{physical_id},channel_type_id=#{channel_type_id},
         channel_code=#{channel_code},logic_id=#{logic_id},collect_dev_id=#{collect_dev_id},state=#{state}
     </insert>
 
@@ -33,7 +33,7 @@
     </select>
     
     <select id="getConfigById" resultType="com.lifuyi.dev_monitor.model.mqtt.CollectConfig">
-        select signal,phase,(select code from physical where id=physical_id) physical_code,channel_code,
+        select `signal`,phase,(select code from physical where id=physical_id) physical_code,channel_code,
         (select logic_code from logic_node where logic_id=con.logic_id) as logic_code,
         (select `name` from workshop_dev where id=collect_dev_id) as collect_dev_name,
         (select `type` from channel_parameter where id=channel_type_id) as type,

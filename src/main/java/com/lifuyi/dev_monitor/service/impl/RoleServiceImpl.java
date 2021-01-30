@@ -8,10 +8,7 @@ import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.collect.WorkShop;
 import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
 import com.lifuyi.dev_monitor.model.enterprise.Enterprise;
-import com.lifuyi.dev_monitor.model.role.Resp.EnterPriseAuthor;
-import com.lifuyi.dev_monitor.model.role.Resp.FarmAuthor;
-import com.lifuyi.dev_monitor.model.role.Resp.RoleResp;
-import com.lifuyi.dev_monitor.model.role.Resp.ShopAuthor;
+import com.lifuyi.dev_monitor.model.role.Resp.*;
 import com.lifuyi.dev_monitor.model.role.Role;
 import com.lifuyi.dev_monitor.model.role.RoleAuthority;
 import com.lifuyi.dev_monitor.model.user.Resp.UserResp;
@@ -83,8 +80,9 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public ResultMessage<Map<EnterPriseAuthor, String>> getRoleAuthority(String roleId) {
-        Map<EnterPriseAuthor, String> enterPriseAuthorStringHashMap = new HashMap<>();
+    public ResultMessage<List<EnterPriseAuthor>> getRoleAuthority(String roleId) {
+        List<EnterPriseAuthor> enterPriseAuthors=new ArrayList<>();
+//        Map<EnterPriseAuthor, String> enterPriseAuthorStringHashMap = new HashMap<>();
         List<String> shopIds=roleMapper.getShopIdsByRoleId(roleId);
         Role roleQuery = new Role();
         roleQuery.setId(roleId);
@@ -97,31 +95,31 @@ public class RoleServiceImpl implements RoleService {
                         enterprise.getEnterprise_id(), "1");
                 //厂房
                 List<WorkShop> farmList = workShopMapper.getWorkShopList(workShopQueryReq);
-                Map<FarmAuthor,String> farmMap=new HashMap<>();
+                List<FarmAuthor> farmRespList=new ArrayList<>();
                 String enterPriseFlag="0";
                 for (WorkShop farm : farmList) {
                     //车间
                     WorkShopQueryReq workShopQueryReq1 = new WorkShopQueryReq(enterprise.getEnterprise_id(),
                             farm.getId(), "2");
                     List<WorkShop> shopList = workShopMapper.getWorkShopList(workShopQueryReq1);
-                    Map<ShopAuthor,String> shopMap=new HashMap<>();
+                    List<ShopAuthor> shopRespList=new ArrayList<>();
                     String farmFlag="0";
                     for (WorkShop shop : shopList) {
                         if(shopIds.contains(shop.getId())){
-                            shopMap.put(new ShopAuthor(shop.getId(),shop.getName()),"1");
+                            shopRespList.add(new ShopAuthor(shop.getId(),shop.getName(),"1"));
                             farmFlag="1";
                             enterPriseFlag="1";
                         }else {
-                            shopMap.put(new ShopAuthor(shop.getId(),shop.getName()),"0");
+                            shopRespList.add(new ShopAuthor(shop.getId(),shop.getName(),"0"));
                         }
                     }
-                    farmMap.put(new FarmAuthor(shopMap,farm.getId(),farm.getName()),farmFlag);
+                    farmRespList.add(new FarmAuthor(shopRespList,farm.getId(),farm.getName(),farmFlag));
                 }
-                enterPriseAuthorStringHashMap.put(
-                        new EnterPriseAuthor(farmMap,enterprise.getEnterprise_id(),enterprise.getEnterprise_name()),enterPriseFlag);
+                enterPriseAuthors.add(
+                        new EnterPriseAuthor(farmRespList,enterprise.getEnterprise_id(),enterprise.getEnterprise_name(),enterPriseFlag));
             }
         }
-        return new ResultMessage<Map<EnterPriseAuthor, String>>("200","success",enterPriseAuthorStringHashMap);
+        return new ResultMessage<List<EnterPriseAuthor>>("200","success",enterPriseAuthors);
     }
 
     @Override

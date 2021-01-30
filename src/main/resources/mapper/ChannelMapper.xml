@@ -77,7 +77,7 @@
 
     <select id="getUnBingdingChannelParameterByPhyId" resultType="com.lifuyi.dev_monitor.model.channel.ChannelParameter">
         select a.* from (select distinct channel_type_id from physical_channel_binding where physical_id=#{id}
-        and channel_type_id is not null) b inner join physical a on a.id=b.channel_type_id
+        and channel_type_id is not null) b inner join channel_parameter a on a.id=b.channel_type_id
     </select>
 
 

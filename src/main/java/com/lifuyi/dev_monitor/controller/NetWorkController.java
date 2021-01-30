@@ -46,10 +46,11 @@ public class NetWorkController {
 
     @PostMapping("/deleteById")
     @ApiOperation(value = "根据id删除网关",  notes = "")
-    public ResultMessage<Boolean> deleteById(@RequestParam("id")
-                                                 @ApiParam(value = "id",required = true) String id){
+    public ResultMessage<Boolean> deleteById(@RequestParam("id") List<String> id){
         try {
-            netWorkService.deleteById(id);
+            for(String d:id){
+                netWorkService.deleteById(d);
+            }
             return new ResultMessage<Boolean>("200","success",true);
         }catch (Exception e){
             e.printStackTrace();

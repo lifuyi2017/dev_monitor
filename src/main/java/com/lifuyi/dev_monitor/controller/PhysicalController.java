@@ -45,10 +45,11 @@ public class PhysicalController {
 
     @PostMapping("/deleteById")
     @ApiOperation(value = "根据id删除物理节点",  notes = "")
-    public ResultMessage<Boolean> deleteById(@RequestParam("id")
-                                                 @ApiParam(value = "id",required = true) String id) {
+    public ResultMessage<Boolean> deleteById(@RequestParam("id") List<String> id) {
         try {
-            physicalService.deleteById(id);
+            for(String f:id){
+                physicalService.deleteById(f);
+            }
             return new ResultMessage<Boolean>("200","success",true);
         }catch (Exception e){
             e.printStackTrace();

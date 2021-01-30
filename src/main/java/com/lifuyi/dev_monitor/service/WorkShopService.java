@@ -26,4 +26,6 @@ public interface WorkShopService {
     void deleteById(String id);
 
     ResultMessage<List<WorkShopDev>> getDevByDevGroupId(String id);
+
+    void deleteWorkShopById(String id, String type) throws Exception;
 }

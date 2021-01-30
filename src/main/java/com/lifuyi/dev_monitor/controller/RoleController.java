@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/role")
@@ -48,17 +47,18 @@ public class RoleController {
 
     @PostMapping("/getRoleAuthority")
     @ApiOperation(value = "获取角色权限",  notes = "后台系统展示用")
-    public ResultMessage<Map<EnterPriseAuthor,String>> getRoleAuthority(@RequestParam("roleId")
+    public ResultMessage<List<EnterPriseAuthor>> getRoleAuthority(@RequestParam("roleId")
                                                                             @ApiParam(value = "角色id",required = true) String roleId){
         return roleService.getRoleAuthority(roleId);
     }
 
     @PostMapping("/deleteById")
     @ApiOperation(value = "根据id删除角色",  notes = "")
-    public ResultMessage<Boolean> deleteById(@RequestParam("roleId")
-                                                 @ApiParam(value = "id",required = true) String roleId){
+    public ResultMessage<Boolean> deleteById(@RequestParam("id") List<String> id){
         try {
-            roleService.deleteById(roleId);
+            for(String w:id){
+                roleService.deleteById(w);
+            }
             return new ResultMessage<Boolean>("200","success",true);
         }catch (Exception e){
             e.printStackTrace();

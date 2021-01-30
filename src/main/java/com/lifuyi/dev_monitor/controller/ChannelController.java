@@ -53,10 +53,11 @@ public class ChannelController {
 
     @PostMapping("/deleteById")
     @ApiOperation(value = "根据id删除通道组", notes = "")
-    public ResultMessage<Boolean> getChannelParameterPages(@RequestParam("id")
-                                                               @ApiParam(value = "id",required = true) String id){
+    public ResultMessage<Boolean> getChannelParameterPages(@RequestParam("id") List<String> id){
         try {
-            channelService.deleteById(id);
+            for(String s:id){
+                channelService.deleteById(s);
+            }
             return new ResultMessage<Boolean>("200","success",true);
         }catch (Exception e){
             e.printStackTrace();
