@@ -138,13 +138,13 @@ public class CollectServiceImpl implements CollectService {
         List<WorkShopDev> workShopDevList = workShopMapper.getWorkShopDevList(id);
         for(WorkShopDev dev:workShopDevList){
             CollectConfigQueryReq collectConfigQueryReq = new CollectConfigQueryReq();
-            collectConfigQueryReq.setId(id);
+            collectConfigQueryReq.setId(dev.getId());
             configResps.addAll(getCollectConfigByDevGroup(collectConfigQueryReq).getValue());
         }
         List<ShopDevGroup> workShopDevGroupList = workShopMapper.getWorkShopDevGroupList(id);
         for(ShopDevGroup shopDevGroup:workShopDevGroupList){
             CollectConfigQueryReq collectConfigQueryReq = new CollectConfigQueryReq();
-            collectConfigQueryReq.setId(id);
+            collectConfigQueryReq.setId(shopDevGroup.getId());
             configResps.addAll(getCollectConfigByDevGroup(collectConfigQueryReq).getValue());
         }
         return new ResultMessage<List<CollectConfigResp>>("200","success",configResps);

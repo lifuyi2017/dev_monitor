@@ -10,6 +10,7 @@ import com.lifuyi.dev_monitor.model.enterprise.Resp.EnterpriseTypeResp;
 import com.lifuyi.dev_monitor.service.DevService;
 import com.lifuyi.dev_monitor.util.UploadUtils;
 import io.swagger.annotations.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,6 +57,9 @@ public class DevController {
     public void getPic(@RequestParam("imgId") String imgId, HttpServletResponse response) {
         InputStream in = null;
         try {
+//            if(StringUtils.isBlank(imgId)){
+//                return;
+//            }
             File file = new File(url + File.separator + imgId);
             in = new FileInputStream(file);
             response.setContentType("image/" + imgId.substring(imgId.lastIndexOf(".") + 1));

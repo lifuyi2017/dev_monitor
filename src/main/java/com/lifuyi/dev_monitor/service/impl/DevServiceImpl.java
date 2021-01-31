@@ -12,10 +12,12 @@ import com.lifuyi.dev_monitor.model.dev.Req.BaseDevEntityReq;
 import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevPagesRsp;
 import com.lifuyi.dev_monitor.service.CollectService;
 import com.lifuyi.dev_monitor.service.DevService;
+import com.lifuyi.dev_monitor.util.DeleteFileUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -116,6 +118,11 @@ public class DevServiceImpl implements DevService {
         }else {
             devMapper.deleteFanById(id);
         }
+        //删除图片
+        if(!StringUtils.isBlank(baseDevPagesRsp.getPic_url())){
+            DeleteFileUtil.deleteFile(DeleteFileUtil.url+ File.separator+baseDevPagesRsp.getPic_url());
+        }
+        //删除设备
         devMapper.deleteById(id);
         //通过设备id获取其所绑定的设备或者设备组
         WorkShopDev workShopDev=workShopMapper.getDevGroupIdByDevId(id);

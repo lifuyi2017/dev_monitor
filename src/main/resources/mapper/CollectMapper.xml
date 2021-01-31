@@ -40,7 +40,7 @@
         (select frequency from channel_parameter where id=channel_type_id) as frequency,
         (select duration from channel_parameter where id=channel_type_id) as duration,
         (select accuracy from channel_parameter where id=channel_type_id) as accuracy,
-        (select interval from channel_parameter where id=channel_type_id) as interval,state  from collect_dev_config con where id=#{id}
+        (select `interval` from channel_parameter where id=channel_type_id) as `interval`,state  from collect_dev_config con where id=#{id}
     </select>
 
     <select id="getCollectConfigById" resultType="com.lifuyi.dev_monitor.model.collect.CollectDevConfig">
