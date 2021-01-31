@@ -9,8 +9,6 @@ import com.lifuyi.dev_monitor.model.channel.resp.ChannelResp;
 import com.lifuyi.dev_monitor.service.ChannelService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -53,7 +51,7 @@ public class ChannelController {
 
     @PostMapping("/deleteById")
     @ApiOperation(value = "根据id删除通道组", notes = "")
-    public ResultMessage<Boolean> getChannelParameterPages(@RequestParam("id") List<String> id){
+    public ResultMessage<Boolean> deleteById(@RequestParam("id") List<String> id){
         try {
             for(String s:id){
                 channelService.deleteById(s);

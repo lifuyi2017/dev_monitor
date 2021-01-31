@@ -8,10 +8,11 @@
     </select>
 
     <insert id="addOrUpdatePhysical" parameterType="com.lifuyi.dev_monitor.model.physical.Physical">
-        insert into physical(id,`type`,code,num,network_id,`name`,enterprise_id) values
-        (#{id},#{type},#{code},#{num},#{network_id},#{name},#{enterprise_id})
+        insert into physical(id,`type`,code,num,network_id,`name`,enterprise_id,update_time) values
+        (#{id},#{type},#{code},#{num},#{network_id},#{name},#{enterprise_id},CURRENT_TIMESTAMP)
         ON DUPLICATE KEY UPDATE
-        `type`=#{type},code=#{code},num=#{code},network_id=#{network_id},`name`=#{name},enterprise_id=#{enterprise_id}
+        `type`=#{type},code=#{code},num=#{code},network_id=#{network_id},`name`=#{name},enterprise_id=#{enterprise_id},
+        update_time=CURRENT_TIMESTAMP
     </insert>
 
     <select id="getPageByEntity" parameterType="com.lifuyi.dev_monitor.model.physical.Physical" 
@@ -29,6 +30,7 @@
         <if test="name!=null">
             and `name` like concat('%',#{name},'%')
         </if>
+        order by update_time desc
     </select>
 
     <insert id="insertOrUpdatePhysicalChannelBinding" parameterType="com.lifuyi.dev_monitor.model.physical.PhysicalChannelBinding">

@@ -1,6 +1,7 @@
 package com.lifuyi.dev_monitor.service;
 
 import com.lifuyi.dev_monitor.model.ResultMessage;
+import com.lifuyi.dev_monitor.model.collect.CollectDevConfig;
 import com.lifuyi.dev_monitor.model.collect.WorkShop;
 import com.lifuyi.dev_monitor.model.collect.WorkShopDev;
 import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
@@ -28,4 +29,5 @@ public interface WorkShopService {
     ResultMessage<List<WorkShopDev>> getDevByDevGroupId(String id);
 
     void deleteWorkShopById(String id, String type) throws Exception;
+
 }

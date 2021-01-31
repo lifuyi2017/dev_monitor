@@ -29,4 +29,6 @@ public interface CollectMapper {
     List<CollectDevConfig> getConfigByChannelTypeId(String id);
 
     void removeLogicId(String logic_id);
+
+    List<CollectDevConfig> getCollectConfigByConfig(CollectDevConfig config);
 }

@@ -63,4 +63,18 @@
         update collect_dev_config set logic_id=null where logic_id=#{logic_id}
     </update>
 
+    <select id="getCollectConfigByConfig" resultType="com.lifuyi.dev_monitor.model.collect.CollectDevConfig"
+            parameterType="com.lifuyi.dev_monitor.model.collect.CollectDevConfig">
+        select * from  collect_dev_config where 1=1
+        <if test="id!=null">
+            and id=#{id}
+        </if>
+        <if test="channel_type_id!=null">
+            and channel_type_id=#{channel_type_id}
+        </if>
+        <if test="state!=null">
+            and state=#{state}
+        </if>
+    </select>
+
 </mapper>

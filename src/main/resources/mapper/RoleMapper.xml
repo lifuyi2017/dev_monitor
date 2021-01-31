@@ -30,6 +30,7 @@
           <if test="status!=null">
               and status=#{status}
           </if>
+           order by update_time desc
     </select>
 
     <delete id="deleteAuthorityByRoleId">

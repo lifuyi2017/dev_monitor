@@ -9,11 +9,12 @@
 
     <insert id="addOrUpdateNetWork" parameterType="com.lifuyi.dev_monitor.model.network.Network">
         insert into network(network_id,network_type,network_code,network_name,network_ip,input_address,
-        output_agreement,enterprise_id) values (#{network_id},#{network_type},#{network_code},#{network_name},
-        #{network_ip},#{input_address},#{output_agreement},#{enterprise_id})
+        output_agreement,enterprise_id,update_time) values (#{network_id},#{network_type},#{network_code},#{network_name},
+        #{network_ip},#{input_address},#{output_agreement},#{enterprise_id},CURRENT_TIMESTAMP)
         ON DUPLICATE KEY UPDATE
         network_type=#{network_type},network_code=#{network_code},network_name=#{network_name},
-        network_ip=#{network_ip},input_address=#{input_address},output_agreement=#{output_agreement},enterprise_id=#{enterprise_id}
+        network_ip=#{network_ip},input_address=#{input_address},output_agreement=#{output_agreement},enterprise_id=#{enterprise_id},
+        update_time=CURRENT_TIMESTAMP
     </insert>
 
 
@@ -32,6 +33,7 @@
         <if test="enterprise_id!=null">
             and enterprise_id=#{enterprise_id}
         </if>
+         order by update_time desc
     </select>
 
     <delete id="deleteByNetWorkId">

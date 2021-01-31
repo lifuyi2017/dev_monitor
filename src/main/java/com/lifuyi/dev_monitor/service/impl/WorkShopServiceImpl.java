@@ -3,6 +3,7 @@ package com.lifuyi.dev_monitor.service.impl;
 import com.lifuyi.dev_monitor.dao.CollectMapper;
 import com.lifuyi.dev_monitor.dao.WorkShopMapper;
 import com.lifuyi.dev_monitor.model.ResultMessage;
+import com.lifuyi.dev_monitor.model.collect.CollectDevConfig;
 import com.lifuyi.dev_monitor.model.collect.WorkShop;
 import com.lifuyi.dev_monitor.model.collect.WorkShopDev;
 import com.lifuyi.dev_monitor.model.collect.req.CollectConfigQueryReq;
@@ -189,6 +190,8 @@ public class WorkShopServiceImpl implements WorkShopService {
             workShopMapper.deleteDevById(id);
         }
     }
+
+
 
 
 }

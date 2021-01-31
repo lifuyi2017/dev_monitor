@@ -161,7 +161,10 @@ public class CollectServiceImpl implements CollectService {
         return new ResultMessage<List<CollectConfigResp>>("200","success",configResps);
     }
 
-
+    @Override
+    public List<CollectDevConfig> getCollectConfigByConfig(CollectDevConfig config) {
+        return collectMapper.getCollectConfigByConfig(config);
+    }
 
 
 }

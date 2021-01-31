@@ -1,5 +1,6 @@
 package com.lifuyi.dev_monitor.dao;
 
+import com.lifuyi.dev_monitor.model.collect.CollectDevConfig;
 import com.lifuyi.dev_monitor.model.collect.WorkShop;
 import com.lifuyi.dev_monitor.model.collect.WorkShopDev;
 import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
@@ -38,4 +39,5 @@ public interface WorkShopMapper {
     void deleteShopById(String id);
 
     List<WorkShopDev> getDevByDevGroupId(String id);
+
 }

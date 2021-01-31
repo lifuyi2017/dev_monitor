@@ -19,14 +19,14 @@
 
     <insert id="insertOrUpdateBase" parameterType="com.lifuyi.dev_monitor.model.dev.BaseDevEntity">
         insert into dev_base_info(id,dev_code,dev_type_id,dev_name,manager,service_enterprise_id,
-        produce_enterprise_id,third_enterprise_id,install_instructions,pic_url,enterprise_id)
+        produce_enterprise_id,third_enterprise_id,install_instructions,pic_url,enterprise_id,update_time)
         values (#{id},#{dev_code},#{dev_type_id},#{dev_name},#{manager},#{service_enterprise_id},
-        #{produce_enterprise_id},#{third_enterprise_id},#{install_instructions},#{pic_url},#{enterprise_id})
+        #{produce_enterprise_id},#{third_enterprise_id},#{install_instructions},#{pic_url},#{enterprise_id},CURRENT_TIMESTAMP)
         ON DUPLICATE KEY UPDATE
         dev_code=#{dev_code},dev_type_id=#{dev_type_id},dev_name=#{dev_name},manager=#{manager},
         service_enterprise_id=#{service_enterprise_id},produce_enterprise_id=#{produce_enterprise_id},
         third_enterprise_id=#{third_enterprise_id},install_instructions=#{install_instructions},
-        pic_url=#{pic_url},enterprise_id=#{enterprise_id}
+        pic_url=#{pic_url},enterprise_id=#{enterprise_id},update_time=CURRENT_TIMESTAMP
     </insert>
 
 
@@ -75,6 +75,7 @@
          <if test="enterprise_id!=null">
              and enterprise_id=#{enterprise_id}
          </if>
+         order by update_time desc
     </select>
 
     <select id="getMotorById" resultType="com.lifuyi.dev_monitor.model.dev.Motor">

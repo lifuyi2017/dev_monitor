@@ -7,10 +7,10 @@
     </delete>
 
     <insert id="insertOrUpdateLogicNode" parameterType="com.lifuyi.dev_monitor.model.logic.LogicNode">
-        insert into logic_node(logic_id,logic_code,logic_name,enterprise_id)
-        values (#{logic_id},#{logic_code},#{logic_name},#{enterprise_id})
+        insert into logic_node(logic_id,logic_code,logic_name,enterprise_id,update_time)
+        values (#{logic_id},#{logic_code},#{logic_name},#{enterprise_id},CURRENT_TIMESTAMP)
         ON DUPLICATE KEY UPDATE
-        logic_code=#{logic_code},logic_name=#{logic_name},enterprise_id=#{enterprise_id}
+        logic_code=#{logic_code},logic_name=#{logic_name},enterprise_id=#{enterprise_id},update_time=CURRENT_TIMESTAMP
     </insert>
 
     <insert id="insertRelation">
@@ -35,7 +35,7 @@
         <if test="enterprise_id!=null">
             and enterprise_id=#{enterprise_id}
         </if>
-
+         order by update_time desc
     </select>
 
 

@@ -10,6 +10,7 @@ import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
 import com.lifuyi.dev_monitor.model.collect.resp.CollectConfigResp;
 import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
+import com.lifuyi.dev_monitor.model.mqtt.CollectConfig;
 import com.lifuyi.dev_monitor.service.CollectService;
 import com.lifuyi.dev_monitor.service.WorkShopService;
 import io.swagger.annotations.Api;
@@ -154,5 +155,13 @@ public class CollectController {
             return new ResultMessage<Boolean>("500",e.getMessage(),false);
         }
     }
+
+
+    @PostMapping(value = "/getCollectConfigByConfig")
+    @ApiOperation(value = "根据相应查询条件获取通道配置，如果某些字段不参与查询就设置为null", notes = "")
+    public ResultMessage<List<CollectDevConfig>> getCollectConfigByConfig(@RequestBody CollectDevConfig config){
+        return new ResultMessage<List<CollectDevConfig>>("200","success",collectService.getCollectConfigByConfig(config));
+    }
+
 
 }

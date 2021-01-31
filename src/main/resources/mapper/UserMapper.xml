@@ -39,6 +39,7 @@
         <if test="role_id!=null">
             and role_id=#{role_id}
         </if>
+         order by update_time desc
     </select>
 
     <select id="getUsersByUser" parameterType="com.lifuyi.dev_monitor.model.user.User"
