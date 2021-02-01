@@ -46,16 +46,21 @@ public class ChannelServiceImpl implements ChannelService {
     public ResultMessage<String> insertOrUpdateChannelParameter(List<ChannelSaveReq> reqs) {
         try {
             for (ChannelSaveReq channelSaveReq : reqs) {
-                String channel_type_id = channelMapper.getMaxChannelTypeId(channelSaveReq.getPhysical_id(), channelSaveReq.getCodes());
-                if (!StringUtils.isBlank(channel_type_id)) {
-                    return new ResultMessage<String>("401", "修改通道组时不能修改物理节点和通道", channel_type_id);
-                }
+//                String channel_type_id = channelMapper.getMaxChannelTypeId(channelSaveReq.getPhysical_id(), channelSaveReq.getCodes());
+//                if (!StringUtils.isBlank(channel_type_id)) {
+//                    return new ResultMessage<String>("401", "修改通道组时不能修改物理节点和通道", channel_type_id);
+//                }
                 String id = UUID.randomUUID().toString().replaceAll("-", "");
                 ChannelParameter channelParameter = channelSaveReq.getChannelParameter();
                 if (!StringUtils.isBlank(channelParameter.getId())) {
                     //修改时不能修改绑定关系
 //            channelMapper.clearBindingByTypeId(channelParameter.getId());
 //            PhysicalChannelResp resp=channelMapper.getPhysicalChannelResp(channelSaveReq.getChannelParameter().getId());
+                    PhysicalChannelResp resp=channelMapper.getPhysicalChannelResp(channelParameter.getId());
+                    if( !(resp.getPhysical_id().equals(channelSaveReq.getPhysical_id())
+                    && MqttUtil.equalLists(channelSaveReq.getCodes(),Arrays.asList(resp.getCodes().split(","))))){
+                        return new ResultMessage<String>("401", "修改通道组时不能修改物理节点和通道", "error");
+                    }
                     CollectDevConfig collectDevConfig = new CollectDevConfig();
                     collectDevConfig.setChannel_type_id(channelParameter.getId());
                     collectDevConfig.setState("1");

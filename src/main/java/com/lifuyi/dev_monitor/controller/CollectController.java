@@ -164,5 +164,4 @@ public class CollectController {
         return new ResultMessage<List<CollectDevConfig>>("200","success",collectService.getCollectConfigByConfig(config));
     }
 
-
 }
