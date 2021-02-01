@@ -36,9 +36,10 @@
          `type`=#{type},dev_id=#{dev_id},enterprise_id=#{enterprise_id}
     </insert>
 
-    <select id="getNotBingingDevByEnterpriseId" resultType="com.lifuyi.dev_monitor.model.dev.BaseDevEntity">
-        select a.* from (select * from dev_base_info where enterprise_id=#{enterpriseId})
-        a left join workshop_dev b on a.id=b.dev_id where b.dev_id is null
+    <select id="getNotBingingDevByEnterpriseId" resultType="com.lifuyi.dev_monitor.model.dev.Resp.BaseDevBingding">
+        select a.*,case when b.dev_id is null then '1' else '0' end as disabled
+        from (select * from dev_base_info where enterprise_id=#{enterpriseId})
+        a left join workshop_dev b on a.id=b.dev_id
     </select>
 
     <select id="getWorkShopDevList" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">

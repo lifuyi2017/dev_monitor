@@ -5,7 +5,7 @@ import com.lifuyi.dev_monitor.model.collect.WorkShop;
 import com.lifuyi.dev_monitor.model.collect.WorkShopDev;
 import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
 import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
-import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
+import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevBingding;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public interface WorkShopMapper {
 
     void insertOrUpdateWorkShopDev(WorkShopDev workShopDev);
 
-    List<BaseDevEntity> getNotBingingDevByEnterpriseId(String enterpriseId);
+    List<BaseDevBingding> getNotBingingDevByEnterpriseId(String enterpriseId);
 
     List<WorkShopDev> getWorkShopDevList(String workshopId);
 

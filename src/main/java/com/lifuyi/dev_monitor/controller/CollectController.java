@@ -10,6 +10,7 @@ import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
 import com.lifuyi.dev_monitor.model.collect.resp.CollectConfigResp;
 import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
+import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevBingding;
 import com.lifuyi.dev_monitor.model.mqtt.CollectConfig;
 import com.lifuyi.dev_monitor.service.CollectService;
 import com.lifuyi.dev_monitor.service.WorkShopService;
@@ -52,7 +53,7 @@ public class CollectController {
 
     @PostMapping(value = "/getNotBingingDevByEnterpriseId")
     @ApiOperation(value = "获取企业下面未被绑定的设备列表", notes = "采集管理里面绑定设备id时下拉所用")
-    public ResultMessage<List<BaseDevEntity>> getNotBingingDevByEnterpriseId(@RequestParam("enterpriseId") String enterpriseId){
+    public ResultMessage<List<BaseDevBingding>> getNotBingingDevByEnterpriseId(@RequestParam("enterpriseId") String enterpriseId){
         return workShopService.getNotBingingDevByEnterpriseId(enterpriseId);
     }
 

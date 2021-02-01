@@ -19,6 +19,8 @@ public class CollectConfigResp {
     private String physical_id;
     @ApiModelProperty(value = "通道分类id" ,position = 5)
     private String channel_type_id;
+//    @ApiModelProperty(value = "通道分类名称" ,position = 13)
+//    private String channel_type_name;
     @ApiModelProperty(value = "通道编号，逗号分割，顺序与相位对应" ,position = 6)
     private String channel_code;
     @ApiModelProperty(value = "逻辑id" ,position = 7)

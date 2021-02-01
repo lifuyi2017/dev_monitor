@@ -11,6 +11,7 @@ import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
 import com.lifuyi.dev_monitor.model.collect.resp.CollectConfigResp;
 import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
+import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevBingding;
 import com.lifuyi.dev_monitor.service.CollectService;
 import com.lifuyi.dev_monitor.service.WorkShopService;
 import org.apache.commons.lang3.StringUtils;
@@ -82,9 +83,9 @@ public class WorkShopServiceImpl implements WorkShopService {
 
 
     @Override
-    public ResultMessage<List<BaseDevEntity>> getNotBingingDevByEnterpriseId(String enterpriseId) {
-        List<BaseDevEntity> baseDevEntities = workShopMapper.getNotBingingDevByEnterpriseId(enterpriseId);
-        return new ResultMessage<List<BaseDevEntity>>("200", "查询成功", baseDevEntities);
+    public ResultMessage<List<BaseDevBingding>> getNotBingingDevByEnterpriseId(String enterpriseId) {
+        List<BaseDevBingding> baseDevEntities = workShopMapper.getNotBingingDevByEnterpriseId(enterpriseId);
+        return new ResultMessage<List<BaseDevBingding>>("200", "查询成功", baseDevEntities);
     }
 
     @Override
