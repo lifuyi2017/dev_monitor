@@ -1,6 +1,7 @@
 package com.lifuyi.dev_monitor.intercept;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -44,7 +45,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             writer = response.getWriter();
 //            Map<String, Object> result = PackageReturnResult.returnJson(400, "用户令牌token无效");
 //            result.put("data", null);
-            writer.print(resultMessage);
+            writer.print(JSONObject.toJSONString(resultMessage));
         } catch (IOException e){
             e.printStackTrace();
         } finally {
