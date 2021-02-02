@@ -1,6 +1,7 @@
 package com.lifuyi.dev_monitor.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.lifuyi.dev_monitor.annotation.UserLoginToken;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.user.Req.UserReq;
 import com.lifuyi.dev_monitor.model.user.Resp.UserResp;
@@ -25,18 +26,21 @@ public class UserController {
 
     @PostMapping(value = "/insertOrUpdateUser")
     @ApiOperation(value = "插入或者更新用户，不传id字段是插入，传是更新", notes = "返回的mesg是id")
+    @UserLoginToken
     public ResultMessage<Boolean> insertOrUpdateUser(@RequestBody User user){
         return userService.insertOrUpdateUser(user);
     }
 
     @PostMapping(value = "/getUserByPage")
     @ApiOperation(value = "获取用户列表，带分页", notes = "返回的mesg是id")
+    @UserLoginToken
     public ResultMessage<PageInfo<UserResp>> getUserByPage(@RequestBody UserReq req){
         return userService.getUserByPage(req);
     }
 
     @PostMapping(value = "/deleteUserById")
     @ApiOperation(value = "通过id删除用户", notes = "")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteUserById(@RequestParam("id") List<String> id){
         try {
             for(String s:id){

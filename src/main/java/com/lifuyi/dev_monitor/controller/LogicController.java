@@ -1,6 +1,7 @@
 package com.lifuyi.dev_monitor.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.lifuyi.dev_monitor.annotation.UserLoginToken;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.logic.LogicNode;
 import com.lifuyi.dev_monitor.model.logic.req.LogicQueryReq;
@@ -26,7 +27,7 @@ public class LogicController {
 
     @PostMapping("/addOrUpdateLogic")
     @ApiOperation(value = "新增或者修改逻辑节点", notes = "")
-//    @UserLoginToken
+    @UserLoginToken
     public ResultMessage<String> addOrUpdateLogic(@RequestBody LogicSaveReq logicSaveReq){
         return logicService.addOrUpdateLogic(logicSaveReq);
     }
@@ -34,6 +35,7 @@ public class LogicController {
 
     @PostMapping("/getLogicPages")
     @ApiOperation(value = "获取逻辑节点，带分页", notes = "")
+    @UserLoginToken
     public ResultMessage<PageInfo<LogicResp>> getLogicPages(@RequestBody LogicQueryReq  logicQueryReq){
         return logicService.getLogicPages(logicQueryReq);
     }
@@ -41,12 +43,14 @@ public class LogicController {
 
     @PostMapping("/getLogicList")
     @ApiOperation(value = "获取逻辑节点，不带分页", notes = "")
+    @UserLoginToken
     public ResultMessage<List<LogicResp>> getLogicList(@RequestBody LogicNode node){
         return logicService.getLogicList(node);
     }
 
     @PostMapping(value = "/deleteById")
     @ApiOperation(value = "根据id删除逻辑", notes = "")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteById(@RequestParam("id") List<String> id) {
         try {
             for(String s:id){

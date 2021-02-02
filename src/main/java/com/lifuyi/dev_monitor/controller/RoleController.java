@@ -1,5 +1,6 @@
 package com.lifuyi.dev_monitor.controller;
 
+import com.lifuyi.dev_monitor.annotation.UserLoginToken;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.role.Resp.EnterPriseAuthor;
 import com.lifuyi.dev_monitor.model.role.Resp.RoleResp;
@@ -26,12 +27,14 @@ public class RoleController {
 
     @PostMapping("/insertOrUpdateRole")
     @ApiOperation(value = "插入或者更新角色基本信息",  notes = "返回的mesg是id")
+    @UserLoginToken
     public ResultMessage<Boolean> insertOrUpdateRole(@RequestBody Role role){
         return roleService.insertOrUpdateRole(role);
     }
 
     @PostMapping("/getRoleList")
     @ApiOperation(value = "获取角色列表",  notes = "")
+    @UserLoginToken
     public ResultMessage<List<RoleResp>> getRoleList(@RequestBody Role role){
         return roleService.getRoleList(role);
     }
@@ -40,6 +43,7 @@ public class RoleController {
 
     @PostMapping("/saveRoleAuthority")
     @ApiOperation(value = "权限设置",  notes = "")
+    @UserLoginToken
     public ResultMessage<Boolean> saveRoleAuthority(@RequestBody List<RoleAuthority> roleAuthorityList){
         return roleService.saveRoleAuthority(roleAuthorityList);
     }
@@ -47,6 +51,7 @@ public class RoleController {
 
     @PostMapping("/getRoleAuthority")
     @ApiOperation(value = "获取角色权限",  notes = "后台系统展示用")
+    @UserLoginToken
     public ResultMessage<List<EnterPriseAuthor>> getRoleAuthority(@RequestParam("roleId")
                                                                             @ApiParam(value = "角色id",required = true) String roleId){
         return roleService.getRoleAuthority(roleId);
@@ -54,6 +59,7 @@ public class RoleController {
 
     @PostMapping("/deleteById")
     @ApiOperation(value = "根据id删除角色",  notes = "")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteById(@RequestParam("id") List<String> id){
         try {
             for(String w:id){

@@ -126,12 +126,14 @@ public class DevServiceImpl implements DevService {
         devMapper.deleteById(id);
         //通过设备id获取其所绑定的设备或者设备组
         WorkShopDev workShopDev=workShopMapper.getDevGroupIdByDevId(id);
-        if("3".equals(workShopDev.getType())){
-            //绑定的是设备
-            collectService.deleteByDevId(workShopDev.getId());
-        }else if("5".equals(workShopDev.getType())){
-            //设备组下面的设备
-            collectService.deleteByDevId(workShopDev.getParent_id());
+        if(workShopDev!=null){
+            if("3".equals(workShopDev.getType())){
+                //绑定的是设备
+                collectService.deleteByDevId(workShopDev.getId());
+            }else if("5".equals(workShopDev.getType())){
+                //设备组下面的设备
+                collectService.deleteByDevId(workShopDev.getParent_id());
+            }
         }
         workShopMapper.deleteDevById(workShopDev.getId());
     }

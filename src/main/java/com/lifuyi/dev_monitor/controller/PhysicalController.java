@@ -1,6 +1,7 @@
 package com.lifuyi.dev_monitor.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.lifuyi.dev_monitor.annotation.UserLoginToken;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.physical.Physical;
 import com.lifuyi.dev_monitor.model.physical.req.PhysicalReq;
@@ -26,25 +27,28 @@ public class PhysicalController {
 
     @PostMapping("/addOrUpdateNetWork")
     @ApiOperation(value = "插入或者更新物理节点",  notes = "返回的mesg是id")
-//    @UserLoginToken
+    @UserLoginToken
     public ResultMessage<Boolean> addOrUpdateNetWork(@RequestBody Physical physical) {
         return physicalService.addOrUpdatePhysical(physical);
     }
 
     @PostMapping("/getPhysicalPages")
     @ApiOperation(value = "获取分页列表",  notes = "")
+    @UserLoginToken
     public ResultMessage<PageInfo<PhysicalResp>> getPhysicalPages(@RequestBody PhysicalReq req) {
         return physicalService.getPhysicalPages(req);
     }
 
     @PostMapping("/getPhysicalList")
     @ApiOperation(value = "获取列表",  notes = "")
+    @UserLoginToken
     public ResultMessage<List<PhysicalResp>> getPhysicalList(@RequestBody Physical physical) {
         return physicalService.getPhysicalList(physical);
     }
 
     @PostMapping("/deleteById")
     @ApiOperation(value = "根据id删除物理节点",  notes = "")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteById(@RequestParam("id") List<String> id) {
         try {
             for(String f:id){

@@ -1,6 +1,7 @@
 package com.lifuyi.dev_monitor.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.lifuyi.dev_monitor.annotation.UserLoginToken;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.network.Network;
 import com.lifuyi.dev_monitor.model.network.req.NetworkReq;
@@ -27,25 +28,28 @@ public class NetWorkController {
 
     @PostMapping("/addOrUpdateNetWork")
     @ApiOperation(value = "插入或者更新网关",  notes = "返回的mesg是id")
-//    @UserLoginToken
+    @UserLoginToken
     public ResultMessage<Boolean> addOrUpdateNetWork(@RequestBody Network network) {
         return netWorkService.addOrUpdateNetWork(network);
     }
 
     @PostMapping("/getNetWorkPages")
     @ApiOperation(value = "获取网关分页列表",  notes = "")
+    @UserLoginToken
     public ResultMessage<PageInfo<NetworkResp>> getNetWorkPages(@RequestBody NetworkReq req){
         return netWorkService.getNetWorkPages(req);
     }
 
     @PostMapping("/getNetWorkList")
     @ApiOperation(value = "获取网关列表,不分页",  notes = "")
+    @UserLoginToken
     public ResultMessage<List<NetworkResp>> getNetWorkList(@RequestBody Network network){
         return netWorkService.getNetWorkList(network);
     }
 
     @PostMapping("/deleteById")
     @ApiOperation(value = "根据id删除网关",  notes = "")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteById(@RequestParam("id") List<String> id){
         try {
             for(String d:id){

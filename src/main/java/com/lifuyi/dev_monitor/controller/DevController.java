@@ -57,19 +57,28 @@ public class DevController {
     public void getPic(@RequestParam("imgId") String imgId, HttpServletResponse response) {
         InputStream in = null;
         try {
-//            if(StringUtils.isBlank(imgId)){
-//                return;
-//            }
-            File file = new File(url + File.separator + imgId);
-            in = new FileInputStream(file);
-            response.setContentType("image/" + imgId.substring(imgId.lastIndexOf(".") + 1));
-            OutputStream out = response.getOutputStream();
-            byte[] buff = new byte[100];
-            int rc = 0;
-            while ((rc = in.read(buff, 0, 100)) > 0) {
-                out.write(buff, 0, rc);
+            if(!StringUtils.isBlank(imgId)){
+                File file = new File(url + File.separator + imgId);
+                in = new FileInputStream(file);
+                response.setContentType("image/" + imgId.substring(imgId.lastIndexOf(".") + 1));
+                OutputStream out = response.getOutputStream();
+                byte[] buff = new byte[100];
+                int rc = 0;
+                while ((rc = in.read(buff, 0, 100)) > 0) {
+                    out.write(buff, 0, rc);
+                }
+                out.flush();
             }
-            out.flush();
+//            File file = new File(url + File.separator + imgId);
+//            in = new FileInputStream(file);
+//            response.setContentType("image/" + imgId.substring(imgId.lastIndexOf(".") + 1));
+//            OutputStream out = response.getOutputStream();
+//            byte[] buff = new byte[100];
+//            int rc = 0;
+//            while ((rc = in.read(buff, 0, 100)) > 0) {
+//                out.write(buff, 0, rc);
+//            }
+//            out.flush();
         } catch (Exception e) {
             e.printStackTrace();
         }

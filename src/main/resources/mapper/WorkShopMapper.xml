@@ -16,6 +16,7 @@
     <select id="getWorkShopList" resultType="com.lifuyi.dev_monitor.model.collect.WorkShop"
             parameterType="com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq">
         select * from workshop where enterprise_id=#{enterprise_id} and parent_id=#{parent_id} and `type`=#{type}
+        order by update_time desc
     </select>
 
 
@@ -43,11 +44,12 @@
     </select>
 
     <select id="getWorkShopDevList" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
-        select * from workshop_dev where  `type`='3' and shop_id=#{workshopId}
+        select * from workshop_dev where  `type`='3' and shop_id=#{workshopId} order by update_time desc
     </select>
 
     <select id="getWorkShopDevGroupList" resultType="com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup">
         select id,`name`,shop_id,parent_id,type,enterprise_id from workshop_dev where `type`='4' and shop_id=#{workshopId}
+        order by update_time desc
     </select>
 
     <select id="getSonDevList" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
@@ -71,7 +73,7 @@
     </delete>
 
     <select id="getDevByDevGroupId" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
-        select * from workshop_dev where parent_id=#{id} and `type`='5'
+        select * from workshop_dev where parent_id=#{id} and `type`='5' order by update_time desc
     </select>
 
 

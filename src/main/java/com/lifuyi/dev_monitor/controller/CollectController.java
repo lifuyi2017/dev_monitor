@@ -1,5 +1,6 @@
 package com.lifuyi.dev_monitor.controller;
 
+import com.lifuyi.dev_monitor.annotation.UserLoginToken;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.collect.CollectDevConfig;
 import com.lifuyi.dev_monitor.model.collect.WorkShop;
@@ -35,24 +36,28 @@ public class CollectController {
 
     @PostMapping(value = "/insertOrUpdateWorkShop")
     @ApiOperation(value = "插入或者更新厂房，不传id字段是插入，传是更新", notes = "返回的mesg是id")
+    @UserLoginToken
     public ResultMessage<Boolean> insertOrUpdateWorkShop(@RequestBody WorkShop workShop){
         return workShopService.insertOrUpdateWorkShop(workShop);
     }
 
     @PostMapping(value = "/getWorkShopList")
     @ApiOperation(value = "获取下级车间或者下级厂房", notes = "")
+    @UserLoginToken
     public ResultMessage<List<WorkShop>> getWorkShopList(@RequestBody WorkShopQueryReq req){
         return workShopService.getWorkShopList(req);
     }
 
     @PostMapping(value = "/insertOrUpdateWorkShopDev")
     @ApiOperation(value = "插入或者更新设备或者设备组", notes = "")
+    @UserLoginToken
     public ResultMessage<Boolean> insertOrUpdateWorkShopDev(@RequestBody WorkShopDev workShopDev){
         return workShopService.insertOrUpdateWorkShopDev(workShopDev);
     }
 
     @PostMapping(value = "/getNotBingingDevByEnterpriseId")
     @ApiOperation(value = "获取企业下面未被绑定的设备列表", notes = "采集管理里面绑定设备id时下拉所用")
+    @UserLoginToken
     public ResultMessage<List<BaseDevBingding>> getNotBingingDevByEnterpriseId(@RequestParam("enterpriseId") String enterpriseId){
         return workShopService.getNotBingingDevByEnterpriseId(enterpriseId);
     }
@@ -60,6 +65,7 @@ public class CollectController {
 
     @PostMapping(value = "/getWorkShopDevList")
     @ApiOperation(value = "获取车间下面的设备", notes = "")
+    @UserLoginToken
     public ResultMessage<List<WorkShopDev>> getWorkShopDevList(@RequestParam("workshopId")
                                                                    @ApiParam(value = "车间id",required = true) String workshopId){
         return workShopService.getWorkShopDevList(workshopId);
@@ -67,6 +73,7 @@ public class CollectController {
 
     @PostMapping(value = "/getWorkShopDevGroupList")
     @ApiOperation(value = "获取车间下面的设备组", notes = "")
+    @UserLoginToken
     public ResultMessage<List<ShopDevGroup>> getWorkShopDevGroupList(@RequestParam("workshopId")
                                                                          @ApiParam(value = "车间id",required = true) String workshopId){
         return workShopService.getWorkShopDevGroupList(workshopId);
@@ -74,6 +81,7 @@ public class CollectController {
 
     @PostMapping(value = "/getDevByDevGroupId")
     @ApiOperation(value = "获取设备组下的设备", notes = "")
+    @UserLoginToken
     public ResultMessage<List<WorkShopDev>> getDevByDevGroupId(@RequestParam("id")
                                                                @ApiParam(value = "设备组",required = true) String id){
         return workShopService.getDevByDevGroupId(id);
@@ -82,6 +90,7 @@ public class CollectController {
 
     @PostMapping(value = "/getUnBindingCollectChannelCode")
     @ApiOperation(value = "获取指定通道种类下面的未绑定采集配置的通道", notes = "新增采集时用")
+    @UserLoginToken
     public ResultMessage<List<String>> getUnBindingCollectChannelCode(@RequestParam("typeId")
                                                                           @ApiParam(value = "通道类型id",required = true) String typeId,
                                                                       @RequestParam("physicalId")
@@ -92,6 +101,7 @@ public class CollectController {
 
     @PostMapping(value = "/insertOrUpdateCollectConfig")
     @ApiOperation(value = "新增采集节点设置", notes = "新增采集时用")
+    @UserLoginToken
     public ResultMessage<Boolean> insertOrUpdateCollectConfig(@RequestBody CollectDevConfig config){
         return collectService.insertOrUpdateCollectConfig(config);
     }
@@ -99,6 +109,7 @@ public class CollectController {
 
     @PostMapping(value = "/getCollectConfigByDevGroup")
     @ApiOperation(value = "通过设备或者设备组获取采集节点设置", notes = "")
+    @UserLoginToken
     public ResultMessage<List<CollectConfigResp>>  getCollectConfigByDevGroup(@RequestBody CollectConfigQueryReq req){
         if("1".equals(req.getType())){
             return collectService.getCollectConfigByFactoryId(req.getId(),req.getEnterprise_id());
@@ -126,12 +137,14 @@ public class CollectController {
 
     @PostMapping(value = "/startOrStopCollect")
     @ApiOperation(value = "开始或者结束采集", notes = "")
+    @UserLoginToken
     public ResultMessage<Boolean> startOrStopCollect(@RequestBody List<StartOrStopCollect> startOrStopCollect){
         return collectService.startOrStopCollect(startOrStopCollect);
     }
 
     @PostMapping(value = "/deleteById")
     @ApiOperation(value = "根据id删除采集配置", notes = "")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteById(@RequestParam("id") List<String> id) {
         try {
             for(String s:id){
@@ -147,6 +160,7 @@ public class CollectController {
 
     @PostMapping(value = "/deleteWorkShopById")
     @ApiOperation(value = "根据id删除厂房车间", notes = "")
+    @UserLoginToken
     public ResultMessage<Boolean> deleteWorkShopById(@RequestParam("id") String id,@RequestParam("type") String type) {
         try {
             workShopService.deleteWorkShopById(id,type);
@@ -160,6 +174,7 @@ public class CollectController {
 
     @PostMapping(value = "/getCollectConfigByConfig")
     @ApiOperation(value = "根据相应查询条件获取通道配置，如果某些字段不参与查询就设置为null", notes = "")
+    @UserLoginToken
     public ResultMessage<List<CollectDevConfig>> getCollectConfigByConfig(@RequestBody CollectDevConfig config){
         return new ResultMessage<List<CollectDevConfig>>("200","success",collectService.getCollectConfigByConfig(config));
     }

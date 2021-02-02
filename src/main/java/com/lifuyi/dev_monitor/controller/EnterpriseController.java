@@ -38,14 +38,14 @@ public class EnterpriseController {
 
     @PostMapping("/getType")
     @ApiOperation(value = "获取企业类型", notes = "获取企业类型")
-//    @UserLoginToken
+    @UserLoginToken
     public ResultMessage<List<EnterpriseTypeResp>> getType() {
         return new ResultMessage<List<EnterpriseTypeResp>>("200","成功",enterpriseMapper.getType());
     }
 
 
     @PostMapping("/addOrUpdate")
-//    @UserLoginToken
+    @UserLoginToken
     public ResultMessage<Boolean> addOrUpdate(@RequestBody EnterpriseReq enterpriseReq) {
         return enterpriseService.addOrUpdate(enterpriseReq);
     }
@@ -53,7 +53,7 @@ public class EnterpriseController {
 
 
     @PostMapping("/getEnterprisePage")
-//    @UserLoginToken
+    @UserLoginToken
     public ResultMessage<PageInfo<EnterpriseResp>> getEnterprisePage(@RequestBody EnterprisePageReq pageReq) {
         return enterpriseService.getEnterprisePage(pageReq);
     }
@@ -61,14 +61,14 @@ public class EnterpriseController {
 
     @PostMapping("/getEnterprise")
     @ApiOperation(value = "获取企业信息，不分页", notes = "权限那儿获取关联企业可以用这儿")
-//    @UserLoginToken
+    @UserLoginToken
     public ResultMessage<List<EnterpriseResp>> getEnterprise(@RequestBody Enterprise enterprise) {
         return enterpriseService.getEnterprise(enterprise);
     }
 
 
     @PostMapping("/getEnterpriseByTypeIds")
-//    @UserLoginToken
+    @UserLoginToken
     public ResultMessage<List<Enterprise>> getEnterpriseByTypeIds(@RequestBody TypeIds ids) {
         return enterpriseService.getEnterpriseByTypeIds(ids.getIds());
     }
