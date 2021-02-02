@@ -5,7 +5,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://106.55.249.130:27017/local
+      uri: mongodb://root:bala123bala!!@dds-bp12b08b2855b6b4-pub.mongodb.rds.aliyuncs.com:3717/admin
   datasource:
     name: mysql_test
     type: com.alibaba.druid.pool.DruidDataSource

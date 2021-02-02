@@ -11,6 +11,7 @@ import com.lifuyi.dev_monitor.annotation.FrontUserLoginToken;
 import com.lifuyi.dev_monitor.annotation.PassToken;
 import com.lifuyi.dev_monitor.annotation.UserLoginToken;
 import com.lifuyi.dev_monitor.dao.UserMapper;
+import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.user.Resp.UserResp;
 import com.lifuyi.dev_monitor.model.user.User;
 import com.lifuyi.dev_monitor.service.UserService;
@@ -23,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -32,6 +35,24 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Resource
     UserMapper userMapper;
+
+    private void returnJson(HttpServletResponse response, ResultMessage<String> resultMessage){
+        PrintWriter writer = null;
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        try {
+            writer = response.getWriter();
+//            Map<String, Object> result = PackageReturnResult.returnJson(400, "用户令牌token无效");
+//            result.put("data", null);
+            writer.print(resultMessage);
+        } catch (IOException e){
+            e.printStackTrace();
+        } finally {
+            if(writer != null){
+                writer.close();
+            }
+        }
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -57,30 +78,40 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
             if(userLoginToken.required()){
                 if(token == null){
-                    throw new RuntimeException("无token，请重新登录");
+                    returnJson(response,new ResultMessage<String>("410","无token，请重新登录","error"));
+                    return false;
+//                    throw new RuntimeException("无token，请重新登录");
                 }
                 //获取token的userid
                 try{
                     userId = JWT.decode(token).getAudience().get(0);
                 }
                 catch (JWTDecodeException e){
-                    throw new RuntimeException("401");
+                    returnJson(response,new ResultMessage<String>("411","token错误","error"));
+                    return false;
+//                    throw new RuntimeException("401");
                 }
                 if (token.equals(TokenCache.backendCache.getIfPresent(userId))){
-                    throw new RuntimeException("已经登出注销的token，请重新登录");
+                    returnJson(response,new ResultMessage<String>("411","已经登出注销的token，请重新登录","error"));
+                    return false;
+//                    throw new RuntimeException("已经登出注销的token，请重新登录");
                 }
                 User user1 = new User();
                 user1.setId(userId);
                 List<UserResp> usersByUser = userMapper.getUserByEntity(user1);
                 if(usersByUser==null){
-                    throw new RuntimeException("用户不存在");
+                    returnJson(response,new ResultMessage<String>("411","用户不存在","error"));
+                    return false;
+//                    throw new RuntimeException("用户不存在");
                 }
                 //验证token
                 JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(usersByUser.get(0).getUser_password())).build();
                 try{
                     jwtVerifier.verify(token);
                 }catch (JWTVerificationException e){
-                    throw new RuntimeException("token验证不通过或者已经过期，请重新登录");
+                    returnJson(response,new ResultMessage<String>("411","token验证不通过或者已经过期，请重新登录","error"));
+                    return false;
+//                    throw new RuntimeException("token验证不通过或者已经过期，请重新登录");
                 }
                 return true;
             }
