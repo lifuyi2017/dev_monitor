@@ -20,6 +20,9 @@ public class DevicePredicData {
     private String device_name;
     private Long time_min;
     private Long time_max;
-
+    private Integer number_Of_phase;
+    private String device_warn_result;
+    private Integer device_warn_score;
+    private String point_coordinate;
 
 }

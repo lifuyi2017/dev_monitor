@@ -1,6 +1,7 @@
 package com.lifuyi.dev_monitor.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.lifuyi.dev_monitor.annotation.UserLoginToken;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
 import com.lifuyi.dev_monitor.model.dev.DevType;
@@ -32,6 +33,7 @@ public class DevController {
 
     @PostMapping("/getType")
     @ApiOperation(value = "获取设备类型", notes = "获取设备类型")
+    @UserLoginToken
     public ResultMessage<List<DevType>> getType() {
         return new ResultMessage<List<DevType>>("200", "查询成功", devService.getType());
     }
@@ -39,6 +41,7 @@ public class DevController {
 
     @PostMapping("/uploadPic")
     @ApiResponses({@ApiResponse(code = 200, message = "图片id"), @ApiResponse(code = 401, message = "上传失败")})
+    @UserLoginToken
     public ResultMessage<String> uploadPic(@RequestParam("imgFile") MultipartFile imgFile) {
         return UploadUtils.uploadPic(imgFile);
     }
@@ -46,6 +49,7 @@ public class DevController {
 
     @GetMapping(value = "/previewPic")
     @ApiOperation(value = "预览图片", notes = "输入id,返回base64")
+    @UserLoginToken
     public String previewPic(@RequestParam("imgId") String imgId) {
         return UploadUtils.previewPic(imgId);
     }
@@ -54,6 +58,7 @@ public class DevController {
 
     @GetMapping(value = "/getPic")
     @ApiOperation(value = "预览图片", notes = "输入id,返回base64")
+    @UserLoginToken
     public void getPic(@RequestParam("imgId") String imgId, HttpServletResponse response) {
         InputStream in = null;
         try {

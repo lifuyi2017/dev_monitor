@@ -82,7 +82,6 @@ public class LoginController {
     }
 
 
-
     @FrontPassToken
     @RequestMapping(value = "/loginFront", method = RequestMethod.POST)
     @ApiOperation(value = "前台系统登陆",  notes = "")
