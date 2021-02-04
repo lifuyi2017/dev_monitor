@@ -1,13 +1,17 @@
 package com.lifuyi.dev_monitor.model.mongo.current_data;
 
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.io.Serializable;
 
 /**
  * https://blog.csdn.net/yanpenglei/article/details/79261875
  */
 @Document(collection = "device_predic_data")
-public class DevicePredicData {
+@Data
+public class DevicePredicData implements Serializable {
     @Id
     private Long id;
     private String company_id;
