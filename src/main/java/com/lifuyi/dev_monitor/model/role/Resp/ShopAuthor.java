@@ -7,14 +7,16 @@ import lombok.Data;
 @Api(value = "角色的车间权限实体")
 public class ShopAuthor {
 
-    private String shop_id;
-    private String shop_name;
+    private String id;
+    private String label;
     private String flag;
+    private String type;
 
-    public ShopAuthor(String shop_id, String shop_name, String flag) {
-        this.shop_id = shop_id;
-        this.shop_name = shop_name;
+    public ShopAuthor(String id, String label, String flag, String type) {
+        this.id = id;
+        this.label = label;
         this.flag = flag;
+        this.type = type;
     }
 
     public ShopAuthor() {

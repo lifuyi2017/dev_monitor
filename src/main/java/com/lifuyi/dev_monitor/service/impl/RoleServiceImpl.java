@@ -116,17 +116,17 @@ public class RoleServiceImpl implements RoleService {
                     String farmFlag = "0";
                     for (WorkShop shop : shopList) {
                         if (shopIds.contains(shop.getId())) {
-                            shopRespList.add(new ShopAuthor(shop.getId(), shop.getName(), "1"));
+                            shopRespList.add(new ShopAuthor(shop.getId(), shop.getName(), "1","3"));
                             farmFlag = "1";
                             enterPriseFlag = "1";
                         } else {
-                            shopRespList.add(new ShopAuthor(shop.getId(), shop.getName(), "0"));
+                            shopRespList.add(new ShopAuthor(shop.getId(), shop.getName(), "0","3"));
                         }
                     }
-                    farmRespList.add(new FarmAuthor(shopRespList, farm.getId(), farm.getName(), farmFlag));
+                    farmRespList.add(new FarmAuthor(shopRespList, farm.getId(), farm.getName(), farmFlag,"2"));
                 }
                 enterPriseAuthors.add(
-                        new EnterPriseAuthor(farmRespList, enterprise.getEnterprise_id(), enterprise.getEnterprise_name(), enterPriseFlag));
+                        new EnterPriseAuthor(farmRespList, enterprise.getEnterprise_id(), enterprise.getEnterprise_name(), enterPriseFlag,"1"));
             }
         }
         return new ResultMessage<List<EnterPriseAuthor>>("200", "success", enterPriseAuthors);

@@ -12,17 +12,18 @@ import java.util.Map;
 public class FarmAuthor {
 
 
-    private List<ShopAuthor> shopAuthors;
-    private String farm_id;
-    private String farm_name;
-    @ApiModelProperty(value = "下层权限,1是有，0是无" ,position = 1)
+    private List<ShopAuthor> children;
+    private String id;
+    private String label;
     private String flag;
+    private String type;
 
-    public FarmAuthor(List<ShopAuthor> shopAuthors, String farm_id, String farm_name, String flag) {
-        this.shopAuthors = shopAuthors;
-        this.farm_id = farm_id;
-        this.farm_name = farm_name;
+    public FarmAuthor(List<ShopAuthor> children, String id, String label, String flag, String type) {
+        this.children = children;
+        this.id = id;
+        this.label = label;
         this.flag = flag;
+        this.type = type;
     }
 
     public FarmAuthor() {
