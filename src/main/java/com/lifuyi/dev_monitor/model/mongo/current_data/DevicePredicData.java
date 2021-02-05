@@ -1,5 +1,6 @@
 package com.lifuyi.dev_monitor.model.mongo.current_data;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,6 +26,7 @@ public class DevicePredicData implements Serializable {
     private Long time_min;
     private Long time_max;
     private Integer number_Of_phase;
+    @ApiModelProperty(value = "0正常，1警告，2异常" ,position = 2,required = true)
     private String device_warn_result;
     private Integer device_warn_score;
     private String point_coordinate;

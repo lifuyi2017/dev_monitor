@@ -5,7 +5,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://root:bala123bala!!@dds-bp12b08b2855b6b4-pub.mongodb.rds.aliyuncs.com:3717/admin
+      uri: mongodb://root:bala123bala!!@dds-bp12b08b2855b6b4-pub.mongodb.rds.aliyuncs.com:3717/vir_current_data?authSource=admin
   datasource:
     name: mysql_test
     type: com.alibaba.druid.pool.DruidDataSource

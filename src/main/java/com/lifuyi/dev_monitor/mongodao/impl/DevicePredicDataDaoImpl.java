@@ -21,9 +21,13 @@ public class DevicePredicDataDaoImpl implements DevicePredicDataDao {
     @Override
     public DevicePredicData getDevHealthyByDevId(String devId) {
         Query query = new Query(Criteria.where("device_id").is(devId));
-//        query.with(new Sort(Sort.Direction.DESC,"time_max"));
-        DevicePredicData demoEntity = mongoTemplate.findOne(query, DevicePredicData.class);
-        return demoEntity;
+        query.with(new Sort(Sort.Direction.DESC,"time_max"));
+        List<DevicePredicData> demoEntity = mongoTemplate.find(query, DevicePredicData.class);
+        if(demoEntity.size()>0){
+            return demoEntity.get(0);
+        }else {
+            return null;
+        }
     }
 
 }

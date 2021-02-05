@@ -6,6 +6,7 @@ import com.lifuyi.dev_monitor.model.collect.WorkShopDev;
 import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
 import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevPagesRsp;
+import com.lifuyi.dev_monitor.model.mongo.statics.EnterPriseAuthorAndState;
 import com.lifuyi.dev_monitor.model.role.Resp.EnterPriseAuthor;
 import com.lifuyi.dev_monitor.service.DevService;
 import com.lifuyi.dev_monitor.service.RoleService;
@@ -39,11 +40,11 @@ public class FrontDevController {
     @Autowired
     private DevService devService;
 
-    @PostMapping("/getRoleAuthority")
-    @ApiOperation(value = "获取角色权限",  notes = "用于展示设备树，展示flag是1的部分就行")
-    public ResultMessage<List<EnterPriseAuthor>> getRoleAuthority(@RequestParam("roleId")
+    @PostMapping("/getRoleAuthorityAndState")
+    @ApiOperation(value = "获取角色权限下的企业，厂房，车间，带健康状态统计",  notes = "")
+    public ResultMessage<List<EnterPriseAuthorAndState>> getRoleAuthorityAndState(@RequestParam("roleId")
                                                                   @ApiParam(value = "角色id",required = true) String roleId){
-        return roleService.getRoleAuthority(roleId);
+        return roleService.getRoleAuthorityAndState(roleId);
     }
 
     @PostMapping(value = "/getDevByDevGroupId")
