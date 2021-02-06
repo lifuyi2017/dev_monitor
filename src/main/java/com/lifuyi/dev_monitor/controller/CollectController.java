@@ -10,6 +10,7 @@ import com.lifuyi.dev_monitor.model.collect.req.StartOrStopCollect;
 import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
 import com.lifuyi.dev_monitor.model.collect.resp.CollectConfigResp;
 import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
+import com.lifuyi.dev_monitor.model.collect.resp.WorkShopDevWithType;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
 import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevBingding;
 import com.lifuyi.dev_monitor.model.mqtt.CollectConfig;
@@ -66,7 +67,7 @@ public class CollectController {
     @PostMapping(value = "/getWorkShopDevList")
     @ApiOperation(value = "获取车间下面的设备", notes = "")
     @UserLoginToken
-    public ResultMessage<List<WorkShopDev>> getWorkShopDevList(@RequestParam("workshopId")
+    public ResultMessage<List<WorkShopDevWithType>> getWorkShopDevList(@RequestParam("workshopId")
                                                                    @ApiParam(value = "车间id",required = true) String workshopId){
         return workShopService.getWorkShopDevList(workshopId);
     }

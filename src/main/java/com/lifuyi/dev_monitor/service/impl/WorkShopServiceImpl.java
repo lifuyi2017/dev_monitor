@@ -10,6 +10,7 @@ import com.lifuyi.dev_monitor.model.collect.req.CollectConfigQueryReq;
 import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
 import com.lifuyi.dev_monitor.model.collect.resp.CollectConfigResp;
 import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
+import com.lifuyi.dev_monitor.model.collect.resp.WorkShopDevWithType;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
 import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevBingding;
 import com.lifuyi.dev_monitor.service.CollectService;
@@ -89,8 +90,8 @@ public class WorkShopServiceImpl implements WorkShopService {
     }
 
     @Override
-    public ResultMessage<List<WorkShopDev>> getWorkShopDevList(String workshopId) {
-        List<WorkShopDev> devList = workShopMapper.getWorkShopDevList(workshopId);
+    public ResultMessage<List<WorkShopDevWithType>> getWorkShopDevList(String workshopId) {
+        List<WorkShopDevWithType> devList = workShopMapper.getWorkShopDevWithTypeList(workshopId);
         return new ResultMessage<List<WorkShopDev>>("200", "查询成功", devList);
     }
 

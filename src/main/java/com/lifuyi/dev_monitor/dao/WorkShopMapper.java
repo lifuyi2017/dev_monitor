@@ -5,6 +5,7 @@ import com.lifuyi.dev_monitor.model.collect.WorkShop;
 import com.lifuyi.dev_monitor.model.collect.WorkShopDev;
 import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
 import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
+import com.lifuyi.dev_monitor.model.collect.resp.WorkShopDevWithType;
 import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevBingding;
 
 import java.util.List;
@@ -40,4 +41,5 @@ public interface WorkShopMapper {
 
     List<WorkShopDev> getDevByDevGroupId(String id);
 
+    List<WorkShopDevWithType> getWorkShopDevWithTypeList(String workshopId);
 }

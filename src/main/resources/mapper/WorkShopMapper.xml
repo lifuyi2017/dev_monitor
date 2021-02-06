@@ -44,7 +44,7 @@
     </select>
 
     <select id="getWorkShopDevList" resultType="com.lifuyi.dev_monitor.model.collect.WorkShopDev">
-        select * from workshop_dev where  `type`='3' and shop_id=#{workshopId} order by update_time desc
+        select * from workshop_dev  where  `type`='3' and shop_id=#{workshopId} order by update_time desc
     </select>
 
     <select id="getWorkShopDevGroupList" resultType="com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup">
@@ -76,6 +76,11 @@
         select * from workshop_dev where parent_id=#{id} and `type`='5' order by update_time desc
     </select>
 
+    <select id="getWorkShopDevWithTypeList" resultType="com.lifuyi.dev_monitor.model.collect.resp.WorkShopDevWithType">
+    select id,name,shop_id,parent_id,type,dev_id,
+        (select dev_type_id from dev_base_info where id=workdev.dev_id) dev_type,enterprise_id
+         from workshop_dev workdev where  `type`='3' and shop_id=#{workshopId} order by update_time desc
+    </select>
 
 
 </mapper>

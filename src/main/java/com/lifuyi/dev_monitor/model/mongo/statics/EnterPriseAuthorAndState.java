@@ -14,8 +14,9 @@ public class EnterPriseAuthorAndState {
 
 
     private List<FarmAuthorAndState> farmAuthorList;
-    private String enterprise_id;
-    private String enterprise_name;
+    private String id;
+    private String name;
+    private String type;
     private Integer normalNum;
     private Integer warnNum;
     private Integer errorNum;

@@ -10,8 +10,9 @@ import java.util.List;
 @Api(value = "车间,带健康状态")
 public class ShopAuthorAndStatus {
 
-    private String shop_id;
-    private String shop_name;
+    private String id;
+    private String name;
+    private String type;
     private Integer normalNum;
     private Integer warnNum;
     private Integer errorNum;

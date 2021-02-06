@@ -9,8 +9,9 @@ import java.util.List;
 public class FarmAuthorAndState {
 
     private List<ShopAuthorAndStatus> shopAuthors;
-    private String farm_id;
-    private String farm_name;
+    private String id;
+    private String name;
+    private String type;
     private Integer normalNum;
     private Integer warnNum;
     private Integer errorNum;

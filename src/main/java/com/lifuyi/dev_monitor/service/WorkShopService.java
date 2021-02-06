@@ -6,6 +6,7 @@ import com.lifuyi.dev_monitor.model.collect.WorkShop;
 import com.lifuyi.dev_monitor.model.collect.WorkShopDev;
 import com.lifuyi.dev_monitor.model.collect.req.WorkShopQueryReq;
 import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
+import com.lifuyi.dev_monitor.model.collect.resp.WorkShopDevWithType;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
 import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevBingding;
 
@@ -20,7 +21,7 @@ public interface WorkShopService {
 
     ResultMessage<List<BaseDevBingding>> getNotBingingDevByEnterpriseId(String enterpriseId);
 
-    ResultMessage<List<WorkShopDev>> getWorkShopDevList(String workshopId);
+    ResultMessage<List<WorkShopDevWithType>> getWorkShopDevList(String workshopId);
 
     ResultMessage<List<ShopDevGroup>> getWorkShopDevGroupList(String workshopId);
 
