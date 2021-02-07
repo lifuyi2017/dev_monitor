@@ -4,6 +4,7 @@ import com.lifuyi.dev_monitor.annotation.UserLoginToken;
 import com.lifuyi.dev_monitor.model.ResultMessage;
 import com.lifuyi.dev_monitor.model.collect.WorkShopDev;
 import com.lifuyi.dev_monitor.model.collect.resp.ShopDevGroup;
+import com.lifuyi.dev_monitor.model.collect.resp.WorkShopDevWithType;
 import com.lifuyi.dev_monitor.model.dev.BaseDevEntity;
 import com.lifuyi.dev_monitor.model.dev.Resp.BaseDevPagesRsp;
 import com.lifuyi.dev_monitor.model.mongo.statics.EnterPriseAuthorAndState;
@@ -56,7 +57,7 @@ public class FrontDevController {
 
     @PostMapping(value = "/getWorkShopDevList")
     @ApiOperation(value = "获取车间下面的设备", notes = "")
-    public ResultMessage<List<WorkShopDev>> getWorkShopDevList(@RequestParam("workshopId")
+    public ResultMessage<List<WorkShopDevWithType>> getWorkShopDevList(@RequestParam("workshopId")
                                                                @ApiParam(value = "车间id",required = true) String workshopId){
         return workShopService.getWorkShopDevList(workshopId);
     }

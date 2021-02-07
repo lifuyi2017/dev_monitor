@@ -199,18 +199,18 @@ public class RoleServiceImpl implements RoleService {
                             farmWarn+=shopWarn;
                             farmError+=shopError;
                             shopAuthorAndStatuses.add(new ShopAuthorAndStatus(shop.getId(),
-                                    shop.getName(),shopNormal,shopWarn,shopError,devHeathList));
+                                    shop.getName(),"3",shopNormal,shopWarn,shopError,devHeathList));
                         }
                         enterNormal+=farmNormal;
                         enterWarn+=farmWarn;
                         enterError+=farmError;
                         farmAuthorAndStateList.add(new FarmAuthorAndState(shopAuthorAndStatuses,farm.getId(),
-                                farm.getName(),farmNormal,farmWarn,farmError));
+                                farm.getName(),"2",farmNormal,farmWarn,farmError));
                     }
                 }
                 if(farmAuthorAndStateList.size()>0){
                     enterPriseAuthorAndStates.add(new EnterPriseAuthorAndState(farmAuthorAndStateList,enterprise.getEnterprise_id()
-                    ,enterprise.getEnterprise_name(),enterNormal,enterWarn,enterError));
+                    ,enterprise.getEnterprise_name(),"1",enterNormal,enterWarn,enterError));
                 }
             }
         }

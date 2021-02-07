@@ -92,7 +92,7 @@ public class WorkShopServiceImpl implements WorkShopService {
     @Override
     public ResultMessage<List<WorkShopDevWithType>> getWorkShopDevList(String workshopId) {
         List<WorkShopDevWithType> devList = workShopMapper.getWorkShopDevWithTypeList(workshopId);
-        return new ResultMessage<List<WorkShopDev>>("200", "查询成功", devList);
+        return new ResultMessage<List<WorkShopDevWithType>>("200", "查询成功", devList);
     }
 
     @Override

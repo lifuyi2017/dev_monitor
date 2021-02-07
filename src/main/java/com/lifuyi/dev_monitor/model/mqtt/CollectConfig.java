@@ -20,6 +20,8 @@ public class CollectConfig {
     private String logic_code;
     @ApiModelProperty(value = "设备或者设备组名称" ,position = 6)
     private String collect_dev_name;
+    @ApiModelProperty(value = "设备或者设备组id" ,position = 13)
+    private String collect_dev_id;
     @ApiModelProperty(value = "类型" ,position = 7)
     private String type;
     @ApiModelProperty(value = "频率" ,position = 8)
@@ -36,13 +38,14 @@ public class CollectConfig {
     public CollectConfig() {
     }
 
-    public CollectConfig(String signal, String phase, String physical_code, String channel_code, String logic_code, String collect_dev_name, String type, String frequency, String duration, String accuracy, String interval, String state) {
+    public CollectConfig(String signal, String phase, String physical_code, String channel_code, String logic_code, String collect_dev_name, String collect_dev_id, String type, String frequency, String duration, String accuracy, String interval, String state) {
         this.signal = signal;
         this.phase = phase;
         this.physical_code = physical_code;
         this.channel_code = channel_code;
         this.logic_code = logic_code;
         this.collect_dev_name = collect_dev_name;
+        this.collect_dev_id = collect_dev_id;
         this.type = type;
         this.frequency = frequency;
         this.duration = duration;

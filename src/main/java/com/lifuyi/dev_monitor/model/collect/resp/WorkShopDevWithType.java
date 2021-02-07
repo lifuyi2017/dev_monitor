@@ -15,7 +15,7 @@ public class WorkShopDevWithType {
     @ApiModelProperty(value = "类型，3是车间下面的设备，4是车间下面的设备组，5是设备组下面的设备" ,position = 5,required = true)
     private String type;
     @ApiModelProperty(value = "绑定的dev的id，如果是设备组，可不填" ,position = 6)
-    private Integer dev_id;
+    private String dev_id;
     @ApiModelProperty(value = "绑定的dev的类型id，如果是设备组，可不填" ,position = 7)
     private String dev_type;
     @ApiModelProperty(value = "企业id" ,position = 8,required = true)
@@ -24,7 +24,7 @@ public class WorkShopDevWithType {
     public WorkShopDevWithType() {
     }
 
-    public WorkShopDevWithType(String id, String name, String shop_id, String parent_id, String type, Integer dev_id, String dev_type, String enterprise_id) {
+    public WorkShopDevWithType(String id, String name, String shop_id, String parent_id, String type, String dev_id, String dev_type, String enterprise_id) {
         this.id = id;
         this.name = name;
         this.shop_id = shop_id;

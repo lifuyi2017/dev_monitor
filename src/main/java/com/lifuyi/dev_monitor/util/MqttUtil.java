@@ -31,6 +31,7 @@ public class MqttUtil {
         mqttMessage.setQos(2);
         mqttMessage.setRetained(true);
         String str=JSONArray.toJSON(collectionMqtt).toString();
+        System.out.println("发送消息：==========="+str);
         mqttMessage.setPayload(str.getBytes());
         MqttDeliveryToken publish = topic.publish(mqttMessage);
         publish.waitForCompletion();

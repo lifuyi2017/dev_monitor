@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * https://blog.csdn.net/yanpenglei/article/details/79261875
@@ -29,6 +30,6 @@ public class DevicePredicData implements Serializable {
     @ApiModelProperty(value = "0正常，1警告，2异常" ,position = 2,required = true)
     private String device_warn_result;
     private Integer device_warn_score;
-    private String point_coordinate;
+    private List<List<Double>> point_coordinate;
 
 }
