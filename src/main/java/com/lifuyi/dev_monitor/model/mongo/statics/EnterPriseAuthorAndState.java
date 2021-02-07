@@ -21,10 +21,11 @@ public class EnterPriseAuthorAndState {
     private Integer warnNum;
     private Integer errorNum;
 
-    public EnterPriseAuthorAndState(List<FarmAuthorAndState> farmAuthorList, String enterprise_id, String enterprise_name, Integer normalNum, Integer warnNum, Integer errorNum) {
+    public EnterPriseAuthorAndState(List<FarmAuthorAndState> farmAuthorList, String id, String name, String type, Integer normalNum, Integer warnNum, Integer errorNum) {
         this.farmAuthorList = farmAuthorList;
-        this.enterprise_id = enterprise_id;
-        this.enterprise_name = enterprise_name;
+        this.id = id;
+        this.name = name;
+        this.type = type;
         this.normalNum = normalNum;
         this.warnNum = warnNum;
         this.errorNum = errorNum;

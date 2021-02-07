@@ -16,10 +16,11 @@ public class FarmAuthorAndState {
     private Integer warnNum;
     private Integer errorNum;
 
-    public FarmAuthorAndState(List<ShopAuthorAndStatus> shopAuthors, String farm_id, String farm_name, Integer normalNum, Integer warnNum, Integer errorNum) {
+    public FarmAuthorAndState(List<ShopAuthorAndStatus> shopAuthors, String id, String name, String type, Integer normalNum, Integer warnNum, Integer errorNum) {
         this.shopAuthors = shopAuthors;
-        this.farm_id = farm_id;
-        this.farm_name = farm_name;
+        this.id = id;
+        this.name = name;
+        this.type = type;
         this.normalNum = normalNum;
         this.warnNum = warnNum;
         this.errorNum = errorNum;

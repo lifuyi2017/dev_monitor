@@ -18,9 +18,10 @@ public class ShopAuthorAndStatus {
     private Integer errorNum;
     private List<DevHeath> devHeathList;
 
-    public ShopAuthorAndStatus(String shop_id, String shop_name, Integer normalNum, Integer warnNum, Integer errorNum, List<DevHeath> devHeathList) {
-        this.shop_id = shop_id;
-        this.shop_name = shop_name;
+    public ShopAuthorAndStatus(String id, String name, String type, Integer normalNum, Integer warnNum, Integer errorNum, List<DevHeath> devHeathList) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
         this.normalNum = normalNum;
         this.warnNum = warnNum;
         this.errorNum = errorNum;
