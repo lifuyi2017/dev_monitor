@@ -1,7 +1,9 @@
 package com.lifuyi.dev_monitor.model.collect.resp;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
+@Data
 public class WorkShopDevWithType {
 
     @ApiModelProperty(value = "设备或者设备组的id" ,position = 1)
