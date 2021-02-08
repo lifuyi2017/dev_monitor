@@ -12,9 +12,9 @@ public class RoleAuthority {
     private String id;
     @ApiModelProperty(value = "角色id" ,position = 2,required = true)
     private String role_id;
-    @ApiModelProperty(value = "车间id" ,position = 3,required = true)
+    @ApiModelProperty(value = "厂房id" ,position = 3,required = true)
     private String farm_id;
-    @ApiModelProperty(value = "厂房id" ,position = 4)
+    @ApiModelProperty(value = "车间id" ,position = 4)
     private String shop_id;
     @ApiModelProperty(value = "企业id" ,position = 5)
     private String enterprise_id;
